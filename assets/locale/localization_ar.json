@@ -1,0 +1,105 @@
+{
+  "local": "locale=ar",
+
+  "home": "الصفحة الرئيسية",
+  "your_order": "طلبك",
+  "order_type": "نوع الطلب",
+  "order_status": "حالة الطلب",
+  "profile": "الملف الشخصي",
+  "address_book": "دليل العناوين",
+  "about_us": "معلومات عنا",
+  "contact_us": "اتصل بنا",
+  "login": "تسجيل الدخول",
+  "guest_login": "زائر الرجاء تسجيل الدخول",
+  "logout": "الخروج",
+  "signup": "سجل",
+
+  "select_cars": "اختر سيارات",
+  "car_type":"نوع السيارة",
+
+  "select_service": "اختر الخدمة",
+  "service_type": "نوع الخدمة",
+
+  "services_details": "تفاصيل الخدمات",
+  "address_details": "تفاصيل العنوان",
+  "duration": "المدة الزمنية",
+  "price": "السعر",
+  "subscription_price": "مشاركة الجائزة",
+
+  "one_time_wash": "غسل مرة واحدة",
+  "monthly_wash": "الغسيل الشهري",
+
+  "choose_schedule": "اختر الجدول",
+  "date": "تاريخ",
+  "comment": "تعليق",
+
+  "check_out": "الدفع",
+  "car_name": "اسم السيارة",
+  "service_nature": "طبيعة الخدمة",
+  "service_name": "اسم الخدمة",
+  "amount": "كمية",
+  "payment_by": "الدفع بواسطة",
+  "pick_address": " ... اختر العنوان من",
+  "shipping_address": "عنوان الشحن",
+  "address_name": "اسم عنوان",
+  "area_name": "اسم المنطقة",
+  "street":"شارع",
+  "block":"منع",
+  "building":"بناء",
+  "avenue":"السبيل",
+  "apartment":"شقة",
+  "floor":"أرضية",
+
+  "map": "خريطة",
+  "search_your_place": "ابحث عن مكانك",
+  "enter":"أدخل",
+  "save":"حفظ",
+  "cancel":"إلغاء",
+  "discard":"تجاهل",
+  "discard_warning":"تجاهل حدث جديد؟",
+
+  "confirm_address": "تأكيد العنوان",
+  "order_history":  "تاريخ الطلب",
+
+  "name": "اسم",
+  "fst_name": "الاسم الاول",
+  "enter_fst_name": "أدخل الاسم الأول",
+  "lst_name": "الكنية",
+  "enter_lst_name": "إدخال اسم آخر",
+  "email": "البريد الإلكتروني",
+  "enter_email":  "أدخل بريدك الالكتروني",
+  "cnf_email":  "تأكيد عنوان البريد الإلكتروني",
+  "enter_cnf_email":  "تأكيد بريدك الالكتروني",
+  "phone":  "هاتف",
+  "enter_phone": "أدخل رقم الهاتف",
+  "address": "عنوان",
+  "add_new_address": "إضافة عنوان جديد",
+  "enter_address": "أدخل عنوانك",
+  "password": "كلمه السر",
+  "enter_pass": "ادخل رقمك السري",
+  "cnf_password": "تأكيد كلمة المرور",
+  "enter_cnf_pass": "أكد رقمك السري",
+
+  "login_to_carspa": "تسجيل الدخول إلى CarSpa",
+  "sign_to_carspa": "قم بالتسجيل في CarSpa",
+
+  "login_note": "الرجاء تسجيل الدخول أولا",
+  "empty_msg": "لم يتم العثور على شيء",
+  "empty_error_msg": "لا يمكن أن تكون القيمة فارغة!",
+
+  "save_change": "حفظ التغيير",
+
+  "success_order_msg": "تم بنجاح تقديم طلبك!",
+  "login_success_msg": "تسجيل الدخول بنجاح!",
+  "guest_login_warning_msg": "Login as a guest",
+  "sign_success_msg": "اشترك بنجاح!",
+
+  "error_error_msg": "دام! هناك شئ غير صحيح...!",
+  "not_selected_error_msg": "لم يتم اختياره",
+  "pick_address_error_msg": "العنوان مطلوب",
+  "email_error_msg": "البريد الإلكتروني لا يطابق أو ينسق الخطأ",
+  "pass_error_msg": "كلمة المرور غير متطابقة أو أقل من 6 أرقام",
+
+  "continue": "استمر"
+
+}
