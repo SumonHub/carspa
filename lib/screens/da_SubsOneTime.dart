@@ -203,14 +203,20 @@ class _SubsOneTimeState extends State<SubsOneTime> {
 
   Future _saveData(var list) async {
     var body = jsonEncode(list);
-    print('serialize_dateTime API body : $body');
-
     var response = await http.post(
       ApiConstant.ARRAY_TO_STRING,
       body: {'serialize_array': '$body'},
     );
     var jsonResponse = json.decode(response.body);
     var data = jsonResponse['data'];
+
+    print('list : $list');
+    print('jsonEncode_list : ${jsonEncode(list)}');
+    print('dateTime_API_body : $body');
+    print('serialize_dateTime_API_jsonResponse : ${response.toString()}');
+    print('serialize_dateTime_API_jsonResponse_decode : $jsonResponse');
+    print('serialize_dateTime_API_data : $data');
+
 
     UserPref.savePref('serialize_dateTime', data);
     UserPref.savePref('dateTime',
@@ -408,20 +414,20 @@ class _DateTimePicker extends StatelessWidget {
 class MyDate {
   DateTime date;
   TimeOfDay time;
-  DateFormat _dateFormat = DateFormat.yMd();
+  DateFormat _dateFormat = DateFormat("y-M-d");
   BuildContext _context;
 
   MyDate(this._context, this.date, this.time);
 
   Map toJson() {
     return {
-      'date': _dateFormat.format(date),
+      'date': DateFormat("y-M-d").format(date),
       'time': time.format(_context),
     };
   }
 
   @override
   String toString() {
-    return '${DateFormat("y/M/d").format(date)} at ${time.format(_context)} \n';
+    return '${DateFormat("y-M-d").format(date)} at ${time.format(_context)}';
   }
 }

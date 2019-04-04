@@ -437,6 +437,6 @@ class MyDate {
 
   @override
   String toString() {
-    return '${DateFormat("y/M/d").format(date)} at ${time.format(_context)} \n';
+    return '${DateFormat("y-M-d").format(date)} at ${time.format(_context)} \n';
   }
 }

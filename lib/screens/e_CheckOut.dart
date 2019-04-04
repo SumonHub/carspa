@@ -31,7 +31,8 @@ class _CheckOutState extends State<CheckOut> {
   bool _isAddressConfirm = false;
 
   String user_id;
-  String user_name;
+  String user_fstName;
+  String user_lstName;
   String user_email;
   String user_phone;
 
@@ -69,7 +70,10 @@ class _CheckOutState extends State<CheckOut> {
 
       _isLogin = (prefs.getBool('isLogin') ?? false);
       _isGuestLogin = (prefs.getBool('isGuestLogin') ?? false);
-
+/*
+* serialize_dateTime  = a:1:{i:0;a:2:{s:4:"date";s:9:"3/25/2019";s:4:"time";s:8:"11:36 PM";}}
+* dateTime  = 2019/3/25 at 11:36 PM
+*/
       serialize_dateTime = (prefs.getString('serialize_dateTime') ?? 0);
       dateTime = (prefs.getString('dateTime') ?? 0);
       car_name = (prefs.getString('car_type_name') ?? 0);
@@ -80,9 +84,17 @@ class _CheckOutState extends State<CheckOut> {
       price = (prefs.getString('price') ?? 0);
       duration = (prefs.getString('duration') ?? 0);
 
-      user_id = prefs.getString('user_id');
-      user_name = prefs.getString('user_name');
-      user_email = prefs.getString('user_email');
+
+      user_fstName = prefs.getString('user_fstName');
+      user_lstName = prefs.getString('user_lstName');
+      if(_isGuestLogin){
+        user_id = ' ';
+        user_email = ' ';
+      }else{
+        user_id = prefs.getString('user_id');
+        user_email = prefs.getString('user_email');
+      }
+
       user_phone = prefs.getString('user_phone');
 
       street = prefs.getString('street');
@@ -93,10 +105,11 @@ class _CheckOutState extends State<CheckOut> {
       floor = prefs.getString('floor');
 
       _contactDetails = new ContactDetails(
-          user_id, user_name, user_name, user_email, user_phone);
+          user_id, user_fstName, user_lstName, user_email, user_phone);
       _orderDatails = new OrderDatails(
           user_id,
-          user_name,
+          user_fstName,
+          user_lstName,
           user_email,
           serialize_dateTime,
           car_name,
@@ -202,8 +215,8 @@ class _CheckOutState extends State<CheckOut> {
                           // ModalRoute.withName('/screen1'));
                         } else {
                           Fluttertoast.showToast(
-                              msg: AppTranslations.of(context)
-                                  .text("error_msg"),
+                              msg:
+                                  AppTranslations.of(context).text("error_msg"),
                               //error_msg
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.CENTER,
@@ -234,7 +247,9 @@ class _CheckOutState extends State<CheckOut> {
                     children: <Widget>[
                       _isGuestLogin
                           ? Center(
-                              child: new Text(AppTranslations.of(context).text("guest_login_warning_msg"),
+                              child: new Text(
+                                AppTranslations.of(context)
+                                    .text("guest_login_warning_msg"),
                                 style: TextStyle(color: Colors.yellowAccent),
                               ),
                             )
@@ -244,15 +259,17 @@ class _CheckOutState extends State<CheckOut> {
                             Icons.account_circle,
                             color: Colors.white,
                           ),
-                          '${_contactDetails.first_name}',
+                          '${_contactDetails.first_name + " " + _contactDetails.last_name}',
                           null),
-                      new PPTextField(
-                          Icon(
-                            Icons.email,
-                            color: Colors.white,
-                          ),
-                          '$user_email',
-                          null),
+                      _isGuestLogin
+                          ? null
+                          : new PPTextField(
+                              Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                              '$user_email',
+                              null),
                       new PPTextField(
                           Icon(
                             Icons.phone_iphone,
@@ -265,7 +282,7 @@ class _CheckOutState extends State<CheckOut> {
                             Icons.date_range,
                             color: Colors.white,
                           ),
-                          dateTime.replaceAll(',', ''),
+                          dateTime.replaceAll(',', '') + '\n'+ serialize_dateTime,
                           null),
                       new Card(
                           color: Colors.teal,
@@ -630,7 +647,8 @@ class _CheckOutState extends State<CheckOut> {
     _locale == 0 ? _locale = '?locale=en' : null;
 
     var user_id = _contactDetails.user_id ?? ' ';
-    var user_first_name = _contactDetails.first_name;
+    var user_fst_name = _contactDetails.first_name;
+    var user_lst_name = _contactDetails.last_name;
     var user_email = _contactDetails.email;
     var user_phone = _contactDetails.phone;
 
@@ -641,33 +659,9 @@ class _CheckOutState extends State<CheckOut> {
     var apartment = _addressDetails.apartment;
     var floor = _addressDetails.floor;
 
-    print(''
-        '\n user_id : $user_id'
-        '\n user_first_name : $user_first_name'
-        '\n user_email : $user_email'
-        '\n user_phone : $user_phone'
-        '\n street : $street'
-        '\n block : $block'
-        '\n building : $building'
-        '\n avenue : $avenue'
-        '\n apartment : $apartment'
-        '\n floor : $floor');
-
-    /*   var _shippingAddress = new _ShippingAddress(
-        first_name: user_first_name,
-        last_name: user_first_name,
-        email: user_email,
-        phone: user_phone,
-        street: street,
-        block: block,
-        building: building,
-        avenue: avenue,
-        apartment: apartment,
-        floor: floor);*/
-
     var _shippingAddressBody = json.encode(new _ShippingAddress(
-        first_name: user_first_name,
-        last_name: user_first_name,
+        first_name: user_fst_name,
+        last_name: user_lst_name,
         email: user_email,
         phone: user_phone,
         street: street,
@@ -684,7 +678,7 @@ class _CheckOutState extends State<CheckOut> {
     );
     var jsonResponse = json.decode(_shippingAddressResponse.body);
     var _shippingAddress = jsonResponse['data'];
-    print('_shippingAddress response : $_shippingAddress');
+   // print('_shippingAddressResponse : $_shippingAddress');
 
     // Create a FormData
     var _orderBody = {
@@ -697,7 +691,7 @@ class _CheckOutState extends State<CheckOut> {
       "shipping_address": "$_shippingAddress", //*
       "order_schedule": "${_orderDatails.serialize_dateTime}", //*
       "payment_method": " $_payMethod ", //*
-      "paid_amount": "123456", //*
+      "paid_amount": "${_orderDatails.price}", //*
       "order_type": "${_orderDatails.service_nature}", //*
     };
     print('_orderBody : ${_orderBody}');
@@ -713,9 +707,11 @@ class _CheckOutState extends State<CheckOut> {
   }
 
   void _getLoginFeed(BuildContext context) async {
-    Navigator.of(context).push(
-      new MaterialPageRoute(builder: (_) => new LoginTab()),
-    ).then((val) => val ? _loadPref() : null);
+    Navigator.of(context)
+        .push(
+          new MaterialPageRoute(builder: (_) => new LoginTab()),
+        )
+        .then((val) => val ? _loadPref() : null);
   }
 }
 
@@ -748,7 +744,7 @@ class _ShippingAddress {
     return {
       'contact_details': {
         'first_name': '$first_name',
-        'last_name': ' $last_name',
+        'last_name': '$last_name',
         'email': '$email',
         'phone': '$phone'
       },
@@ -801,7 +797,8 @@ class AddressDetails {
 
 class OrderDatails {
   String user_id;
-  String user_name;
+  String user_fstName;
+  String user_lstName;
   String user_email;
   String serialize_dateTime;
   String car_name;
@@ -814,7 +811,8 @@ class OrderDatails {
 
   OrderDatails(
       this.user_id,
-      this.user_name,
+      this.user_fstName,
+      this.user_lstName,
       this.user_email,
       this.serialize_dateTime,
       this.car_name,
@@ -827,6 +825,6 @@ class OrderDatails {
 
   @override
   String toString() {
-    return 'OrderDatails{user_id: $user_id, user_name: $user_name, user_email: $user_email, serialize_dateTime: $serialize_dateTime, car_name: $car_name, car_id: $car_id, service_nature: $service_nature, service_name: $service_name, service_id: $service_id, price: $price, duration: $duration}';
+    return 'OrderDatails{user_id: $user_id, user_name: $user_fstName $user_lstName, user_email: $user_email, serialize_dateTime: $serialize_dateTime, car_name: $car_name, car_id: $car_id, service_nature: $service_nature, service_name: $service_name, service_id: $service_id, price: $price, duration: $duration}';
   }
 }

@@ -212,7 +212,8 @@ class _LoginPageState extends State<LoginPage> {
       var user = new UserProfile.fromJson(responseJson['success']);
       if (user != null) {
         UserPref.savePref('user_id', '${user.id}');
-        UserPref.savePref('user_name', '${user.first_name} ${user.last_name}');
+        UserPref.savePref('user_fstName', '${user.first_name}');
+        UserPref.savePref('user_lstName', '${user.last_name}');
         UserPref.savePref('user_email', '${user.email}');
         UserPref.savePref('user_phone', '${user.phone}');
       }

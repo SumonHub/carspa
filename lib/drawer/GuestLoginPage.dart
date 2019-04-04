@@ -126,8 +126,8 @@ class _GuestLoginState extends State<GuestLogin> {
     UserPref.saveBool('isLogin', false);
     UserPref.saveBool('isGuestLogin', true);
     UserPref.savePref('token', null);
-    UserPref.savePref('user_name', fstName);
-    UserPref.savePref('user_email', lstName);
+    UserPref.savePref('user_fstName', fstName);
+    UserPref.savePref('user_lstName', lstName);
     UserPref.savePref('user_phone', phoneNo);
   }
 }
