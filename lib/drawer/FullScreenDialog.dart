@@ -5,12 +5,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-
 import 'package:http/http.dart' as http;
 
 // This demo is based on
@@ -97,7 +96,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
   Future _getSuggestedArea() async {
     print('------------- GET_SUGGESTED_AREA() start ------------------');
 
-    var _locale = await UserPref.getPref('lang_code');
+    var _locale = await UserStringPref.getPref('lang_code');
     if (_locale == 0 || _locale == 'en') {
       _locale = "?locale=en";
     } else {
@@ -637,8 +636,8 @@ class FullScreenDialogState extends State<FullScreenDialog> {
     *
     * */
 
-    var _token = await UserPref.getPref('token');
-    var customer_id = await UserPref.getPref('user_id');
+    var _token = await UserStringPref.getPref('token');
+    var customer_id = await UserStringPref.getPref('user_id');
     var selected_area_id = _selectedLocation.checked_area_id;
     var address_name = _addressNameController.text;
     var street = _streetController.text;

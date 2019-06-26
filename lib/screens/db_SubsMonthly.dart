@@ -1,13 +1,13 @@
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/e_CheckOut.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/e_CheckOut.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -228,10 +228,10 @@ class _SubsMonthlyState extends State<SubsMonthly> {
     var jsonResponse = json.decode(response.body);
     var data = jsonResponse['data'];
 
-    UserPref.savePref('serialize_dateTime', data);
-    UserPref.savePref('dateTime',
+    UserStringPref.savePref('serialize_dateTime', data);
+    UserStringPref.savePref('dateTime',
         '${list.toString().replaceAll('[', "").replaceAll(']', '')}');
-    UserPref.savePref('service_nature',
+    UserStringPref.savePref('service_nature',
         '${AppTranslations.of(context).text("one_time_wash")}');
 
     print('serialize_dateTime : $data');

@@ -1,10 +1,9 @@
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/da_SubsOneTime.dart';
+import 'package:carspa/screens/db_SubsMonthly.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/db_SubsMonthly.dart';
-import 'package:flutter_app_x/screens/da_SubsOneTime.dart';
-import 'package:flutter_app_x/screens/e_CheckOut.dart';
 
 class ServiceNature extends StatelessWidget {
   @override
@@ -21,7 +20,7 @@ class ServiceNature extends StatelessWidget {
             Avatar('assets/photos/date.png'),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: new MaterialButton(
                 child: new Text(AppTranslations.of(context).text("one_time_wash"),
                   style: const TextStyle(
@@ -36,7 +35,7 @@ class ServiceNature extends StatelessWidget {
                   * service_nature: "One Time Wash"
                   *
                   * */
-                  UserPref.savePref('service_nature', "One Time Wash");
+                  UserStringPref.savePref('service_nature', "One Time Wash");
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SubsOneTime()));
@@ -49,7 +48,7 @@ class ServiceNature extends StatelessWidget {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: new MaterialButton(
                 child: new Text(
                   AppTranslations.of(context).text("monthly_wash"),
@@ -66,7 +65,7 @@ class ServiceNature extends StatelessWidget {
                   * service_nature: "Monthly Wash"
                   *
                   * */
-                  UserPref.savePref('service_nature', "Monthly Wash");
+                  UserStringPref.savePref('service_nature', "Monthly Wash");
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SubsMonthly()));
                 },

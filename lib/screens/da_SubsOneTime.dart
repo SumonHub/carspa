@@ -1,26 +1,17 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/e_CheckOut.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/f_PickMap.dart';
-import 'package:flutter_app_x/screens/e_CheckOut.dart';
-
-//import 'package:flutter_calendar_carousel/classes/event.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-
-//import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-//   show CalendarCarousel;
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SubsOneTime extends StatefulWidget {
   @override
@@ -44,7 +35,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
     List<Schedule> list = new List();
     for (var u in schedules) {
       Schedule schedule = new Schedule(
-          schedule_id: u['id'],
+          schedule_id: u['id'].toString(),
           openning_time: u['opening_time'],
           clossing_time: u['closing_time'],
           day_name: u['day_name']);
@@ -218,10 +209,10 @@ class _SubsOneTimeState extends State<SubsOneTime> {
     print('serialize_dateTime_API_data : $data');
 
 
-    UserPref.savePref('serialize_dateTime', data);
-    UserPref.savePref('dateTime',
+    UserStringPref.savePref('serialize_dateTime', data);
+    UserStringPref.savePref('dateTime',
         '${list.toString().replaceAll('[', "").replaceAll(']', '')}');
-    UserPref.savePref('service_nature',
+    UserStringPref.savePref('service_nature',
         '${AppTranslations.of(context).text("one_time_wash")}');
 
     print('serialize_dateTime : $data');

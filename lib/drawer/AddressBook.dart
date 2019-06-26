@@ -1,15 +1,14 @@
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/MyTitle.dart';
+import 'package:carspa/components/MyValueText.dart';
+import 'package:carspa/drawer/FullScreenDialog.dart';
+import 'package:carspa/drawer/LoginTab.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/components/MyTitle.dart';
-import 'package:flutter_app_x/components/MyValueText.dart';
-import 'package:flutter_app_x/drawer/FullScreenDialog.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
 import 'package:http/http.dart' as http;
 
 class AddressBook extends StatefulWidget {
@@ -85,8 +84,8 @@ class _AddressBookState extends State<AddressBook> {
 
   Future<List<Address_Book>> fetchAddress() async {
     print('---------------> AddressBook/fetchAddress() end <----------------');
-    var _token = await UserPref.getPref('token');
-    var customer_id = await UserPref.getPref('user_id');
+    var _token = await UserStringPref.getPref('token');
+    var customer_id = await UserStringPref.getPref('user_id');
     List<Address_Book> _addressBooks = new List();
     final response = await http.get(
       ApiConstant.GET_CUSTOMER_ADDRESS + '?customer_id=$customer_id',
@@ -100,10 +99,10 @@ class _AddressBookState extends State<AddressBook> {
 
       for (var u in data) {
         Address_Book address = new Address_Book(
-          id: u['id'],
-          customer_id: u['customer_id'],
+          id: u['id'].toString(),
+          customer_id: u['customer_id'].toString(),
           address_name: u['address_name'],
-          selected_area_id: u['selected_area_id'],
+          selected_area_id: u['selected_area_id'].toString(),
           phone_number: u['phone_number'],
           area_name: u['area_name'],
           street: u['street'],
@@ -124,7 +123,7 @@ class _AddressBookState extends State<AddressBook> {
   }
 
   Future _checkIsLogin() async {
-    var _token = await UserPref.getPref('token');
+    var _token = await UserStringPref.getPref('token');
     if (_token == 0) {
       setState(() {
         _isLogin = false;
@@ -270,11 +269,11 @@ class _AddressListState extends State<AddressList> {
   void _addAddressLocally(int index) {
     var _address = widget.addressBooks[index];
 
-    UserPref.savePref('street', '${widget.addressBooks[index].street}');
-    UserPref.savePref('block', '${_address.block}');
-    UserPref.savePref('building', '${_address.building}');
-    UserPref.savePref('avenue', '${_address.avenue}');
-    UserPref.savePref('apartment', '${_address.apartment}');
-    UserPref.savePref('floor', '${_address.floor}');
+    UserStringPref.savePref('street', '${widget.addressBooks[index].street}');
+    UserStringPref.savePref('block', '${_address.block}');
+    UserStringPref.savePref('building', '${_address.building}');
+    UserStringPref.savePref('avenue', '${_address.avenue}');
+    UserStringPref.savePref('apartment', '${_address.apartment}');
+    UserStringPref.savePref('floor', '${_address.floor}');
   }
 }

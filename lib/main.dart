@@ -1,26 +1,11 @@
 import 'dart:io';
 
+import 'package:carspa/localization/AppTranslationsDelegate.dart';
+import 'package:carspa/localization/Application.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/a_SelectCars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/components/loginInput.dart';
-import 'package:flutter_app_x/drawer/AddressBook.dart';
-import 'package:flutter_app_x/localization/AppTranslationsDelegate.dart';
-import 'package:flutter_app_x/localization/Application.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/screens/d_ServiceNature.dart';
-import 'package:flutter_app_x/screens/fa_AddressForm.dart';
-import 'package:flutter_app_x/screens/da_SubsOneTime.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
-import 'package:flutter_app_x/screens/db_SubsMonthly.dart';
-import 'package:flutter_app_x/screens/e_CheckOut.dart';
-import 'package:flutter_app_x/screens/f_PickMap.dart';
-import 'package:flutter_app_x/screens/a_SelectCars.dart';
-import 'package:flutter_app_x/screens/b_SelectService.dart';
-import 'package:flutter_app_x/screens/g_SuccessPage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(new MyApp());
@@ -56,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    UserPref.savePref('lang_code', 'en');
+    UserStringPref.savePref('lang_code', 'en');
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     application.onLocaleChanged = onLocaleChange;
     _isConnected();

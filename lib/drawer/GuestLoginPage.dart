@@ -1,13 +1,9 @@
-import 'dart:convert';
-
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/loginInput.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/components/loginInput.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 
 class GuestLogin extends StatefulWidget {
   @override
@@ -123,11 +119,11 @@ class _GuestLoginState extends State<GuestLogin> {
   }
 
   _login(String fstName, String lstName, String phoneNo) async {
-    UserPref.saveBool('isLogin', false);
-    UserPref.saveBool('isGuestLogin', true);
-    UserPref.savePref('token', null);
-    UserPref.savePref('user_fstName', fstName);
-    UserPref.savePref('user_lstName', lstName);
-    UserPref.savePref('user_phone', phoneNo);
+    UserStringPref.saveBoolPref('isLogin', false);
+    UserStringPref.saveBoolPref('isGuestLogin', true);
+    UserStringPref.savePref('token', null);
+    UserStringPref.savePref('user_fstName', fstName);
+    UserStringPref.savePref('user_lstName', lstName);
+    UserStringPref.savePref('user_phone', phoneNo);
   }
 }

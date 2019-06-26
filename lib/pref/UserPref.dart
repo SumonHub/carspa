@@ -1,17 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserPref {
+class UserStringPref {
   static savePref(String key, String value) async {
     final _pref = await SharedPreferences.getInstance();
     _pref.setString(key, value);
     var counter = _pref.getString('$key') ?? 0;
-    print('Pref.. save $key  = $counter');
+    print('Pref.. Save_String $key  = $counter');
   }
 
-  static saveBool(String key, bool value) async {
+  static saveBoolPref(String key, bool value) async {
     final _pref = await SharedPreferences.getInstance();
     _pref.setBool(key, value);
-    print('Pref.. save $key  = $value');
+    print('Pref.. Save_Bool $key  = $value');
   }
 
   static getPref(String key) async {

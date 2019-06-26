@@ -1,7 +1,7 @@
+import 'package:carspa/drawer/GuestLoginPage.dart';
+import 'package:carspa/drawer/LoginPage.dart';
+import 'package:carspa/localization/AppTranslations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/drawer/GuestLoginPage.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
 
 class LoginTab extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _LoginTabState extends State<LoginTab> {
               ],
             ),
           ),
-       // title: Text('Tabs Demo'),
+          // title: Text('Tabs Demo'),
         ),
         body: TabBarView(
           children: [

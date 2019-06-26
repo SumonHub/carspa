@@ -1,12 +1,11 @@
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/drawer/LoginTab.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
 import 'package:http/http.dart' as http;
 
 class OrderHistoryPage extends StatefulWidget {
@@ -72,7 +71,7 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
     uri = uri.replace(query: 'user=x--------------------');
     print(uri);*/
 
-    var customer_id = await UserPref.getPref('user_id');
+    var customer_id = await UserStringPref.getPref('user_id');
 
     var response = await http.get(
         'http://carspa-kw.com/api/get-all-orders-by-id?customer_id=$customer_id');
@@ -100,7 +99,7 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
   }
 
   void _checkIsLogin() async {
-    var token = await UserPref.getPref('token');
+    var token = await UserStringPref.getPref('token');
     if (token != 0) {
       setState(() {
         _isLogin = true;

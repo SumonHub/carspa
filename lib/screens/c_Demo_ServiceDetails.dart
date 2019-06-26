@@ -1,13 +1,4 @@
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/d_ServiceNature.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:http/http.dart' as http;
 
 /*
 class ServiceDetails extends StatefulWidget {

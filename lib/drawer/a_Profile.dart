@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/drawer/LoginTab.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
 import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
@@ -30,8 +29,7 @@ class _ProfileState extends State<Profile> {
   var _id, _name, _email, _phone, _address, _password;
 
   Future _loadUserInfo() async {
-
-    var _token = await UserPref.getPref('token');
+    var _token = await UserStringPref.getPref('token');
     if (_token == 0) {
      setState(() {
        _isLogin = false;

@@ -1,23 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/components/MyTitle.dart';
+import 'package:carspa/components/MyValueText.dart';
+import 'package:carspa/components/ProfileTextField.dart';
+import 'package:carspa/drawer/AddressBook.dart';
+import 'package:carspa/drawer/LoginTab.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/f_PickMap.dart';
+import 'package:carspa/screens/g_SuccessPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/components/MyTitle.dart';
-import 'package:flutter_app_x/components/MyValueText.dart';
-import 'package:flutter_app_x/components/ProfileTextField.dart';
-import 'package:flutter_app_x/drawer/AddressBook.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/drawer/LoginPage.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/drawer/PickAddressTab.dart';
-import 'package:flutter_app_x/screens/f_PickMap.dart';
-import 'package:flutter_app_x/screens/g_SuccessPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckOut extends StatefulWidget {
   @override
@@ -282,7 +279,8 @@ class _CheckOutState extends State<CheckOut> {
                             Icons.date_range,
                             color: Colors.white,
                           ),
-                          dateTime.replaceAll(',', '') + '\n'+ serialize_dateTime,
+                          dateTime.replaceAll(
+                              ',', '') /*+ '\n'+ serialize_dateTime*/,
                           null),
                       new Card(
                           color: Colors.teal,
@@ -643,7 +641,7 @@ class _CheckOutState extends State<CheckOut> {
   }
 
   Future<bool> _submitOrder() async {
-    var _locale = await UserPref.getPref('locale');
+    var _locale = await UserStringPref.getPref('locale');
     _locale == 0 ? _locale = '?locale=en' : null;
 
     var user_id = _contactDetails.user_id ?? ' ';

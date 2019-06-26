@@ -1,7 +1,7 @@
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/fa_AddressForm.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/fa_AddressForm.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +16,7 @@ class _PickMapState extends State<PickMap> {
   TextEditingController _textEditingController;
 
   GoogleMapController mapController;
+
   //var _initLocation = const LatLng(29.347126136377188, 47.67043210566044);
   var _initLocation = const LatLng(29.3759, 47.9774);
   var _currLoc;
@@ -54,11 +55,11 @@ class _PickMapState extends State<PickMap> {
           GoogleMap(
             onMapCreated: (GoogleMapController controller) {
               controller.animateCamera(
-                CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: _initLocation,
-                      zoom: 15.0,
-                    ))
+                  CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                        target: _initLocation,
+                        zoom: 15.0,
+                      ))
               );
               setState(() {
                 mapController = controller;
@@ -183,11 +184,11 @@ class _PickMapState extends State<PickMap> {
     // From coordinates
     final coordinates = new Coordinates(latlng.latitude, latlng.longitude);
     var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    await Geocoder.local.findAddressesFromCoordinates(coordinates);
     print("${addresses.toString()}");
     var first = addresses.first;
 
-    UserPref.savePref('addressLine', '${first.featureName}');
+    UserStringPref.savePref('addressLine', '${first.featureName}');
 
     // _search = first.addressLine;
 
@@ -211,7 +212,7 @@ class _PickMapState extends State<PickMap> {
 
     setState(() {
       final _updatedLoc =
-          LatLng(first.coordinates.latitude, first.coordinates.longitude);
+      LatLng(first.coordinates.latitude, first.coordinates.longitude);
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(_updatedLoc.latitude, _updatedLoc.longitude),
         zoom: 17.0,

@@ -1,8 +1,8 @@
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/drawer/b_OrderHistoryPage.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/screens/a_SelectCars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/drawer/b_OrderHistoryPage.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/screens/a_SelectCars.dart';
 
 class SuccessPage extends StatefulWidget {
   @override
@@ -58,7 +58,7 @@ class _SuccessPageState extends State<SuccessPage> {
                       MaterialPageRoute(builder: (context) => Cars()));*/
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => Cars()),
-                      (Route<dynamic> route) => false);
+                          (Route<dynamic> route) => false);
                 },
                 elevation: 4.0,
                 minWidth: double.infinity,

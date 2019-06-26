@@ -1,7 +1,7 @@
 class CarType {
-  final String id;
-  final String name;
-  final String carImage;
+  var id;
+  String name;
+  String carImage;
 
   CarType({this.id, this.name, this.carImage});
 
@@ -29,7 +29,7 @@ class Service {
         }
   * */
 
-  String service_id;
+  var service_id;
   String duration;
   String price;
   String subscription_price;

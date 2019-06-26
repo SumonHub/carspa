@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/localization/Application.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/localization/Application.dart';
 
 class AppTranslationsDelegate extends LocalizationsDelegate<AppTranslations> {
   final Locale newLocale;

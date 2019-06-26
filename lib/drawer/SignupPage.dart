@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/components/loginInput.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/loginInput.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPage extends StatefulWidget {

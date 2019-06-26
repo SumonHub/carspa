@@ -1,23 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/d_ServiceNature.dart';
+import 'package:carspa/screens/da_SubsOneTime.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/d_ServiceNature.dart';
-import 'package:flutter_app_x/screens/da_SubsOneTime.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:http/http.dart' as http;
-
-class Details extends StatefulWidget {
+class ServiceDetails extends StatefulWidget {
   @override
-  _DetailsState createState() => _DetailsState();
+  _ServiceDetailsState createState() => _ServiceDetailsState();
 }
 
-class _DetailsState extends State<Details> {
+class _ServiceDetailsState extends State<ServiceDetails> {
   //Duration delay = const Duration(milliseconds: 200);
   bool isLoading = true;
 
@@ -34,7 +33,7 @@ class _DetailsState extends State<Details> {
   List<Addons> _addonsList = new List();
 
   Future<List<Addons>> fetchData() async {
-    var _locale = await UserPref.getPref('locale');
+    var _locale = await UserStringPref.getPref('locale');
     _locale==0? _locale='?locale=en': null;
     print('---------> fetchData() <------------');
 
@@ -163,8 +162,8 @@ class _DetailsState extends State<Details> {
 
             }
 
-            UserPref.savePref('duration', duration);
-            UserPref.savePref('price', price);
+            UserStringPref.savePref('duration', duration);
+            UserStringPref.savePref('price', price);
 
 
 
@@ -172,7 +171,7 @@ class _DetailsState extends State<Details> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SubsOneTime()));
             } else {
-              UserPref.savePref('subscription_price', subscription_price);
+              UserStringPref.savePref('subscription_price', subscription_price);
 
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ServiceNature()));

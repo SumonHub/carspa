@@ -1,18 +1,13 @@
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/c_ServiceDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/c_ServiceDetails.dart';
-import 'package:flutter_app_x/screens/d_ServiceNature.dart';
-import 'package:flutter_app_x/screens/c_Demo_ServiceDetails.dart';
-import 'package:flutter_app_x/screens/da_SubsOneTime.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectService extends StatelessWidget {
@@ -21,7 +16,7 @@ class SelectService extends StatelessWidget {
   *
   * */
   Future<List<Service>> fetchService() async {
-    var _locale = await UserPref.getPref('lang_code');
+    var _locale = await UserStringPref.getPref('lang_code');
     if(_locale==0 || _locale=='en'){
       _locale = "?locale=en";
     }else{
@@ -34,12 +29,17 @@ class SelectService extends StatelessWidget {
     var _bodyData = {
       "car_type_id": car_type_id,
     };
-    var response = await http.get(ApiConstant.SERVICE_API+_locale+'&car_type_id=$car_type_id');
+    var response = await http.get(
+        ApiConstant.SERVICE_API + _locale + '&car_type_id=1');
     print('ApiConstant.SERVICE_API : ${ApiConstant.SERVICE_API}');
     var jsonResponse = json.decode(response.body);
     var data = jsonResponse['data'];
     for (var u in data) {
-      Service service = new Service(u['service_id'] as String , u['duration'] as String, u['one_time_price'] as String, u['subscription_price'] as String,
+      Service service = new Service(
+          u['service_id'],
+          u['duration'] as String,
+          u['one_time_price'] as String,
+          u['subscription_price'] as String,
           u['addons_id'] as String, u['image'] as String, u['service_name'] as String, u['description'] as String);
 
       serviceList.add(service);
@@ -132,19 +132,28 @@ class _ServiceListState extends State<ServiceList> {
                                 MaterialPageRoute(
                                     builder: (context) => SelectSubscriptionType()));*/
 
-                            UserPref.savePref('service_id',  widget.serviceList[index].service_id);
-                            UserPref.savePref('service_name',  widget.serviceList[index].service_name);
-                            UserPref.savePref('duration',  widget.serviceList[index].duration);
-                            UserPref.savePref('price',  widget.serviceList[index].price);
-                            UserPref.savePref('subscription_price',  widget.serviceList[index].subscription_price);
-                            UserPref.savePref('description',  widget.serviceList[index].description);
-                            UserPref.savePref('addons_serialized_id',  widget.serviceList[index].addons_serialized_id);
-                            UserPref.savePref('service_image',  widget.serviceList[index].image);
+                            UserStringPref.savePref('service_id',
+                                widget.serviceList[index].service_id
+                                    .toString());
+                            UserStringPref.savePref('service_name',
+                                widget.serviceList[index].service_name);
+                            UserStringPref.savePref(
+                                'duration', widget.serviceList[index].duration);
+                            UserStringPref.savePref(
+                                'price', widget.serviceList[index].price);
+                            UserStringPref.savePref('subscription_price',
+                                widget.serviceList[index].subscription_price);
+                            UserStringPref.savePref('description',
+                                widget.serviceList[index].description);
+                            UserStringPref.savePref('addons_serialized_id',
+                                widget.serviceList[index].addons_serialized_id);
+                            UserStringPref.savePref('service_image',
+                                widget.serviceList[index].image);
 
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Details()));
+                                    builder: (context) => ServiceDetails()));
                           },
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 20.0, vertical: 10.0),

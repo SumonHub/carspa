@@ -1,19 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/drawer/AddressBook.dart';
+import 'package:carspa/drawer/LoginTab.dart';
+import 'package:carspa/drawer/a_Profile.dart';
+import 'package:carspa/drawer/b_OrderHistoryPage.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/localization/Application.dart';
+import 'package:carspa/pref/UserPref.dart';
+import 'package:carspa/screens/b_SelectService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/drawer/AddressBook.dart';
-import 'package:flutter_app_x/drawer/LoginTab.dart';
-import 'package:flutter_app_x/drawer/PickAddressTab.dart';
-import 'package:flutter_app_x/drawer/a_Profile.dart';
-import 'package:flutter_app_x/drawer/b_OrderHistoryPage.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/localization/Application.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
-import 'package:flutter_app_x/screens/b_SelectService.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,9 +33,9 @@ class _CarsState extends State<Cars> {
 
   void _chooseLangAction(String language) {
     if (language == 'English') {
-      UserPref.savePref('lang_code', 'en');
+      UserStringPref.savePref('lang_code', 'en');
     } else {
-      UserPref.savePref('lang_code', 'ar');
+      UserStringPref.savePref('lang_code', 'ar');
     }
     application.onLocaleChanged(Locale(languagesMap[language]));
   }
@@ -44,7 +43,7 @@ class _CarsState extends State<Cars> {
   Future<List<CarType>> fetchCars() async {
     print('-------------Cars / fetchCars() start ------------------');
 
-    var _locale = await UserPref.getPref('lang_code');
+    var _locale = await UserStringPref.getPref('lang_code');
     if (_locale == 0 || _locale == 'en') {
       _locale = "?locale=en";
     } else {
@@ -60,7 +59,7 @@ class _CarsState extends State<Cars> {
       var data = jsonResponse['data'];
       for (var u in data) {
         CarType car = new CarType(
-            id: u['id'] as String,
+            id: u['id'] as int,
             name: u['name'] as String,
             carImage: u['image']);
         carList.add(car);
@@ -159,8 +158,10 @@ class CarTypeList extends StatelessWidget {
                 onTap: () async {
                   // _save(carList[index].id);
 
-                  await UserPref.savePref('car_type_id', carList[index].id);
-                  await UserPref.savePref('car_type_name', carList[index].name);
+                  await UserStringPref.savePref(
+                      'car_type_id', carList[index].id.toString());
+                  await UserStringPref.savePref(
+                      'car_type_name', carList[index].name);
 
                   await Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SelectService()));
@@ -386,7 +387,7 @@ class _AppDrawerState extends State<AppDrawer> {
               // close the drawer
               Navigator.pop(context);
 
-              UserPref.clearAll();
+              UserStringPref.clearAll();
 
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => LoginTab()));

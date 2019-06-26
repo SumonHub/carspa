@@ -1,20 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:flutter_app_x/api/ApiConstant.dart';
-import 'package:flutter_app_x/api/ApiHelperClass.dart';
-import 'package:flutter_app_x/api/User.dart';
-import 'package:flutter_app_x/components/Avatar.dart';
-import 'package:flutter_app_x/localization/AppTranslations.dart';
-import 'package:flutter_app_x/pref/UserPref.dart';
 
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
+import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/loginInput.dart';
+import 'package:carspa/drawer/SignupPage.dart';
+import 'package:carspa/localization/AppTranslations.dart';
+import 'package:carspa/pref/UserPref.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_x/components/loginInput.dart';
-import 'package:flutter_app_x/drawer/SignupPage.dart';
-import 'package:path/path.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -162,14 +157,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<bool> _login(String user_email, String user_password) async {
     var _loginUrl = ApiConstant.LOGIN_API;
-    /*var _bodyData = {
+    var _bodyData = {
       "email": "$user_email",
       'password': "$user_password",
-    };*/
-    var _bodyData = {
+    };
+    /* var _bodyData = {
       "email": "admin@123.com",
       'password': "123456",
-    };
+    };*/
     var response = await http.post(_loginUrl, body: _bodyData);
     var responseBody = jsonDecode(response.body);
 
@@ -179,9 +174,9 @@ class _LoginPageState extends State<LoginPage> {
         user_token = responseBody['success']['token'];
       });
       // user_token = responseBody['success']['token'];
-      UserPref.savePref('token', user_token);
-      UserPref.saveBool('isLogin', true);
-      UserPref.saveBool('isGuestLogin', false);
+      UserStringPref.savePref('token', user_token);
+      UserStringPref.saveBoolPref('isLogin', true);
+      UserStringPref.saveBoolPref('isGuestLogin', false);
       return true;
     } else {
       print('login_error : ${responseBody['error']}');
@@ -211,11 +206,11 @@ class _LoginPageState extends State<LoginPage> {
       print('user profile : ${responseJson['success']}');
       var user = new UserProfile.fromJson(responseJson['success']);
       if (user != null) {
-        UserPref.savePref('user_id', '${user.id}');
-        UserPref.savePref('user_fstName', '${user.first_name}');
-        UserPref.savePref('user_lstName', '${user.last_name}');
-        UserPref.savePref('user_email', '${user.email}');
-        UserPref.savePref('user_phone', '${user.phone}');
+        UserStringPref.savePref('user_id', '${user.id.toString()}');
+        UserStringPref.savePref('user_fstName', '${user.first_name}');
+        UserStringPref.savePref('user_lstName', '${user.last_name}');
+        UserStringPref.savePref('user_email', '${user.email}');
+        UserStringPref.savePref('user_phone', '${user.phone}');
       }
 
   }
