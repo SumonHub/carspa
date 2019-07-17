@@ -61,7 +61,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         print(' addons response : $addons');
         for (var u in addons) {
           Addons addons = new Addons(
-              u['addons_id'], u['duration'], u['price'], u['addons_name']);
+              u['id'].toString(), u['duration'], u['price'], u['addons_name']);
           print('addons $i: ${addons.toString()}');
           addonsList.add(addons);
         }
@@ -122,7 +122,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         _selectedAddonsId.add(addons_id);
         duration = _addDuration.abs().toString();
         price = _addPrice.abs().toString();
-
       });
     } else {
       setState(() {
@@ -158,14 +157,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             * save addond id, duration, price
             *
             * */
-            if(_selectedAddonsId!=null){
 
-            }
+            _saveSelectedAddons(_selectedAddonsId);
+
 
             UserStringPref.savePref('duration', duration);
             UserStringPref.savePref('price', price);
-
-
 
             if (subscription_price == '') {
               Navigator.push(context,
@@ -369,6 +366,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                                 '${b.toString()} - ${bb.toString()} = ${bbbb.toString()}\n'
                                 );
 
+
                             _onAddonsSelected(
                                 selected, _addonsList[index].addons_id, index);
                           },
@@ -392,5 +390,25 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ],
             ),
     );
+  }
+
+  void _saveSelectedAddons(List selectedAddonsId) async {
+    if (selectedAddonsId.isNotEmpty) {
+      var body = jsonEncode(selectedAddonsId);
+      var response = await http.post(
+        ApiConstant.ARRAY_TO_STRING,
+        body: {'serialize_array': '$body'},
+      );
+      var jsonResponse = json.decode(response.body);
+      var data = jsonResponse['data'];
+
+      UserStringPref.savePref('serialize_addons', data.toString());
+      //  UserStringPref.savePref('_addons_id', selectedAddonsId.toString().replaceAll("[", "").replaceAll("]", "").trim());
+
+    }
+    else {
+      // UserStringPref.savePref('_addons_id', "empty");
+      UserStringPref.savePref('serialize_addons', " ");
+    }
   }
 }

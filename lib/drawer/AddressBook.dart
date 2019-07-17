@@ -190,7 +190,8 @@ class _AddressListState extends State<AddressList> {
                                 content: Text('Address save for check out'));
                             Scaffold.of(context).showSnackBar(snackBar);
                             _addAddressLocally(index);
-                        //    Navigator.pop(context, true);
+                            Navigator.pop(context, true);
+
                           },
                           onLongPress: null,
                           contentPadding: EdgeInsets.symmetric(
@@ -270,6 +271,7 @@ class _AddressListState extends State<AddressList> {
     var _address = widget.addressBooks[index];
 
     UserStringPref.savePref('street', '${widget.addressBooks[index].street}');
+    UserStringPref.savePref('area', '${_address.area_name}');
     UserStringPref.savePref('block', '${_address.block}');
     UserStringPref.savePref('building', '${_address.building}');
     UserStringPref.savePref('avenue', '${_address.avenue}');

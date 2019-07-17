@@ -23,6 +23,7 @@
   "services_details": "تفاصيل الخدمات",
   "address_details": "تفاصيل العنوان",
   "duration": "المدة الزمنية",
+  "addons": "Addons",
   "price": "السعر",
   "subscription_price": "مشاركة الجائزة",
 
@@ -42,13 +43,14 @@
   "pick_address": " ... اختر العنوان من",
   "shipping_address": "عنوان الشحن",
   "address_name": "اسم عنوان",
-  "area_name": "اسم المنطقة",
+  "area_name": "منطقة",
+  "choose_your_area": "Choose Your Area",
   "street":"شارع",
-  "block":"منع",
-  "building":"بناء",
-  "avenue":"السبيل",
+  "block": "قطعة",
+  "building": "منزل",
+  "avenue": "جادة",
   "apartment":"شقة",
-  "floor":"أرضية",
+  "floor": "دور",
 
   "map": "خريطة",
   "search_your_place": "ابحث عن مكانك",
@@ -81,6 +83,7 @@
   "enter_cnf_pass": "أكد رقمك السري",
 
   "login_to_carspa": "تسجيل الدخول إلى CarSpa",
+  "login_as_guest": "تسجيل الدخول كضيف",
   "sign_to_carspa": "قم بالتسجيل في CarSpa",
 
   "login_note": "الرجاء تسجيل الدخول أولا",

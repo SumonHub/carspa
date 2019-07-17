@@ -13,6 +13,7 @@ import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/b_SelectService.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,7 +60,7 @@ class _CarsState extends State<Cars> {
       var data = jsonResponse['data'];
       for (var u in data) {
         CarType car = new CarType(
-            id: u['id'] as int,
+            id: u['id'],
             name: u['name'] as String,
             carImage: u['image']);
         carList.add(car);
@@ -120,11 +121,7 @@ class _CarsState extends State<Cars> {
                   ? CarTypeList(
                       carList: snapshot.data,
                     )
-                  : Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    );
+                  : SpinKitPouringHourglass(color: Colors.white);
             }));
   }
 }

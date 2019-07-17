@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/api/ApiHelperClass.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/e_CheckOut.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AddressForm extends StatefulWidget {
   @override
@@ -16,13 +21,14 @@ class _AddressFormState extends State<AddressForm> {
   TextEditingController _buildingController = TextEditingController();
   TextEditingController _avenueController = TextEditingController();
   TextEditingController _apartmentController = TextEditingController();
-  TextEditingController _flooController = TextEditingController();
+  TextEditingController _floorController = TextEditingController();
 
+  bool _areaValidStatus = true;
   bool _streetValidStatus = true;
   bool _blockValidStatus = true;
   bool _buildingValidStatus = true;
 
-  var _streetText;
+  var _streetText = 'Enter Street';
   var _blockText = 'Enter Block';
   var _buildingText = 'Enter Building No';
   var _avenueText = 'Enter Avenue No';
@@ -34,10 +40,59 @@ class _AddressFormState extends State<AddressForm> {
   var empty_msg;
 
   void _loadPrefData() async {
-    var addressLine = await (UserStringPref.getPref('addressLine')) ?? 0;
+    var building = await (UserStringPref.getPref('name')) ?? 0;
+    var street = await (UserStringPref.getPref('street')) ?? 0;
     setState(() {
-      _streetText = addressLine;
-      _streetController = TextEditingController(text: '$_streetText');
+      if (street
+          .toString()
+          .isNotEmpty) {
+        _streetText = street;
+        _streetController = TextEditingController(text: '$_streetText');
+      }
+      if (building
+          .toString()
+          .isNotEmpty) {
+        _buildingText = building;
+        _buildingController = TextEditingController(text: '$_buildingText');
+      }
+    });
+  }
+
+
+  List<SuggestedArea> _areaList = new List();
+  List<String> _locations = ['A', 'B', 'C', 'D']; // Option 2
+  SuggestedArea _selectedLocation;
+
+  Future _getSuggestedArea() async {
+    print('------------- GET_SUGGESTED_AREA() start ------------------');
+
+    var _locale = await UserStringPref.getPref('lang_code');
+    if (_locale == 0 || _locale == 'en') {
+      _locale = "?locale=en";
+    } else {
+      _locale = '?locale=ar';
+    }
+
+    var url = ApiConstant.GET_SUGGESTED_AREA + _locale;
+    print('GET_SUGGESTED_AREA api url : $url');
+    var response = await http.get(url);
+    List<SuggestedArea> _suggestedAreaList = new List();
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
+      var data = jsonResponse['data'];
+
+      for (var u in data) {
+        SuggestedArea suggestedArea = new SuggestedArea(
+            area_name: u['area_name'],
+            checked_area_id: u['checked_area_id'].toString());
+        _suggestedAreaList.add(suggestedArea);
+      }
+
+      print('GET_SUGGESTED_AREA.length : ${_suggestedAreaList.length}');
+    }
+
+    setState(() {
+      _areaList = _suggestedAreaList;
     });
   }
 
@@ -46,6 +101,8 @@ class _AddressFormState extends State<AddressForm> {
     super.initState();
 
     _loadPrefData();
+
+    _getSuggestedArea();
   }
 
   @override
@@ -76,7 +133,7 @@ class _AddressFormState extends State<AddressForm> {
               _streetController.text.isNotEmpty
                   ? _streetValidStatus = true
                   : _streetValidStatus = false;
-              _buildingController.text.isNotEmpty
+              _blockController.text.isNotEmpty
                   ? _blockValidStatus = true
                   : _blockValidStatus = false;
               _buildingController.text.isNotEmpty
@@ -90,8 +147,8 @@ class _AddressFormState extends State<AddressForm> {
                   ? UserStringPref.savePref(
                   'apartment', '${_apartmentController.text}')
                   : UserStringPref.savePref('apartment', null);
-              _flooController.text.isNotEmpty
-                  ? UserStringPref.savePref('floor', '${_flooController.text}')
+              _floorController.text.isNotEmpty
+                  ? UserStringPref.savePref('floor', '${_floorController.text}')
                   : UserStringPref.savePref('floor', null);
 
               if (_streetValidStatus &&
@@ -120,6 +177,72 @@ class _AddressFormState extends State<AddressForm> {
         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: ListView(
           children: <Widget>[
+
+            new ListTile(
+              leading: Container(
+                padding: EdgeInsets.only(right: 12.0),
+                decoration: new BoxDecoration(
+                    border: new Border(
+                        right: new BorderSide(
+                            width: 1.0, color: Colors.white24))),
+                child: Icon(Icons.add_location, color: Colors.white),
+                // Icon(Icons.directions_car, color: Colors.white),
+              ),
+              title: Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: DropdownButton(
+                  elevation: 0,
+                  isExpanded: true,
+                  /*style: TextStyle(
+                      color: Colors.white
+                    ),*/
+                  hint: Text(
+                    AppTranslations.of(context).text("choose_your_area"),
+                    // 'Choose Your Area',
+                    style: TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // Not necessary for Option 1
+                  value: _selectedLocation,
+                  onChanged: (SuggestedArea newValue) {
+                    print('=======${newValue.toString()}======');
+                    setState(() {
+                      _selectedLocation = newValue;
+                    });
+                  },
+                  items: _areaList.map((SuggestedArea location) {
+                    return DropdownMenuItem(
+                      child: new Text(location.area_name),
+                      value: location,
+                    );
+                  }).toList(),
+                ),
+              ),
+              subtitle: Container(
+                padding: EdgeInsets.all(9.0),
+                child: Text(
+                  _areaValidStatus
+                      ? AppTranslations.of(context).text("area_name")
+                      : empty_msg,
+                  style: TextStyle(
+                    color:
+                    _areaValidStatus ? Colors.white : Colors.yellowAccent,
+                    fontSize: 12.5,
+                    fontWeight:
+                    _areaValidStatus ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 12.0,
+            ),
             new ListTile(
               leading: Container(
                 padding: EdgeInsets.only(right: 12.0),
@@ -142,7 +265,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: InputDecoration(
                   hintText: '$_streetText',
                   hintStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.white54,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("street"),
@@ -358,7 +481,7 @@ class _AddressFormState extends State<AddressForm> {
                 child: Icon(Icons.add_location, color: Colors.white),
               ),
               title: TextField(
-                controller: _flooController,
+                controller: _floorController,
                 style: new TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

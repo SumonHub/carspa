@@ -113,7 +113,8 @@ class FullScreenDialogState extends State<FullScreenDialog> {
 
       for (var u in data) {
         SuggestedArea suggestedArea = new SuggestedArea(
-            area_name: u['area_name'], checked_area_id: u['checked_area_id']);
+            area_name: u['area_name'],
+            checked_area_id: u['checked_area_id'].toString());
         _suggestedAreaList.add(suggestedArea);
       }
 
@@ -240,7 +241,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                       color: Colors.white
                     ),*/
                       hint: Text(
-                        AppTranslations.of(context).text("search_your_place"),
+                        AppTranslations.of(context).text("choose_your_area"),
                         // 'Choose Your Area',
                         style: TextStyle(
                           color: Colors.teal,
@@ -614,9 +615,10 @@ class FullScreenDialogState extends State<FullScreenDialog> {
               ].map<Widget>((Widget child) {
                 return Container(
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
-                    height: 96.0,
+                    height: 110.0,
                     child: child);
-              }).toList())),
+              }).toList())
+      ),
     );
   }
 

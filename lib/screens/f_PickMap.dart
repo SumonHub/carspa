@@ -182,9 +182,26 @@ class _PickMapState extends State<PickMap> {
 
   Future _getAddressFromLatlng(LatLng latlng) async {
     // From coordinates
-    final coordinates = new Coordinates(latlng.latitude, latlng.longitude);
-    var addresses =
-    await Geocoder.local.findAddressesFromCoordinates(coordinates);
+
+
+    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
+        latlng.latitude, latlng.longitude);
+    print("country : ${placemark[0].country}");
+    print("position : ${placemark[0].position}");
+    print("locality : ${placemark[0].locality}");
+    print("administrativeArea : ${placemark[0].administrativeArea}");
+    print("postalCode : ${placemark[0].postalCode}");
+    print("name : ${placemark[0].name}");
+    print("isoCountryCode : ${placemark[0].isoCountryCode}");
+    print("subLocality : ${placemark[0].subLocality}");
+    print("subThoroughfare : ${placemark[0].subThoroughfare}");
+    print("thoroughfare : ${placemark[0].thoroughfare}");
+
+    UserStringPref.savePref('name', '${placemark[0].name}');
+    UserStringPref.savePref('street', '${placemark[0].thoroughfare}');
+
+    /*final coordinates = new Coordinates(latlng.latitude, latlng.longitude);
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     print("${addresses.toString()}");
     var first = addresses.first;
 
@@ -201,7 +218,7 @@ class _PickMapState extends State<PickMap> {
         "adminArea : ${first.adminArea}\n"
         "subAdminArea : ${first.subAdminArea}\n"
         "thoroughfare : ${first.thoroughfare}\n"
-        "subThoroughfare : ${first.subThoroughfare}\n");
+        "subThoroughfare : ${first.subThoroughfare}\n");*/
   }
 
   _getLatlngFromAddress(String address) async {

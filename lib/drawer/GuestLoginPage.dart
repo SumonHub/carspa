@@ -60,7 +60,7 @@ class _GuestLoginState extends State<GuestLogin> {
             margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
             child: MaterialButton(
               child: new Text(
-                AppTranslations.of(context).text("login_to_carspa"),
+                AppTranslations.of(context).text("login_as_guest"),
                 style: const TextStyle(
                   color: Colors.black,
                   letterSpacing: 5.0,

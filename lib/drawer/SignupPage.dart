@@ -183,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
       "phone": "$phone",
       "address": "$address",
       "password": "$pass",
-      "confirm_password": "$cnfEmail"
+      "confirm_password": "$cnfPass"
     };
 
     print(_bodyData);

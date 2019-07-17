@@ -146,7 +146,8 @@ class _ServiceListState extends State<ServiceList> {
                             UserStringPref.savePref('description',
                                 widget.serviceList[index].description);
                             UserStringPref.savePref('addons_serialized_id',
-                                widget.serviceList[index].addons_serialized_id);
+                                widget.serviceList[index].addons_serialized_id)
+                                .toString();
                             UserStringPref.savePref('service_image',
                                 widget.serviceList[index].image);
 

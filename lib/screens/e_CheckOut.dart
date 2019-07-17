@@ -22,7 +22,7 @@ class CheckOut extends StatefulWidget {
 }
 
 class _CheckOutState extends State<CheckOut> {
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool _isLogin = false;
   bool _isGuestLogin = false;
   bool _isAddressConfirm = false;
@@ -40,11 +40,12 @@ class _CheckOutState extends State<CheckOut> {
   String service_nature;
   String service_name;
   String service_id;
-  String addons_id; //
+  var serialize_addons_id, _addons_id;
   String price;
   String duration;
 
   var street = ' Street no selected';
+  var area = ' Area no selected';
   var block = ' Block no selected';
   var building = ' Building not selected';
   var avenue = ' Avenue not selected';
@@ -58,6 +59,7 @@ class _CheckOutState extends State<CheckOut> {
   ContactDetails _contactDetails;
   AddressDetails _addressDetails;
   OrderDatails _orderDatails;
+
 
   //Loading counter value on start
   Future _loadPref() async {
@@ -78,6 +80,9 @@ class _CheckOutState extends State<CheckOut> {
       service_name = (prefs.getString('service_name') ?? 0);
       service_nature = (prefs.getString('service_nature') ?? 0);
       service_id = (prefs.getString('service_id') ?? 0);
+      serialize_addons_id = (prefs.getString('serialize_addons') ?? "");
+      _addons_id = (prefs.getString('_addons_id') ?? 0);
+      print("value =" + _addons_id.toString());
       price = (prefs.getString('price') ?? 0);
       duration = (prefs.getString('duration') ?? 0);
 
@@ -95,6 +100,7 @@ class _CheckOutState extends State<CheckOut> {
       user_phone = prefs.getString('user_phone');
 
       street = prefs.getString('street');
+      area = prefs.getString('area');
       block = prefs.getString('block');
       building = prefs.getString('building');
       avenue = prefs.getString('avenue');
@@ -114,10 +120,19 @@ class _CheckOutState extends State<CheckOut> {
           service_nature,
           service_name,
           service_id,
+          serialize_addons_id,
+          _addons_id,
           price,
           duration);
       _addressDetails =
-          new AddressDetails(street, block, building, avenue, apartment, floor);
+      new AddressDetails(
+          street,
+          area,
+          block,
+          building,
+          avenue,
+          apartment,
+          floor);
 
       print(_contactDetails.toString());
       print(_addressDetails.toString());
@@ -571,6 +586,9 @@ class _CheckOutState extends State<CheckOut> {
                                                   .text("street")),
                                           new MyTitle(
                                               AppTranslations.of(context)
+                                                  .text("area_name")),
+                                          new MyTitle(
+                                              AppTranslations.of(context)
                                                   .text("block")),
                                           new MyTitle(
                                               AppTranslations.of(context)
@@ -596,6 +614,12 @@ class _CheckOutState extends State<CheckOut> {
                                         children: <Widget>[
                                           new MyValueText(
                                               '${street == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : street}'),
+                                          new MyValueText(
+                                              '${area == null
+                                                  ? '${AppTranslations.of(
+                                                  context).text(
+                                                  "not_selected_error_msg")}'
+                                                  : area}'),
                                           new MyValueText(
                                               '${block == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : block}'),
                                           new MyValueText(
@@ -681,7 +705,7 @@ class _CheckOutState extends State<CheckOut> {
     // Create a FormData
     var _orderBody = {
       "user_id": " $user_id", //*
-      "addons_id": " ",
+      "addons_id": "${_orderDatails.serialize_addons_id}",
       "service_id": "${_orderDatails.service_id}", //*
       "car_type_id": "${_orderDatails.car_id}", //*
       "amount": "${_orderDatails.price}", //*
@@ -777,6 +801,7 @@ class ContactDetails {
 
 class AddressDetails {
   var street;
+  var area;
   var block;
   var building;
   var avenue;
@@ -784,12 +809,12 @@ class AddressDetails {
   var floor;
   var additional_direction = "No direction";
 
-  AddressDetails(this.street, this.block, this.building, this.avenue,
+  AddressDetails(this.street, this.area, this.block, this.building, this.avenue,
       this.apartment, this.floor);
 
   @override
   String toString() {
-    return 'AddressDetails{street: $street, block: $block, building: $building, avenue: $avenue, apartment: $apartment, floor: $floor, additional_direction: $additional_direction}';
+    return 'AddressDetails{street: $street, area: $area, block: $block, building: $building, avenue: $avenue, apartment: $apartment, floor: $floor, additional_direction: $additional_direction}';
   }
 }
 
@@ -804,6 +829,8 @@ class OrderDatails {
   String service_nature;
   String service_name;
   String service_id;
+  var serialize_addons_id;
+  var _addons_id;
   String price;
   String duration;
 
@@ -818,11 +845,13 @@ class OrderDatails {
       this.service_nature,
       this.service_name,
       this.service_id,
+      this.serialize_addons_id,
+      this._addons_id,
       this.price,
       this.duration);
 
   @override
   String toString() {
-    return 'OrderDatails{user_id: $user_id, user_name: $user_fstName $user_lstName, user_email: $user_email, serialize_dateTime: $serialize_dateTime, car_name: $car_name, car_id: $car_id, service_nature: $service_nature, service_name: $service_name, service_id: $service_id, price: $price, duration: $duration}';
+    return 'OrderDatails{user_id: $user_id, user_name: $user_fstName $user_lstName, user_email: $user_email, serialize_dateTime: $serialize_dateTime, car_name: $car_name, car_id: $car_id, service_nature: $service_nature, service_name: $service_name, service_id: $service_id, serialize_addons_id: $serialize_addons_id, _addons_id: $_addons_id, price: $price, duration: $duration}';
   }
 }

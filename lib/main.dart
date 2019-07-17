@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:carspa/localization/AppTranslationsDelegate.dart';
 import 'package:carspa/localization/Application.dart';
 import 'package:carspa/pref/UserPref.dart';
-import 'package:carspa/screens/a_SelectCars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'screens/SplashScreen.dart';
 
 void main() {
   runApp(new MyApp());
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.teal,
         ),
         home: checkConnection
-            ? Cars()
+            ? SplashScreen()
             : Scaffold(
           body: Center(
             child: Text('No internet connection!'),
