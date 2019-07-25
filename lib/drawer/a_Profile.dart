@@ -378,28 +378,35 @@ class _ProfileState extends State<Profile> {
                   ],
                 )
               : Center(
-                  child: MaterialButton(
-                    color: Colors.white,
-                    onPressed: () {
-                      _getLoginFeed(context);
-                    },
-                    child: Text(
-                      AppTranslations.of(context).text("login_note"),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        letterSpacing: 5.0,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              MaterialButton(
+                color: Colors.white,
+                onPressed: () {
+                  _goToLoginTab(context, 0);
+                },
+                child: Text(
+                  AppTranslations.of(context).text("login_note"),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 5.0,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+            ],
+          )
                 ),
     );
   }
 
-  void _getLoginFeed(BuildContext context) async {
+  void _goToLoginTab(BuildContext context, int tabPosition) async {
     Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (_) => new LoginTab()),)
+        .push(new MaterialPageRoute(
+        builder: (_) => new LoginTab(tabPosition: tabPosition,)),)
         .then((value) => value ? _loadUserInfo() : null);
   }
 }

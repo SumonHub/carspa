@@ -60,8 +60,7 @@ class _AddressFormState extends State<AddressForm> {
 
 
   List<SuggestedArea> _areaList = new List();
-  List<String> _locations = ['A', 'B', 'C', 'D']; // Option 2
-  SuggestedArea _selectedLocation;
+  SuggestedArea _selectedArea;
 
   Future _getSuggestedArea() async {
     print('------------- GET_SUGGESTED_AREA() start ------------------');
@@ -107,7 +106,16 @@ class _AddressFormState extends State<AddressForm> {
 
   @override
   Widget build(BuildContext context) {
-    empty_msg = AppTranslations.of(context).text("empty_msg");
+    empty_msg = AppTranslations.of(context).text("required");
+
+    var enter = AppTranslations.of(context).text("enter");
+
+    _streetText = AppTranslations.of(context).text("street");
+    _blockText = AppTranslations.of(context).text("block");
+    _buildingText = AppTranslations.of(context).text("building");
+    _avenueText = AppTranslations.of(context).text("avenue");
+    _apartmentText = AppTranslations.of(context).text("apartment");
+    _floorText = AppTranslations.of(context).text("floor");
 
     return Scaffold(
       backgroundColor: Colors.teal,
@@ -115,10 +123,9 @@ class _AddressFormState extends State<AddressForm> {
         title: Text(AppTranslations.of(context).text("confirm_address")),
       ),
       bottomNavigationBar: _isLogin
-          ? Padding(
-        padding: EdgeInsets.only(
-            left: 20.0, right: 20.0, bottom: 12.0, top: 12.0),
-        child: MaterialButton(
+          ? new BottomAppBar(
+        child: FlatButton(
+          color: Colors.white,
           child: new Text(
             AppTranslations.of(context).text("confirm_address"),
             style: const TextStyle(
@@ -130,6 +137,9 @@ class _AddressFormState extends State<AddressForm> {
           ),
           onPressed: () {
             setState(() {
+              _selectedArea != null
+                  ? _areaValidStatus = true
+                  : _areaValidStatus = false;
               _streetController.text.isNotEmpty
                   ? _streetValidStatus = true
                   : _streetValidStatus = false;
@@ -139,6 +149,8 @@ class _AddressFormState extends State<AddressForm> {
               _buildingController.text.isNotEmpty
                   ? _buildingValidStatus = true
                   : _buildingValidStatus = false;
+
+
               _avenueController.text.isNotEmpty
                   ? UserStringPref.savePref(
                   'avenue', '${_avenueController.text}')
@@ -151,9 +163,10 @@ class _AddressFormState extends State<AddressForm> {
                   ? UserStringPref.savePref('floor', '${_floorController.text}')
                   : UserStringPref.savePref('floor', null);
 
-              if (_streetValidStatus &&
+              if (_areaValidStatus && _streetValidStatus &&
                   _buildingValidStatus &&
                   _blockValidStatus) {
+                UserStringPref.savePref('area', '${_selectedArea.area_name}');
                 UserStringPref.savePref('street', '${_streetController.text}');
                 UserStringPref.savePref('block', '${_blockController.text}');
                 UserStringPref.savePref(
@@ -166,10 +179,6 @@ class _AddressFormState extends State<AddressForm> {
               }
             });
           },
-          elevation: 4.0,
-          minWidth: double.infinity,
-          height: 48.0,
-          color: Colors.white,
         ),
       )
           : null,
@@ -209,11 +218,11 @@ class _AddressFormState extends State<AddressForm> {
                     ),
                   ),
                   // Not necessary for Option 1
-                  value: _selectedLocation,
+                  value: _selectedArea,
                   onChanged: (SuggestedArea newValue) {
                     print('=======${newValue.toString()}======');
                     setState(() {
-                      _selectedLocation = newValue;
+                      _selectedArea = newValue;
                     });
                   },
                   items: _areaList.map((SuggestedArea location) {
@@ -263,7 +272,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: '$_streetText',
+                  hintText: '$enter $_streetText',
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
@@ -310,7 +319,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: _blockText,
+                  hintText: '$enter $_blockText',
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
@@ -358,7 +367,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: _buildingText,
+                  hintText: '$enter ' + _buildingText,
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
@@ -408,7 +417,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: _avenueText,
+                  hintText: '$enter ' + _avenueText,
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
@@ -448,7 +457,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: _apartmentText,
+                  hintText: '$enter ' + _apartmentText,
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,
@@ -488,7 +497,7 @@ class _AddressFormState extends State<AddressForm> {
                 ),
                 cursorColor: Colors.yellowAccent,
                 decoration: InputDecoration(
-                  hintText: _floorText,
+                  hintText: '$enter ' + _floorText,
                   hintStyle: new TextStyle(
                     color: Colors.white54,
                     fontWeight: FontWeight.bold,

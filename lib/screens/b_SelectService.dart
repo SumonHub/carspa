@@ -143,6 +143,8 @@ class _ServiceListState extends State<ServiceList> {
                                 'price', widget.serviceList[index].price);
                             UserStringPref.savePref('subscription_price',
                                 widget.serviceList[index].subscription_price);
+                            UserStringPref.savePref('subscription_duration',
+                                widget.serviceList[index].duration);
                             UserStringPref.savePref('description',
                                 widget.serviceList[index].description);
                             UserStringPref.savePref('addons_serialized_id',

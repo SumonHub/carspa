@@ -12,6 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:flutter_calendar_carousel/classes/event.dart';
 //import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 //   show CalendarCarousel;
@@ -31,6 +32,9 @@ class _SubsMonthlyState extends State<SubsMonthly> {
   List<Schedule> _scheduleList = new List();
   List _offDayList = new List();
   List<MyDate> _selectedDateList = new List();
+
+  String subscription_price;
+  String subscription_duration;
 
   _getSchedule() async {
     _selectedDateList.add(new MyDate(context, DateTime.now(), TimeOfDay.now()));
@@ -100,10 +104,18 @@ class _SubsMonthlyState extends State<SubsMonthly> {
     return _offDayIdList;
   }
 
+  _loadPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      subscription_price = (prefs.getString('subscription_price') ?? 0);
+      subscription_duration = (prefs.getString('subscription_duration') ?? 0);
+    });
+  }
   @override
   void initState() {
     super.initState();
     _getSchedule();
+    _loadPref();
   }
 
   @override
@@ -123,17 +135,17 @@ class _SubsMonthlyState extends State<SubsMonthly> {
                 _selectedDateList
                     .add(new MyDate(context, DateTime.now(), TimeOfDay.now()));
               }else{
-                final snackBar = SnackBar(content: Text('You can select maximum 5'));
+                final snackBar = SnackBar(content: Text(
+                    AppTranslations.of(context).text("max_date_warning")));
                 mScaffoldState.currentState.showSnackBar(snackBar);
               }
             });
           },
           child: Icon(Icons.add),
         ),
-        bottomNavigationBar: Padding(
-          padding:
-              EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0, top: 0),
-          child: MaterialButton(
+        bottomNavigationBar: new BottomAppBar(
+          child: FlatButton(
+            color: Colors.white,
             child: new Text(
               AppTranslations.of(context).text("continue"),
               style: const TextStyle(
@@ -170,10 +182,6 @@ class _SubsMonthlyState extends State<SubsMonthly> {
               print(
                   '----datetime list : ${_selectedDateList.toString()} ---------');
             },
-            elevation: 4.0,
-            minWidth: double.infinity,
-            height: 48.0,
-            color: Colors.white,
           ),
         ),
         body: Container(
@@ -229,10 +237,16 @@ class _SubsMonthlyState extends State<SubsMonthly> {
     var data = jsonResponse['data'];
 
     UserStringPref.savePref('serialize_dateTime', data);
+
+
+    UserStringPref.savePref('price', subscription_price);
+    UserStringPref.savePref('duration', subscription_duration);
+
     UserStringPref.savePref('dateTime',
-        '${list.toString().replaceAll('[', "").replaceAll(']', '')}');
+        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(
+            ',', '').trim()}');
     UserStringPref.savePref('service_nature',
-        '${AppTranslations.of(context).text("one_time_wash")}');
+        '${AppTranslations.of(context).text("monthly_wash")}');
 
     print('serialize_dateTime : $data');
   }

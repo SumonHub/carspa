@@ -32,6 +32,7 @@
 
   "choose_schedule": "Choose Schedule",
   "date": "Date",
+  "max_date_warning": "You can select maximum 5",
   "comment": "Comment",
 
   "check_out": "Check Out",
@@ -42,8 +43,8 @@
   "payment_by": "Payment by",
   "pick_address": "Pick Address From...",
   "shipping_address": "Shipping Address",
-  "address_name": "Address Name",
-  "area_name": "Area Name",
+  "address_name": "Address",
+  "area_name": "Area",
   "choose_your_area": "Choose Your Area",
   "street":"Street",
   "block":"Block",
@@ -55,9 +56,10 @@
   "map": "Map",
   "search_your_place": "Search Your Place",
   "enter":"Enter",
-  "save":"Save",
+  "save": "SAVE",
   "cancel":"CANCEL",
   "discard":"DISCARD",
+  "submit": "SUBMIT",
   "discard_warning":"Discard new event?",
 
   "confirm_address": "Confirm Address",
@@ -83,7 +85,7 @@
   "enter_cnf_pass": "Confirm Your Password",
 
   "login_to_carspa": "Login To CarSpa",
-  "login_as_guest": "Login As A Guest",
+  "login_as_guest": "Continue as a guest",
   "sign_to_carspa": "Signup To CarSpa",
 
   "login_note": "Please login first",
@@ -96,13 +98,13 @@
   "login_success_msg": "Successfully Login!",
   "guest_login_warning_msg": "*Login as a guest",
   "sign_success_msg": "Successfully Sign Up!",
-
+  "required": "*required!",
   "error_msg": "Damm! Something is wrong...!",
   "not_selected_error_msg": "Not Selected",
   "pick_address_error_msg": "Address is required",
   "email_error_msg": "Email doesn't mache or format error",
   "pass_error_msg": "Password doesn't mache or less than 6 digit",
-
-  "continue": "Continue"
+  "continue": "Continue",
+  "order_confirm": "Do you want to submit your order?"
 
 }

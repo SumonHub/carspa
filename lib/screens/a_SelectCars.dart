@@ -284,6 +284,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return new Drawer(
+      elevation: 20.0,
       child: new ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -293,104 +294,129 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: BoxDecoration(
               color: Colors.black,
               // backgroundBlendMode: BlendMode.colorBurn,
-              image:
-                  DecorationImage(image: AssetImage('assets/photos/base.png')),
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/photos/logo.png')),
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.home,
-              color: Colors.teal,
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.teal)
+                )
             ),
-            title: Text(AppTranslations.of(context).text("home")),
-            onTap: () {
-              // close the drawer
-              Navigator.pop(context);
+            child: ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Colors.teal,
+              ),
+              title: Text(AppTranslations.of(context).text("home")),
+              onTap: () {
+                // close the drawer
+                Navigator.pop(context);
 
-              /*// Than Update the state of the app
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Profile('Profile')));*/
-            },
-          ),
-          Divider(
-            color: Colors.teal,
-            height: 16.0,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.shopping_cart,
-              color: Colors.teal,
+                /*// Than Update the state of the app
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Profile('Profile')));*/
+              },
             ),
-            title: Text(AppTranslations.of(context).text("your_order")),
-            onTap: () {
-              // close the drawer
-              Navigator.pop(context);
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.teal)
+                )
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.shopping_cart,
+                color: Colors.teal,
+              ),
+              title: Text(AppTranslations.of(context).text("your_order")),
+              onTap: () {
+                // close the drawer
+                Navigator.pop(context);
 
-              // Than Update the state of the app
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => OrderHistoryPage()));
-            },
-          ),
-          Divider(
-            color: Colors.teal,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.account_circle,
-              color: Colors.teal,
+                // Than Update the state of the app
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (context) => OrderHistoryPage()));
+              },
             ),
-            title: Text(AppTranslations.of(context).text("profile")),
-            onTap: () {
-              // close the drawer
-              Navigator.pop(context);
-              // Than Update the state of the app
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Profile(
-                          AppTranslations.of(context).text("profile"))));
-            },
           ),
-          Divider(
-            color: Colors.teal,
-            height: 16.0,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.directions,
-              color: Colors.teal,
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.teal)
+                )
             ),
-            title: Text(AppTranslations.of(context).text("address_book")),
-            onTap: () {
-              // close the drawer
-              Navigator.pop(context);
-              // Than Update the state of the app
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddressBook()));
-            },
-          ),
-          Divider(
-            color: Colors.teal,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.vpn_key,
-              color: Colors.red,
+            child: ListTile(
+              leading: Icon(
+                Icons.account_circle,
+                color: Colors.teal,
+              ),
+              title: Text(AppTranslations.of(context).text("profile")),
+              onTap: () {
+                // close the drawer
+                Navigator.pop(context);
+                // Than Update the state of the app
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Profile(
+                                AppTranslations.of(context).text("profile"))));
+              },
             ),
-            title: Text(AppTranslations.of(context)
-                .text(_isLogin ? "logout" : "login")),
-            onTap: () {
-              // Update the state of the app
-              // close the drawer
-              Navigator.pop(context);
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.teal)
+                )
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.directions,
+                color: Colors.teal,
+              ),
+              title: Text(AppTranslations.of(context).text("address_book")),
+              onTap: () {
+                // close the drawer
+                Navigator.pop(context);
+                // Than Update the state of the app
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddressBook()));
+              },
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.teal)
+                )
+            ),
+            child: ListTile(
+              leading: Icon(
+                Icons.vpn_key,
+                color: Colors.red,
+              ),
+              title: Text(AppTranslations.of(context)
+                  .text(_isLogin ? "logout" : "login")),
+              onTap: () {
+                // Update the state of the app
+                // close the drawer
+                Navigator.pop(context);
 
-              UserStringPref.clearAll();
+                UserStringPref.clearAll();
 
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => LoginTab()));
-              // Then close the drawer
-              // Navigator.pop(context);
-            },
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(
+                    builder: (_) => new LoginTab(tabPosition: 0,)));
+                // Then close the drawer
+                // Navigator.pop(context);
+              },
+            ),
           ),
         ],
       ),

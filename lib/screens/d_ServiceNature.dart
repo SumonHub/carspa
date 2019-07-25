@@ -1,6 +1,5 @@
 import 'package:carspa/components/Avatar.dart';
 import 'package:carspa/localization/AppTranslations.dart';
-import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/da_SubsOneTime.dart';
 import 'package:carspa/screens/db_SubsMonthly.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class ServiceNature extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.teal,
       appBar: AppBar(
-        title: Text("Services Type"),
+        title: Text(AppTranslations.of(context).text("service_type")),
       ),
       body: Container(
         padding: EdgeInsets.all(12.0),
@@ -35,7 +34,6 @@ class ServiceNature extends StatelessWidget {
                   * service_nature: "One Time Wash"
                   *
                   * */
-                  UserStringPref.savePref('service_nature', "One Time Wash");
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SubsOneTime()));
@@ -65,7 +63,6 @@ class ServiceNature extends StatelessWidget {
                   * service_nature: "Monthly Wash"
                   *
                   * */
-                  UserStringPref.savePref('service_nature', "Monthly Wash");
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SubsMonthly()));
                 },

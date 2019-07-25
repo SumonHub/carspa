@@ -108,10 +108,9 @@ class _SubsOneTimeState extends State<SubsOneTime> {
             AppTranslations.of(context).text("one_time_wash"),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding:
-              EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0, top: 0),
-          child: MaterialButton(
+        bottomNavigationBar: BottomAppBar(
+          child: FlatButton(
+            color: Colors.white,
             child: new Text(
               AppTranslations.of(context).text("continue"),
               style: const TextStyle(
@@ -145,10 +144,6 @@ class _SubsOneTimeState extends State<SubsOneTime> {
               print(
                   '----_selectedDateList : ${_selectedDateList.toString()} ---------');
             },
-            elevation: 4.0,
-            minWidth: double.infinity,
-            height: 48.0,
-            color: Colors.white,
           ),
         ),
         body: Container(
@@ -201,17 +196,10 @@ class _SubsOneTimeState extends State<SubsOneTime> {
     var jsonResponse = json.decode(response.body);
     var data = jsonResponse['data'];
 
-    print('list : $list');
-    print('jsonEncode_list : ${jsonEncode(list)}');
-    print('dateTime_API_body : $body');
-    print('serialize_dateTime_API_jsonResponse : ${response.toString()}');
-    print('serialize_dateTime_API_jsonResponse_decode : $jsonResponse');
-    print('serialize_dateTime_API_data : $data');
-
-
     UserStringPref.savePref('serialize_dateTime', data);
     UserStringPref.savePref('dateTime',
-        '${list.toString().replaceAll('[', "").replaceAll(']', '')}');
+        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(
+            ',', '').trim()}');
     UserStringPref.savePref('service_nature',
         '${AppTranslations.of(context).text("one_time_wash")}');
 

@@ -39,8 +39,8 @@ class FullScreenDialogState extends State<FullScreenDialog> {
 
   bool _validStatus = true;
 
-  var _AddressNameText = 'Enter Address Name';
-  var _AreaNameText = 'Enter Area Name';
+  var _addressNameText = 'Enter Address Name';
+  var _areaNameText = 'Enter Area Name';
   var _streetText = 'Enter Street';
   var _blockText = 'Enter Block';
   var _buildingText = 'Enter Building No';
@@ -136,6 +136,16 @@ class FullScreenDialogState extends State<FullScreenDialog> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     var empty_error_msg = AppTranslations.of(context).text("empty_error_msg");
+    var enter = AppTranslations.of(context).text("enter");
+    _addressNameText = enter + ' ' + AppTranslations.of(context).text("enter");
+    _areaNameText = enter + ' ' + AppTranslations.of(context).text("enter");
+    _streetText = enter + ' ' + AppTranslations.of(context).text("street");
+    _blockText = enter + ' ' + AppTranslations.of(context).text("block");
+    _buildingText = enter + ' ' + AppTranslations.of(context).text("building");
+    _avenueText = enter + ' ' + AppTranslations.of(context).text("avenue");
+    _apartmentText =
+        enter + ' ' + AppTranslations.of(context).text("apartment");
+    _floorText = enter + ' ' + AppTranslations.of(context).text("floor");
 
     return Scaffold(
       backgroundColor: Colors.teal,
@@ -190,13 +200,13 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: InputDecoration(
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
-                      hintText: '$_AddressNameText',
+                      hintText: '$_addressNameText',
                       hintStyle: new TextStyle(
                         color: Colors.white54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText:
-                          AppTranslations.of(context).text("address_name"),
+                      AppTranslations.of(context).text("address"),
                       helperStyle: new TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

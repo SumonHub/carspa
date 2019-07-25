@@ -47,8 +47,12 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
               child: MaterialButton(
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginTab()));
+                  Navigator.of(context)
+                      .push(
+                    new MaterialPageRoute(
+                        builder: (_) => new LoginTab(tabPosition: 0,)),
+                  )
+                      .then((value) => value ? _checkIsLogin() : null);
                 },
                 child: Text(
                   AppTranslations.of(context).text("login_note"),
@@ -89,7 +93,7 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
       orders.add(order);
     }
     print(orders.length);
-    return orders;
+    return orders.reversed.toList();
   }
 
   @override
@@ -118,95 +122,125 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderListState extends State<OrderList> {
+
+  Widget buildText(String key, String value) {
+    return new Expanded(
+        flex: 0,
+        child: Container(
+          padding: EdgeInsets.all(3.0),
+          /* decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.red),),
+        ),*/
+          child: new Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Expanded(
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    new Text('$key',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 0,
+                child: Container(
+                  width: 50,
+                  child: new Icon(Icons.label, color: Colors.white,),
+                ),
+              ),
+
+              new Expanded(
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Text('''$value''',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return widget.orders.isEmpty
         ? new Center(
-            child: Text(
-              AppTranslations.of(context).text("empty_msg"),
-              style: const TextStyle(
-                color: Colors.white,
-                letterSpacing: 5.0,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-        : new ListView.builder(
-            itemCount: widget.orders.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  elevation: 11.0,
-                  margin:
-                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(color: Colors.teal),
-                        child: ListTile(
-                          onTap: null,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          leading: Container(
-                            padding: EdgeInsets.only(right: 12.0),
-                            decoration: new BoxDecoration(
-                                border: new Border(
-                                    right: new BorderSide(
-                                        width: 1.0, color: Colors.white24))),
-                            child:
-                                Icon(Icons.add_shopping_cart, color: Colors.white),
-                          ),
-                          title: Row(
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  new MyText(AppTranslations.of(context).text("service_name")),
-                                  new MyText(AppTranslations.of(context).text("price")),
-                                  new MyText(AppTranslations.of(context).text("order_type")),
-                                  new MyText(AppTranslations.of(context).text("order_status")),
-                                  //  new MyText('created_at'),AppTranslations.of(context).text("service_name")
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  new MyText(
-                                      '= ${widget.orders[index].service_name}'),
-                                  new MyText(
-                                      '= ${widget.orders[index].amount}'),
-                                  new MyText(
-                                      '= ${widget.orders[index].order_type}'),
-                                  new MyText(
-                                      '= ${widget.orders[index].status}'),
-                                  // new MyText('= ${widget.orders[index].created_at}'),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ));
-            });
-  }
-}
-
-class MyText extends StatelessWidget {
-  String text;
-
-  MyText(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
       child: Text(
-        '$text ',
-        style: TextStyle(
+        AppTranslations.of(context).text("empty_msg"),
+        style: const TextStyle(
           color: Colors.white,
+          letterSpacing: 5.0,
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
         ),
       ),
-    );
+    )
+        : new ListView.builder(
+        itemCount: widget.orders.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+              elevation: 11.0,
+              margin:
+              new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(color: Colors.teal),
+                    child: ListTile(
+                      onTap: null,
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                      /*leading: Container(
+                        padding: EdgeInsets.only(right: 12.0),
+                        decoration: new BoxDecoration(
+                            border: new Border(
+                                right: new BorderSide(
+                                    width: 1.0, color: Colors.white24))),
+                        child:
+                        Icon(Icons.add_shopping_cart, color: Colors.white),
+                      ),*/
+                      title: Row(
+                        children: <Widget>[
+                          new Expanded(
+                            child: new Column(
+                              children: <Widget>[
+
+                                buildText(AppTranslations.of(context).text(
+                                    "service_name"),
+                                    widget.orders[index].service_name),
+                                buildText(
+                                    AppTranslations.of(context).text("price"),
+                                    widget.orders[index].amount),
+                                buildText(AppTranslations.of(context).text(
+                                    "order_type"),
+                                    widget.orders[index].order_type),
+                                buildText(AppTranslations.of(context).text(
+                                    "order_status"),
+                                    widget.orders[index].status),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ));
+        });
   }
 }
+

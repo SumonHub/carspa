@@ -4,6 +4,13 @@ import 'package:carspa/localization/AppTranslations.dart';
 import 'package:flutter/material.dart';
 
 class LoginTab extends StatefulWidget {
+  final int tabPosition;
+
+  const LoginTab({Key key, this.tabPosition})
+      : assert(tabPosition != null),
+        super(key: key);
+
+
   @override
   _LoginTabState createState() => _LoginTabState();
 }
@@ -13,6 +20,7 @@ class _LoginTabState extends State<LoginTab> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
+      initialIndex: widget.tabPosition,
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: new PreferredSize(

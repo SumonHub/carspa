@@ -32,6 +32,7 @@
 
   "choose_schedule": "اختر الجدول",
   "date": "تاريخ",
+  "max_date_warning": "يمكنك اختيار الحد الأقصى خمسة",
   "comment": "تعليق",
 
   "check_out": "الدفع",
@@ -44,7 +45,7 @@
   "shipping_address": "عنوان الشحن",
   "address_name": "اسم عنوان",
   "area_name": "منطقة",
-  "choose_your_area": "Choose Your Area",
+  "choose_your_area": "اختر منطقتك",
   "street":"شارع",
   "block": "قطعة",
   "building": "منزل",
@@ -58,6 +59,7 @@
   "save":"حفظ",
   "cancel":"إلغاء",
   "discard":"تجاهل",
+  "submit": "خضع",
   "discard_warning":"تجاهل حدث جديد؟",
 
   "confirm_address": "تأكيد العنوان",
@@ -96,13 +98,13 @@
   "login_success_msg": "تسجيل الدخول بنجاح!",
   "guest_login_warning_msg": "Login as a guest",
   "sign_success_msg": "اشترك بنجاح!",
-
+  "required": "*مطلوب!",
   "error_error_msg": "دام! هناك شئ غير صحيح...!",
   "not_selected_error_msg": "لم يتم اختياره",
   "pick_address_error_msg": "العنوان مطلوب",
   "email_error_msg": "البريد الإلكتروني لا يطابق أو ينسق الخطأ",
   "pass_error_msg": "كلمة المرور غير متطابقة أو أقل من 6 أرقام",
-
-  "continue": "استمر"
+  "continue": "استمر",
+  "order_confirm": "هل تريد تقديم طلبك؟"
 
 }

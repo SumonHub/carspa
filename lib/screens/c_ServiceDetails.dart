@@ -94,6 +94,26 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     });
   }
 
+  void _saveSelectedAddons(List selectedAddonsId) async {
+    if (selectedAddonsId.isNotEmpty) {
+      var body = jsonEncode(selectedAddonsId);
+      var response = await http.post(
+        ApiConstant.ARRAY_TO_STRING,
+        body: {'serialize_array': '$body'},
+      );
+      var jsonResponse = json.decode(response.body);
+      var data = jsonResponse['data'];
+
+      UserStringPref.savePref('serialize_addons', data.toString());
+      //  UserStringPref.savePref('_addons_id', selectedAddonsId.toString().replaceAll("[", "").replaceAll("]", "").trim());
+
+    }
+    else {
+      // UserStringPref.savePref('_addons_id', "empty");
+      UserStringPref.savePref('serialize_addons', '');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -117,8 +137,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     var _addPrice = initPrice+addonsPrice;
     var _subDuration = initDuration-addonsDuration;
     var _subPrice = initPrice-addonsPrice;
+
+    UserStringPref.saveBoolPref('hasAddons', selected);
     if (selected == true) {
       setState(() {
+        UserStringPref.savePref('addons_name', _addonsList[index].addons_name);
+        UserStringPref.savePref('addons_duration', _addonsList[index].duration);
+        UserStringPref.savePref('addons_price', _addonsList[index].price);
+
+
         _selectedAddonsId.add(addons_id);
         duration = _addDuration.abs().toString();
         price = _addPrice.abs().toString();
@@ -139,10 +166,9 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       appBar: AppBar(
         title: new Text(AppTranslations.of(context).text("services_details")),
       ),
-      bottomNavigationBar: new Padding(
-        padding:
-            EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0, top: 12.0),
-        child: MaterialButton(
+      bottomNavigationBar: isLoading ? null : new BottomAppBar(
+        child: FlatButton(
+          color: Colors.white,
           child: new Text(
             AppTranslations.of(context).text("continue"),
             style: const TextStyle(
@@ -177,10 +203,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             /* Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ServiceNature()));*/
           },
-          elevation: 4.0,
-          minWidth: double.infinity,
-          height: 48.0,
-          color: Colors.white,
         ),
       ),
       body: isLoading
@@ -390,25 +412,5 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ],
             ),
     );
-  }
-
-  void _saveSelectedAddons(List selectedAddonsId) async {
-    if (selectedAddonsId.isNotEmpty) {
-      var body = jsonEncode(selectedAddonsId);
-      var response = await http.post(
-        ApiConstant.ARRAY_TO_STRING,
-        body: {'serialize_array': '$body'},
-      );
-      var jsonResponse = json.decode(response.body);
-      var data = jsonResponse['data'];
-
-      UserStringPref.savePref('serialize_addons', data.toString());
-      //  UserStringPref.savePref('_addons_id', selectedAddonsId.toString().replaceAll("[", "").replaceAll("]", "").trim());
-
-    }
-    else {
-      // UserStringPref.savePref('_addons_id', "empty");
-      UserStringPref.savePref('serialize_addons', " ");
-    }
   }
 }
