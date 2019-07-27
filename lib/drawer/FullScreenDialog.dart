@@ -72,7 +72,8 @@ class FullScreenDialogState extends State<FullScreenDialog> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content: Text(AppTranslations.of(context).text("discard_warning"), style: dialogTextStyle),
+              content: Text(AppTranslations.of(context).text("discard_warning"),
+                  style: dialogTextStyle),
               actions: <Widget>[
                 FlatButton(
                     child: Text(AppTranslations.of(context).text("cancel")),
@@ -205,8 +206,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                         color: Colors.white54,
                         fontWeight: FontWeight.bold,
                       ),
-                      helperText:
-                      AppTranslations.of(context).text("address"),
+                      helperText: AppTranslations.of(context).text("address"),
                       helperStyle: new TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -627,8 +627,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     padding: const EdgeInsets.symmetric(vertical: 18.0),
                     height: 110.0,
                     child: child);
-              }).toList())
-      ),
+              }).toList())),
     );
   }
 

@@ -14,8 +14,6 @@ class AddressForm extends StatefulWidget {
 }
 
 class _AddressFormState extends State<AddressForm> {
-
-
   TextEditingController _streetController = TextEditingController();
   TextEditingController _blockController = TextEditingController();
   TextEditingController _buildingController = TextEditingController();
@@ -43,21 +41,16 @@ class _AddressFormState extends State<AddressForm> {
     var building = await (UserStringPref.getPref('name')) ?? 0;
     var street = await (UserStringPref.getPref('street')) ?? 0;
     setState(() {
-      if (street
-          .toString()
-          .isNotEmpty) {
+      if (street.toString().isNotEmpty) {
         _streetText = street;
         _streetController = TextEditingController(text: '$_streetText');
       }
-      if (building
-          .toString()
-          .isNotEmpty) {
+      if (building.toString().isNotEmpty) {
         _buildingText = building;
         _buildingController = TextEditingController(text: '$_buildingText');
       }
     });
   }
-
 
   List<SuggestedArea> _areaList = new List();
   SuggestedArea _selectedArea;
@@ -124,76 +117,79 @@ class _AddressFormState extends State<AddressForm> {
       ),
       bottomNavigationBar: _isLogin
           ? new BottomAppBar(
-        child: FlatButton(
-          color: Colors.white,
-          child: new Text(
-            AppTranslations.of(context).text("confirm_address"),
-            style: const TextStyle(
-              color: Colors.black,
-              letterSpacing: 5.0,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: () {
-            setState(() {
-              _selectedArea != null
-                  ? _areaValidStatus = true
-                  : _areaValidStatus = false;
-              _streetController.text.isNotEmpty
-                  ? _streetValidStatus = true
-                  : _streetValidStatus = false;
-              _blockController.text.isNotEmpty
-                  ? _blockValidStatus = true
-                  : _blockValidStatus = false;
-              _buildingController.text.isNotEmpty
-                  ? _buildingValidStatus = true
-                  : _buildingValidStatus = false;
+              child: FlatButton(
+                color: Colors.white,
+                child: new Text(
+                  AppTranslations.of(context).text("confirm_address"),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 5.0,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _selectedArea != null
+                        ? _areaValidStatus = true
+                        : _areaValidStatus = false;
+                    _streetController.text.isNotEmpty
+                        ? _streetValidStatus = true
+                        : _streetValidStatus = false;
+                    _blockController.text.isNotEmpty
+                        ? _blockValidStatus = true
+                        : _blockValidStatus = false;
+                    _buildingController.text.isNotEmpty
+                        ? _buildingValidStatus = true
+                        : _buildingValidStatus = false;
 
+                    _avenueController.text.isNotEmpty
+                        ? UserStringPref.savePref(
+                            'avenue', '${_avenueController.text}')
+                        : UserStringPref.savePref('avenue', null);
+                    _apartmentController.text.isNotEmpty
+                        ? UserStringPref.savePref(
+                            'apartment', '${_apartmentController.text}')
+                        : UserStringPref.savePref('apartment', null);
+                    _floorController.text.isNotEmpty
+                        ? UserStringPref.savePref(
+                            'floor', '${_floorController.text}')
+                        : UserStringPref.savePref('floor', null);
 
-              _avenueController.text.isNotEmpty
-                  ? UserStringPref.savePref(
-                  'avenue', '${_avenueController.text}')
-                  : UserStringPref.savePref('avenue', null);
-              _apartmentController.text.isNotEmpty
-                  ? UserStringPref.savePref(
-                  'apartment', '${_apartmentController.text}')
-                  : UserStringPref.savePref('apartment', null);
-              _floorController.text.isNotEmpty
-                  ? UserStringPref.savePref('floor', '${_floorController.text}')
-                  : UserStringPref.savePref('floor', null);
+                    if (_areaValidStatus &&
+                        _streetValidStatus &&
+                        _buildingValidStatus &&
+                        _blockValidStatus) {
+                      UserStringPref.savePref(
+                          'area', '${_selectedArea.area_name}');
+                      UserStringPref.savePref(
+                          'street', '${_streetController.text}');
+                      UserStringPref.savePref(
+                          'block', '${_blockController.text}');
+                      UserStringPref.savePref(
+                          'building', '${_buildingController.text}');
 
-              if (_areaValidStatus && _streetValidStatus &&
-                  _buildingValidStatus &&
-                  _blockValidStatus) {
-                UserStringPref.savePref('area', '${_selectedArea.area_name}');
-                UserStringPref.savePref('street', '${_streetController.text}');
-                UserStringPref.savePref('block', '${_blockController.text}');
-                UserStringPref.savePref(
-                    'building', '${_buildingController.text}');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CheckOut()),
-                );
-              }
-            });
-          },
-        ),
-      )
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckOut()),
+                      );
+                    }
+                  });
+                },
+              ),
+            )
           : null,
       body: Container(
         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: ListView(
           children: <Widget>[
-
             new ListTile(
               leading: Container(
                 padding: EdgeInsets.only(right: 12.0),
                 decoration: new BoxDecoration(
                     border: new Border(
-                        right: new BorderSide(
-                            width: 1.0, color: Colors.white24))),
+                        right:
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
                 // Icon(Icons.directions_car, color: Colors.white),
               ),
@@ -241,10 +237,10 @@ class _AddressFormState extends State<AddressForm> {
                       : empty_msg,
                   style: TextStyle(
                     color:
-                    _areaValidStatus ? Colors.white : Colors.yellowAccent,
+                        _areaValidStatus ? Colors.white : Colors.yellowAccent,
                     fontSize: 12.5,
                     fontWeight:
-                    _areaValidStatus ? FontWeight.bold : FontWeight.normal,
+                        _areaValidStatus ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
               ),
@@ -258,7 +254,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
                 // Icon(Icons.directions_car, color: Colors.white),
               ),
@@ -286,13 +282,12 @@ class _AddressFormState extends State<AddressForm> {
                       borderSide: BorderSide(color: Colors.white, width: 2.5)),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
-                  errorText:
-                  _streetValidStatus ? null : empty_msg,
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                  errorText: _streetValidStatus ? null : empty_msg,
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.yellowAccent,
-                      )),
+                    color: Colors.yellowAccent,
+                  )),
                   errorStyle: TextStyle(
                     color: Colors.yellowAccent,
                   ),
@@ -308,7 +303,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
               ),
               title: TextField(
@@ -331,16 +326,16 @@ class _AddressFormState extends State<AddressForm> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.white, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
                   errorText: _blockValidStatus ? null : empty_msg,
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.yellowAccent,
-                      )),
+                    color: Colors.yellowAccent,
+                  )),
                   errorStyle: TextStyle(
                     color: Colors.yellowAccent,
                   ),
@@ -356,7 +351,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
               ),
               title: TextField(
@@ -379,17 +374,16 @@ class _AddressFormState extends State<AddressForm> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.white, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
-                  errorText:
-                  _buildingValidStatus ? null : '$empty_msg',
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                  errorText: _buildingValidStatus ? null : '$empty_msg',
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.yellowAccent,
-                      )),
+                    color: Colors.yellowAccent,
+                  )),
                   errorStyle: TextStyle(
                     color: Colors.yellowAccent,
                   ),
@@ -405,7 +399,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
                 // Icon(Icons.directions_car, color: Colors.white),
               ),
@@ -429,11 +423,11 @@ class _AddressFormState extends State<AddressForm> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.white, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
                 ),
               ),
             ),
@@ -446,7 +440,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
               ),
               title: TextField(
@@ -469,11 +463,11 @@ class _AddressFormState extends State<AddressForm> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.white, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
                 ),
               ),
             ),
@@ -486,7 +480,7 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                        new BorderSide(width: 1.0, color: Colors.white24))),
+                            new BorderSide(width: 1.0, color: Colors.white24))),
                 child: Icon(Icons.add_location, color: Colors.white),
               ),
               title: TextField(
@@ -509,11 +503,11 @@ class _AddressFormState extends State<AddressForm> {
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.white, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
                 ),
               ),
             ),

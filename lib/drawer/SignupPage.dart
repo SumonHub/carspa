@@ -89,7 +89,8 @@ class _SignupPageState extends State<SignupPage> {
                   if (success) {
                     _showToast(' $sign_success_msg ');
                     Navigator.pop(context);
-                  } /*else {
+                  }
+                  /*else {
                     _showToast(' $error_msg ');
                   }*/
                 });

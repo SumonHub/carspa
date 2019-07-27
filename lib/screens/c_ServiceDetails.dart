@@ -34,7 +34,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
   Future<List<Addons>> fetchData() async {
     var _locale = await UserStringPref.getPref('locale');
-    _locale==0? _locale='?locale=en': null;
+    _locale == 0 ? _locale = '?locale=en' : null;
     print('---------> fetchData() <------------');
 
     List<Addons> addonsList = new List();
@@ -54,7 +54,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     if (data.length != 0) {
       for (int i = 0; i < data.length; i++) {
         String addons_id = '?addons_id=${data[i]}';
-        var response = await http.get(ApiConstant.ADD_ONS+ addons_id);
+        var response = await http.get(ApiConstant.ADD_ONS + addons_id);
 
         var jsonResponse = json.decode(response.body);
         var addons = jsonResponse['data'];
@@ -66,7 +66,8 @@ class _ServiceDetailsState extends State<ServiceDetails> {
           addonsList.add(addons);
         }
       }
-    } /*else {
+    }
+    /*else {
       addonsList.add(new Addons('1', '10.00', '20.00', 'test add1'));
       addonsList.add(new Addons('2', '30.00', '40.00', 'test add2'));
       addonsList.add(new Addons('3', '50.00', '60.00', 'test add3'));
@@ -107,8 +108,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       UserStringPref.savePref('serialize_addons', data.toString());
       //  UserStringPref.savePref('_addons_id', selectedAddonsId.toString().replaceAll("[", "").replaceAll("]", "").trim());
 
-    }
-    else {
+    } else {
       // UserStringPref.savePref('_addons_id', "empty");
       UserStringPref.savePref('serialize_addons', '');
     }
@@ -127,16 +127,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   }
 
   void _onAddonsSelected(bool selected, addons_id, int index) {
-
     var initDuration = double.parse(_addonsList[index].duration).abs();
     var addonsDuration = double.parse(duration).abs();
     var initPrice = double.parse(_addonsList[index].price).abs();
     var addonsPrice = double.parse(price).abs();
 
-    var _addDuration = initDuration+addonsDuration;
-    var _addPrice = initPrice+addonsPrice;
-    var _subDuration = initDuration-addonsDuration;
-    var _subPrice = initPrice-addonsPrice;
+    var _addDuration = initDuration + addonsDuration;
+    var _addPrice = initPrice + addonsPrice;
+    var _subDuration = initDuration - addonsDuration;
+    var _subPrice = initPrice - addonsPrice;
 
     UserStringPref.saveBoolPref('hasAddons', selected);
     if (selected == true) {
@@ -144,7 +143,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         UserStringPref.savePref('addons_name', _addonsList[index].addons_name);
         UserStringPref.savePref('addons_duration', _addonsList[index].duration);
         UserStringPref.savePref('addons_price', _addonsList[index].price);
-
 
         _selectedAddonsId.add(addons_id);
         duration = _addDuration.abs().toString();
@@ -166,45 +164,49 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       appBar: AppBar(
         title: new Text(AppTranslations.of(context).text("services_details")),
       ),
-      bottomNavigationBar: isLoading ? null : new BottomAppBar(
-        child: FlatButton(
-          color: Colors.white,
-          child: new Text(
-            AppTranslations.of(context).text("continue"),
-            style: const TextStyle(
-              color: Colors.black,
-              letterSpacing: 5.0,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: () {
-            /*
+      bottomNavigationBar: isLoading
+          ? null
+          : new BottomAppBar(
+              child: FlatButton(
+                color: Colors.white,
+                child: new Text(
+                  AppTranslations.of(context).text("continue"),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 5.0,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  /*
             * save addond id, duration, price
             *
             * */
 
-            _saveSelectedAddons(_selectedAddonsId);
+                  _saveSelectedAddons(_selectedAddonsId);
 
+                  UserStringPref.savePref('duration', duration);
+                  UserStringPref.savePref('price', price);
 
-            UserStringPref.savePref('duration', duration);
-            UserStringPref.savePref('price', price);
+                  if (subscription_price == '') {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SubsOneTime()));
+                  } else {
+                    UserStringPref.savePref(
+                        'subscription_price', subscription_price);
 
-            if (subscription_price == '') {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SubsOneTime()));
-            } else {
-              UserStringPref.savePref('subscription_price', subscription_price);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ServiceNature()));
+                  }
 
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ServiceNature()));
-            }
-
-            /* Navigator.push(context,
+                  /* Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ServiceNature()));*/
-          },
-        ),
-      ),
+                },
+              ),
+            ),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(
@@ -314,11 +316,15 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                                                   right: new BorderSide(
                                                       width: 1.0,
                                                       color: Colors.black54))),
-                                          child: Image.asset('assets/photos/price.png',width: 24.0,height: 24.0, ),
+                                          child: Image.asset(
+                                            'assets/photos/price.png',
+                                            width: 24.0,
+                                            height: 24.0,
+                                          ),
                                         ),
                                         title: Text(
                                           //'$price',
-                                          '${'${AppTranslations.of(context).text("price")}: $price'} ${subscription_price!=''?'|| ${AppTranslations.of(context).text("subscription_price")}: $subscription_price':''}',
+                                          '${'${AppTranslations.of(context).text("price")}: $price'} ${subscription_price != '' ? '|| ${AppTranslations.of(context).text("subscription_price")}: $subscription_price' : ''}',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
@@ -371,23 +377,21 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           value: _selectedAddonsId
                               .contains(_addonsList[index].addons_id),
                           onChanged: (bool selected) {
-
                             var a = double.parse(_addonsList[index].duration);
                             var aa = double.parse(duration);
                             var b = double.parse(_addonsList[index].price);
                             var bb = double.parse(price);
 
-                            var aaa = a+aa;
-                            var aaaa = a-aa;
-                            var bbb = b+bb;
-                            var bbbb= b-bb;
+                            var aaa = a + aa;
+                            var aaaa = a - aa;
+                            var bbb = b + bb;
+                            var bbbb = b - bb;
 
-                            print('\n${a.toString()} + ${aa.toString()} = ${aaa.toString()}\n'
-                                  '${a.toString()} - ${aa.toString()} = ${aaaa.toString()}\n'
+                            print(
+                                '\n${a.toString()} + ${aa.toString()} = ${aaa.toString()}\n'
+                                '${a.toString()} - ${aa.toString()} = ${aaaa.toString()}\n'
                                 ' ${b.toString()} + ${bb.toString()} = ${bbb.toString()}\n'
-                                '${b.toString()} - ${bb.toString()} = ${bbbb.toString()}\n'
-                                );
-
+                                '${b.toString()} - ${bb.toString()} = ${bbbb.toString()}\n');
 
                             _onAddonsSelected(
                                 selected, _addonsList[index].addons_id, index);

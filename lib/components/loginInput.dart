@@ -19,7 +19,8 @@ class LoginInput extends StatelessWidget {
       this.hintText,
       this.labelText,
       this.myController,
-      this.errorText, this.obscureText :false})
+      this.errorText,
+      this.obscureText: false})
       : super(key: key);
 
   @override
@@ -44,7 +45,6 @@ class LoginInput extends StatelessWidget {
             borderSide: new BorderSide(),
           ),
           errorText: errorText,
-
         ),
         // keyboardType: TextInputType.emailAddress,
         style: new TextStyle(

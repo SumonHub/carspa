@@ -1,20 +1,17 @@
-
-class UserLogin{
+class UserLogin {
   String name;
   String email;
- // String eToken;
+  // String eToken;
 
   UserLogin(this.name, this.email);
   UserLogin.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         email = json['email'];
-      //  eToken = json['eToken'];
+  //  eToken = json['eToken'];
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'name': name,
         'email': email,
-      //  'eToken': eToken
+        //  'eToken': eToken
       };
-
 }

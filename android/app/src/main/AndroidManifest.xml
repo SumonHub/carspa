@@ -16,7 +16,7 @@
         android:label="CARSPA"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAujtJ3xZ48bCGVUoM2Qe9cJsaE5eio7YY"/>
+            android:value="AIzaSyDAmobzez46H-FuEjoSP2S31Kkr0Dn5eJ4"/>
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

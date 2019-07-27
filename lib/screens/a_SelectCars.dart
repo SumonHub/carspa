@@ -60,9 +60,7 @@ class _CarsState extends State<Cars> {
       var data = jsonResponse['data'];
       for (var u in data) {
         CarType car = new CarType(
-            id: u['id'],
-            name: u['name'] as String,
-            carImage: u['image']);
+            id: u['id'], name: u['name'] as String, carImage: u['image']);
         carList.add(car);
       }
       print('carList.length : ${carList.length}');
@@ -301,10 +299,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.teal)
-                )
-            ),
+                border: Border(bottom: BorderSide(color: Colors.teal))),
             child: ListTile(
               leading: Icon(
                 Icons.home,
@@ -323,10 +318,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.teal)
-                )
-            ),
+                border: Border(bottom: BorderSide(color: Colors.teal))),
             child: ListTile(
               leading: Icon(
                 Icons.shopping_cart,
@@ -338,7 +330,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 Navigator.pop(context);
 
                 // Than Update the state of the app
-                Navigator.push(context,
+                Navigator.push(
+                    context,
                     MaterialPageRoute(
                         builder: (context) => OrderHistoryPage()));
               },
@@ -346,10 +339,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.teal)
-                )
-            ),
+                border: Border(bottom: BorderSide(color: Colors.teal))),
             child: ListTile(
               leading: Icon(
                 Icons.account_circle,
@@ -363,18 +353,14 @@ class _AppDrawerState extends State<AppDrawer> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            Profile(
-                                AppTranslations.of(context).text("profile"))));
+                        builder: (context) => Profile(
+                            AppTranslations.of(context).text("profile"))));
               },
             ),
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.teal)
-                )
-            ),
+                border: Border(bottom: BorderSide(color: Colors.teal))),
             child: ListTile(
               leading: Icon(
                 Icons.directions,
@@ -392,10 +378,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.teal)
-                )
-            ),
+                border: Border(bottom: BorderSide(color: Colors.teal))),
             child: ListTile(
               leading: Icon(
                 Icons.vpn_key,
@@ -410,9 +393,10 @@ class _AppDrawerState extends State<AppDrawer> {
 
                 UserStringPref.clearAll();
 
-                Navigator.of(context)
-                    .push(new MaterialPageRoute(
-                    builder: (_) => new LoginTab(tabPosition: 0,)));
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (_) => new LoginTab(
+                          tabPosition: 0,
+                        )));
                 // Then close the drawer
                 // Navigator.pop(context);
               },

@@ -27,7 +27,8 @@ class _GuestLoginState extends State<GuestLogin> {
   @override
   Widget build(BuildContext context) {
     _emptyMsg = AppTranslations.of(context).text("empty_msg");
-    guest_login_warning_msg = AppTranslations.of(context).text("guest_login_warning_msg");
+    guest_login_warning_msg =
+        AppTranslations.of(context).text("guest_login_warning_msg");
     error_msg = AppTranslations.of(context).text("error_msg");
 
     return Scaffold(
@@ -91,8 +92,8 @@ class _GuestLoginState extends State<GuestLogin> {
                   _login(_fstNameController.text, _lstNameController.text,
                           _phoneController.text)
                       .then((_) {
-                      _showToast(' $guest_login_warning_msg ');
-                      Navigator.pop(context, true);
+                    _showToast(' $guest_login_warning_msg ');
+                    Navigator.pop(context, true);
                   });
                 }
               },

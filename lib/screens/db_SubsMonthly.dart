@@ -17,14 +17,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 //   show CalendarCarousel;
 
-
 class SubsMonthly extends StatefulWidget {
   @override
   _SubsMonthlyState createState() => _SubsMonthlyState();
 }
 
 class _SubsMonthlyState extends State<SubsMonthly> {
-  final GlobalKey<ScaffoldState> mScaffoldState = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> mScaffoldState =
+      new GlobalKey<ScaffoldState>();
 
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
@@ -111,6 +111,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
       subscription_duration = (prefs.getString('subscription_duration') ?? 0);
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -131,12 +132,13 @@ class _SubsMonthlyState extends State<SubsMonthly> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              if(_selectedDateList.length<5){
+              if (_selectedDateList.length < 5) {
                 _selectedDateList
                     .add(new MyDate(context, DateTime.now(), TimeOfDay.now()));
-              }else{
-                final snackBar = SnackBar(content: Text(
-                    AppTranslations.of(context).text("max_date_warning")));
+              } else {
+                final snackBar = SnackBar(
+                    content: Text(
+                        AppTranslations.of(context).text("max_date_warning")));
                 mScaffoldState.currentState.showSnackBar(snackBar);
               }
             });
@@ -191,7 +193,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
                 Avatar("assets/photos/date.png"),
                 Container(
                   padding:
-                  EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
+                      EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8.0))),
@@ -238,13 +240,11 @@ class _SubsMonthlyState extends State<SubsMonthly> {
 
     UserStringPref.savePref('serialize_dateTime', data);
 
-
     UserStringPref.savePref('price', subscription_price);
     UserStringPref.savePref('duration', subscription_duration);
 
     UserStringPref.savePref('dateTime',
-        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(
-            ',', '').trim()}');
+        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '').trim()}');
     UserStringPref.savePref('service_nature',
         '${AppTranslations.of(context).text("monthly_wash")}');
 

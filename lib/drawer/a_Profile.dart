@@ -31,13 +31,13 @@ class _ProfileState extends State<Profile> {
   Future _loadUserInfo() async {
     var _token = await UserStringPref.getPref('token');
     if (_token == 0) {
-     setState(() {
-       _isLogin = false;
-     });
+      setState(() {
+        _isLogin = false;
+      });
     } else {
-     setState(() {
-       _isLogin = true;
-     });
+      setState(() {
+        _isLogin = true;
+      });
 
       final response = await http.get(
         ApiConstant.USER,
@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                   right: new BorderSide(
                                       width: 1.0, color: Colors.white24))),
                           child:
-                          Icon(Icons.account_circle, color: Colors.white),
+                              Icon(Icons.account_circle, color: Colors.white),
                           // Icon(Icons.directions_car, color: Colors.white),
                         ),
                         title: TextField(
@@ -138,7 +138,7 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
-                            AppTranslations.of(context).text("name"),
+                                AppTranslations.of(context).text("name"),
                             helperStyle: new TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -148,9 +148,9 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.white,
-                                  style: BorderStyle.solid,
-                                )),
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                         ),
                         trailing: IconButton(
@@ -191,7 +191,7 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
-                            AppTranslations.of(context).text("email"),
+                                AppTranslations.of(context).text("email"),
                             helperStyle: new TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -201,9 +201,9 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.white,
-                                  style: BorderStyle.solid,
-                                )),
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                         ),
                         trailing: IconButton(
@@ -244,7 +244,7 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
-                            AppTranslations.of(context).text("phone"),
+                                AppTranslations.of(context).text("phone"),
                             helperStyle: new TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -254,9 +254,9 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.white,
-                                  style: BorderStyle.solid,
-                                )),
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                         ),
                         trailing: IconButton(
@@ -297,7 +297,7 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
-                            AppTranslations.of(context).text("address"),
+                                AppTranslations.of(context).text("address"),
                             helperStyle: new TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -307,9 +307,9 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.white,
-                                  style: BorderStyle.solid,
-                                )),
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                         ),
                         trailing: IconButton(
@@ -351,7 +351,7 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
-                            AppTranslations.of(context).text("password"),
+                                AppTranslations.of(context).text("password"),
                             helperStyle: new TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -361,9 +361,9 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.white,
-                                  style: BorderStyle.solid,
-                                )),
+                              color: Colors.white,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                         ),
                         trailing: IconButton(
@@ -378,35 +378,38 @@ class _ProfileState extends State<Profile> {
                   ],
                 )
               : Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              MaterialButton(
-                color: Colors.white,
-                onPressed: () {
-                  _goToLoginTab(context, 0);
-                },
-                child: Text(
-                  AppTranslations.of(context).text("login_note"),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    letterSpacing: 5.0,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          )
-                ),
+                  child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    MaterialButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        _goToLoginTab(context, 0);
+                      },
+                      child: Text(
+                        AppTranslations.of(context).text("login_note"),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 5.0,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
     );
   }
 
   void _goToLoginTab(BuildContext context, int tabPosition) async {
     Navigator.of(context)
-        .push(new MaterialPageRoute(
-        builder: (_) => new LoginTab(tabPosition: tabPosition,)),)
+        .push(
+          new MaterialPageRoute(
+              builder: (_) => new LoginTab(
+                    tabPosition: tabPosition,
+                  )),
+        )
         .then((value) => value ? _loadUserInfo() : null);
   }
 }

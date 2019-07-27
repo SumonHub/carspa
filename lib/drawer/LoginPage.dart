@@ -39,14 +39,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     _emptyMsg = AppTranslations.of(context).text("empty_msg");
     login_success_msg = AppTranslations.of(context).text("login_success_msg");
     error_msg = AppTranslations.of(context).text("error_msg");
 
     return Scaffold(
         backgroundColor: Colors.teal,
-       // appBar: new AppBar(title: new Text(AppTranslations.of(context).text("login"))),
+        // appBar: new AppBar(title: new Text(AppTranslations.of(context).text("login"))),
         body: new ListView(
           padding: EdgeInsets.all(30.0),
           children: <Widget>[
@@ -98,21 +97,12 @@ class _LoginPageState extends State<LoginPage> {
                         _loadingUserInfo().then((_) {
                           _showToast(' $login_success_msg ');
                           Navigator.pop(context, true);
-
                         });
                       } else {
                         _showToast(' $error_msg ');
                       }
                     });
                   }
-
-                  //     _loadUserInfo();
-
-                  /*  _loadingUserInfo(await _login(
-                      nameController.text, passwordController.text)).then((_){
-                        print('-------login success------------');
-                    Navigator.pop(context, true);
-                  });*/
                 },
                 elevation: 4.0,
                 minWidth: double.infinity,
@@ -197,22 +187,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future _loadingUserInfo() async {
-
-      // var _token = await UserPref.getPref('token');
-      final response = await http.get(
-        ApiConstant.USER,
-        headers: {"Authorization": "Bearer $user_token "},
-      );
-      final responseJson = json.decode(response.body);
-      print('user profile : ${responseJson['success']}');
-      var user = new UserProfile.fromJson(responseJson['success']);
-      if (user != null) {
-        UserStringPref.savePref('user_id', '${user.id.toString()}');
-        UserStringPref.savePref('user_fstName', '${user.first_name}');
-        UserStringPref.savePref('user_lstName', '${user.last_name}');
-        UserStringPref.savePref('user_email', '${user.email}');
-        UserStringPref.savePref('user_phone', '${user.phone.toString()}');
-      }
-
+    // var _token = await UserPref.getPref('token');
+    final response = await http.get(
+      ApiConstant.USER,
+      headers: {"Authorization": "Bearer $user_token "},
+    );
+    final responseJson = json.decode(response.body);
+    print('user profile : ${responseJson['success']}');
+    var user = new UserProfile.fromJson(responseJson['success']);
+    if (user != null) {
+      UserStringPref.savePref('user_id', '${user.id.toString()}');
+      UserStringPref.savePref('user_fstName', '${user.first_name}');
+      UserStringPref.savePref('user_lstName', '${user.last_name}');
+      UserStringPref.savePref('user_email', '${user.email}');
+      UserStringPref.savePref('user_phone', '${user.phone.toString()}');
+    }
   }
 }

@@ -127,7 +127,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
                 * service_dateTime: dateTime
                 * comment: _commentEditingController.text
                 * */
-                Fluttertoast.showToast(
+              Fluttertoast.showToast(
                   msg: " Loading.... ",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
@@ -198,8 +198,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
 
     UserStringPref.savePref('serialize_dateTime', data);
     UserStringPref.savePref('dateTime',
-        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(
-            ',', '').trim()}');
+        '${list.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '').trim()}');
     UserStringPref.savePref('service_nature',
         '${AppTranslations.of(context).text("one_time_wash")}');
 
@@ -320,7 +319,9 @@ class _DateTimePicker extends StatelessWidget {
 
     var _intiValue = TimeOfDay.now().hour;
 
-    if (selectedDate == DateTime.now() && _intiValue > openning_time && _intiValue < clossing_time ) {
+    if (selectedDate == DateTime.now() &&
+        _intiValue > openning_time &&
+        _intiValue < clossing_time) {
       _intiValue = selectedTime.hour;
       openning_time = DateTime.now().hour;
       print('----------| current hour=$_intiValue |-------------');

@@ -62,8 +62,10 @@ class _AddressBookState extends State<AddressBook> {
                 onPressed: () {
                   Navigator.of(context)
                       .push(
-                    new MaterialPageRoute(
-                        builder: (_) => new LoginTab(tabPosition: 0,)),
+                        new MaterialPageRoute(
+                            builder: (_) => new LoginTab(
+                                  tabPosition: 0,
+                                )),
                       )
                       .then((value) => value ? _checkIsLogin() : null);
                 },
@@ -155,8 +157,6 @@ class AddressList extends StatefulWidget {
 }
 
 class _AddressListState extends State<AddressList> {
-
-
   Widget buildText(String key, String value) {
     return new Expanded(
         flex: 0,
@@ -164,8 +164,8 @@ class _AddressListState extends State<AddressList> {
           // margin: EdgeInsets.only(left: 60.0, right: 12.0),
           padding: EdgeInsets.all(3.0),
           decoration: BoxDecoration(
-            //  border: Border(bottom: BorderSide(color: Colors.red),),
-          ),
+              //  border: Border(bottom: BorderSide(color: Colors.red),),
+              ),
           child: new Row(
             children: <Widget>[
               new Expanded(
@@ -173,7 +173,8 @@ class _AddressListState extends State<AddressList> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    new Text('$key',
+                    new Text(
+                      '$key',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -185,17 +186,20 @@ class _AddressListState extends State<AddressList> {
                 flex: 0,
                 child: Container(
                   width: 50,
-                  child: new Icon(Icons.label, color: Colors.white,),
+                  child: new Icon(
+                    Icons.label,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-
               new Expanded(
                 flex: 1,
                 child: new Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text('''$value''',
+                    new Text(
+                      '''$value''',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -205,96 +209,99 @@ class _AddressListState extends State<AddressList> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return widget.addressBooks.isEmpty
         ? new Center(
-      child: Text(
-        AppTranslations.of(context).text("empty_msg"),
-        style: const TextStyle(
-          color: Colors.white,
-          letterSpacing: 5.0,
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    )
+            child: Text(
+              AppTranslations.of(context).text("empty_msg"),
+              style: const TextStyle(
+                color: Colors.white,
+                letterSpacing: 5.0,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
         : new ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.addressBooks.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-              elevation: 11.0,
-              margin:
-              new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(color: Colors.teal),
-                    child: ListTile(
-                      onTap: () {
-                        _addAddressLocally(index);
-                        Navigator.pop(context, true);
-                      },
-                      onLongPress: null,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      title: new Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  buildText(AppTranslations.of(context).text(
-                                      "address"), '${widget.addressBooks[index]
-                                      .address_name}'),
-                                  buildText(AppTranslations.of(context).text(
-                                      "area_name"),
-                                      '${widget.addressBooks[index]
-                                          .area_name}'),
-                                  buildText(AppTranslations.of(context).text(
-                                      "street"),
-                                      '${widget.addressBooks[index].street}'),
-                                  buildText(
-                                      AppTranslations.of(context).text("block"),
-                                      '${widget.addressBooks[index].block}'),
-                                  buildText(AppTranslations.of(context).text(
-                                      "building"),
-                                      '${widget.addressBooks[index].building}'),
-                                  buildText(AppTranslations.of(context).text(
-                                      "avenue"),
-                                      '${widget.addressBooks[index].avenue}'),
-                                  buildText(AppTranslations.of(context).text(
-                                      "apartment"),
-                                      '${widget.addressBooks[index]
-                                          .apartment}'),
-                                  buildText(
-                                      AppTranslations.of(context).text("floor"),
-                                      '${widget.addressBooks[index].floor}'),
-                                  buildText(
-                                      AppTranslations.of(context).text("phone"),
-                                      '${widget.addressBooks[index]
-                                          .phone_number}'),
-
-                                ],
-                              ),
+            shrinkWrap: true,
+            itemCount: widget.addressBooks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  elevation: 11.0,
+                  margin:
+                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(color: Colors.teal),
+                        child: ListTile(
+                          onTap: () {
+                            _addAddressLocally(index);
+                            Navigator.pop(context, true);
+                          },
+                          onLongPress: null,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          title: new Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("address"),
+                                          '${widget.addressBooks[index].address_name}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("area_name"),
+                                          '${widget.addressBooks[index].area_name}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("street"),
+                                          '${widget.addressBooks[index].street}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("block"),
+                                          '${widget.addressBooks[index].block}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("building"),
+                                          '${widget.addressBooks[index].building}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("avenue"),
+                                          '${widget.addressBooks[index].avenue}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("apartment"),
+                                          '${widget.addressBooks[index].apartment}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("floor"),
+                                          '${widget.addressBooks[index].floor}'),
+                                      buildText(
+                                          AppTranslations.of(context)
+                                              .text("phone"),
+                                          '${widget.addressBooks[index].phone_number}'),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ));
-        });
+                    ],
+                  ));
+            });
   }
 
   void _addAddressLocally(int index) {

@@ -48,19 +48,19 @@ class _PickMapState extends State<PickMap> {
     return Scaffold(
       backgroundColor: Colors.teal,
       appBar: AppBar(
-        title: Text(AppTranslations.of(context).text("map"),),
+        title: Text(
+          AppTranslations.of(context).text("map"),
+        ),
       ),
       body: Stack(
         children: <Widget>[
           GoogleMap(
             onMapCreated: (GoogleMapController controller) {
-              controller.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                      CameraPosition(
-                        target: _initLocation,
-                        zoom: 15.0,
-                      ))
-              );
+              controller
+                  .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                target: _initLocation,
+                zoom: 15.0,
+              )));
               setState(() {
                 mapController = controller;
               });
@@ -90,7 +90,8 @@ class _PickMapState extends State<PickMap> {
                   },
                   controller: _textEditingController,
                   decoration: new InputDecoration(
-                    hintText: AppTranslations.of(context).text("search_your_place"),
+                    hintText:
+                        AppTranslations.of(context).text("search_your_place"),
                     labelText: _search,
                     fillColor: Colors.white70,
                     filled: true,
@@ -183,9 +184,8 @@ class _PickMapState extends State<PickMap> {
   Future _getAddressFromLatlng(LatLng latlng) async {
     // From coordinates
 
-
-    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
-        latlng.latitude, latlng.longitude);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(latlng.latitude, latlng.longitude);
     print("country : ${placemark[0].country}");
     print("position : ${placemark[0].position}");
     print("locality : ${placemark[0].locality}");
@@ -229,7 +229,7 @@ class _PickMapState extends State<PickMap> {
 
     setState(() {
       final _updatedLoc =
-      LatLng(first.coordinates.latitude, first.coordinates.longitude);
+          LatLng(first.coordinates.latitude, first.coordinates.longitude);
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(_updatedLoc.latitude, _updatedLoc.longitude),
         zoom: 17.0,

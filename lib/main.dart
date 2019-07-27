@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           _newLocaleDelegate,
           const AppTranslationsDelegate(),
@@ -73,10 +73,10 @@ class _MyAppState extends State<MyApp> {
         home: checkConnection
             ? SplashScreen()
             : Scaffold(
-          body: Center(
-            child: Text('No internet connection!'),
-          ),
-        )
+                body: Center(
+                  child: Text('No internet connection!'),
+                ),
+              )
 
         //LoginPage()
         // MapsDemo()

@@ -10,7 +10,6 @@ class LoginTab extends StatefulWidget {
       : assert(tabPosition != null),
         super(key: key);
 
-
   @override
   _LoginTabState createState() => _LoginTabState();
 }
@@ -31,8 +30,12 @@ class _LoginTabState extends State<LoginTab> {
             child: TabBar(
               indicatorColor: Colors.white,
               tabs: [
-                Tab(text: AppTranslations.of(context).text("login"),),
-                Tab(text: AppTranslations.of(context).text("guest_login"),),
+                Tab(
+                  text: AppTranslations.of(context).text("login"),
+                ),
+                Tab(
+                  text: AppTranslations.of(context).text("guest_login"),
+                ),
               ],
             ),
           ),

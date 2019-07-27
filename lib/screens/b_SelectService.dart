@@ -17,20 +17,21 @@ class SelectService extends StatelessWidget {
   * */
   Future<List<Service>> fetchService() async {
     var _locale = await UserStringPref.getPref('lang_code');
-    if(_locale==0 || _locale=='en'){
+    if (_locale == 0 || _locale == 'en') {
       _locale = "?locale=en";
-    }else{
+    } else {
       _locale = '?locale=ar';
     }
 
     List<Service> serviceList = [];
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    String car_type_id = _pref.getString('car_type_id') ?? 'car_type_id empty in pref' ;
+    String car_type_id =
+        _pref.getString('car_type_id') ?? 'car_type_id empty in pref';
     var _bodyData = {
       "car_type_id": car_type_id,
     };
-    var response = await http.get(
-        ApiConstant.SERVICE_API + _locale + '&car_type_id=1');
+    var response =
+        await http.get(ApiConstant.SERVICE_API + _locale + '&car_type_id=1');
     print('ApiConstant.SERVICE_API : ${ApiConstant.SERVICE_API}');
     var jsonResponse = json.decode(response.body);
     var data = jsonResponse['data'];
@@ -40,7 +41,10 @@ class SelectService extends StatelessWidget {
           u['duration'] as String,
           u['one_time_price'] as String,
           u['subscription_price'] as String,
-          u['addons_id'] as String, u['image'] as String, u['service_name'] as String, u['description'] as String);
+          u['addons_id'] as String,
+          u['image'] as String,
+          u['service_name'] as String,
+          u['description'] as String);
 
       serviceList.add(service);
     }
@@ -53,7 +57,9 @@ class SelectService extends StatelessWidget {
     return new Scaffold(
       backgroundColor: Colors.teal,
       appBar: AppBar(
-        title: new Text(AppTranslations.of(context).text("select_service"),),
+        title: new Text(
+          AppTranslations.of(context).text("select_service"),
+        ),
       ),
       body: new Container(
         padding: new EdgeInsets.all(12.0),
@@ -132,7 +138,8 @@ class _ServiceListState extends State<ServiceList> {
                                 MaterialPageRoute(
                                     builder: (context) => SelectSubscriptionType()));*/
 
-                            UserStringPref.savePref('service_id',
+                            UserStringPref.savePref(
+                                'service_id',
                                 widget.serviceList[index].service_id
                                     .toString());
                             UserStringPref.savePref('service_name',
@@ -147,8 +154,10 @@ class _ServiceListState extends State<ServiceList> {
                                 widget.serviceList[index].duration);
                             UserStringPref.savePref('description',
                                 widget.serviceList[index].description);
-                            UserStringPref.savePref('addons_serialized_id',
-                                widget.serviceList[index].addons_serialized_id)
+                            UserStringPref.savePref(
+                                    'addons_serialized_id',
+                                    widget.serviceList[index]
+                                        .addons_serialized_id)
                                 .toString();
                             UserStringPref.savePref('service_image',
                                 widget.serviceList[index].image);
@@ -181,7 +190,9 @@ class _ServiceListState extends State<ServiceList> {
                             children: <Widget>[
                               Icon(Icons.linear_scale,
                                   color: Colors.yellowAccent),
-                              Text(AppTranslations.of(context).text("service_type"),
+                              Text(
+                                  AppTranslations.of(context)
+                                      .text("service_type"),
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),

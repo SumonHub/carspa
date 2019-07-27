@@ -38,8 +38,15 @@ class Service {
   String service_name;
   String description;
 
-  Service(this.service_id, this.duration, this.price, this.subscription_price, this.addons_serialized_id,
-      this.image, this.service_name, this.description);
+  Service(
+      this.service_id,
+      this.duration,
+      this.price,
+      this.subscription_price,
+      this.addons_serialized_id,
+      this.image,
+      this.service_name,
+      this.description);
 
   @override
   String toString() {
@@ -90,8 +97,10 @@ class Schedule {
   },*/
   String schedule_id, openning_time, clossing_time, day_name;
 
-
-  Schedule({this.schedule_id, this.openning_time, this.clossing_time,
+  Schedule(
+      {this.schedule_id,
+      this.openning_time,
+      this.clossing_time,
       this.day_name});
 
   @override
@@ -100,7 +109,7 @@ class Schedule {
   }
 }
 
-class UserProfile{
+class UserProfile {
   var id;
   String first_name;
   String last_name;
@@ -113,10 +122,19 @@ class UserProfile{
   String updated_at;
 
   UserProfile({
-    this.id,this.first_name,this.last_name,this.email,this.email_verified_at,this.phone,this.address,this.status,this.created_at,this.updated_at,
+    this.id,
+    this.first_name,
+    this.last_name,
+    this.email,
+    this.email_verified_at,
+    this.phone,
+    this.address,
+    this.status,
+    this.created_at,
+    this.updated_at,
   });
 
-  factory UserProfile.fromJson(Map<String,dynamic> json){
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
     if (json == null) {
       return null;
     }
@@ -135,7 +153,7 @@ class UserProfile{
   }
 }
 
-class OrderHistory{
+class OrderHistory {
   String service_name;
   String amount;
   String order_type;
@@ -143,10 +161,14 @@ class OrderHistory{
   String created_at;
 
   OrderHistory({
-    this.service_name,this.amount,this.order_type,this.status,this.created_at,
+    this.service_name,
+    this.amount,
+    this.order_type,
+    this.status,
+    this.created_at,
   });
 
-  factory OrderHistory.fromJson(Map<String,dynamic> json){
+  factory OrderHistory.fromJson(Map<String, dynamic> json) {
     return OrderHistory(
       service_name: json['service_name'],
       amount: json['amount'],
@@ -162,7 +184,7 @@ class OrderHistory{
   }
 }
 
-class Address_Book{
+class Address_Book {
   String id;
   String customer_id;
   String selected_area_id;
@@ -177,10 +199,21 @@ class Address_Book{
   String area_name;
 
   Address_Book({
-    this.id,this.customer_id,this.selected_area_id,this.address_name,this.block,this.street,this.building,this.avenue,this.floor,this.apartment,this.phone_number,this.area_name,
+    this.id,
+    this.customer_id,
+    this.selected_area_id,
+    this.address_name,
+    this.block,
+    this.street,
+    this.building,
+    this.avenue,
+    this.floor,
+    this.apartment,
+    this.phone_number,
+    this.area_name,
   });
 
- /* factory Address_Book.fromJson(Map<String,dynamic> json){
+  /* factory Address_Book.fromJson(Map<String,dynamic> json){
     return Address_Book(
       id: json['id'],
       customer_id: json['customer_id'],
@@ -198,16 +231,16 @@ class Address_Book{
   }*/
 }
 
-
-class SuggestedArea{
+class SuggestedArea {
   String checked_area_id;
   String area_name;
 
   SuggestedArea({
-    this.checked_area_id,this.area_name,
+    this.checked_area_id,
+    this.area_name,
   });
 
-  factory SuggestedArea.fromJson(Map<String,dynamic> json){
+  factory SuggestedArea.fromJson(Map<String, dynamic> json) {
     return SuggestedArea(
       checked_area_id: json['checked_area_id'],
       area_name: json['area_name'],
@@ -218,7 +251,4 @@ class SuggestedArea{
   String toString() {
     return 'area_name : $area_name + checked_area_id : $checked_area_id';
   }
-
 }
-
-

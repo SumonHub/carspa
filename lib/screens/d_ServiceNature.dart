@@ -19,9 +19,10 @@ class ServiceNature extends StatelessWidget {
             Avatar('assets/photos/date.png'),
             Padding(
               padding:
-              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: new MaterialButton(
-                child: new Text(AppTranslations.of(context).text("one_time_wash"),
+                child: new Text(
+                  AppTranslations.of(context).text("one_time_wash"),
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
@@ -46,7 +47,7 @@ class ServiceNature extends StatelessWidget {
             ),
             Padding(
               padding:
-              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: new MaterialButton(
                 child: new Text(
                   AppTranslations.of(context).text("monthly_wash"),

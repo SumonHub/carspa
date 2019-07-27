@@ -49,9 +49,11 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
                 onPressed: () {
                   Navigator.of(context)
                       .push(
-                    new MaterialPageRoute(
-                        builder: (_) => new LoginTab(tabPosition: 0,)),
-                  )
+                        new MaterialPageRoute(
+                            builder: (_) => new LoginTab(
+                                  tabPosition: 0,
+                                )),
+                      )
                       .then((value) => value ? _checkIsLogin() : null);
                 },
                 child: Text(
@@ -122,7 +124,6 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderListState extends State<OrderList> {
-
   Widget buildText(String key, String value) {
     return new Expanded(
         flex: 0,
@@ -138,7 +139,8 @@ class _OrderListState extends State<OrderList> {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new Text('$key',
+                    new Text(
+                      '$key',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -150,16 +152,19 @@ class _OrderListState extends State<OrderList> {
                 flex: 0,
                 child: Container(
                   width: 50,
-                  child: new Icon(Icons.label, color: Colors.white,),
+                  child: new Icon(
+                    Icons.label,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-
               new Expanded(
                 child: new Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    new Text('''$value''',
+                    new Text(
+                      '''$value''',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -169,42 +174,40 @@ class _OrderListState extends State<OrderList> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return widget.orders.isEmpty
         ? new Center(
-      child: Text(
-        AppTranslations.of(context).text("empty_msg"),
-        style: const TextStyle(
-          color: Colors.white,
-          letterSpacing: 5.0,
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    )
+            child: Text(
+              AppTranslations.of(context).text("empty_msg"),
+              style: const TextStyle(
+                color: Colors.white,
+                letterSpacing: 5.0,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
         : new ListView.builder(
-        itemCount: widget.orders.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-              elevation: 11.0,
-              margin:
-              new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(color: Colors.teal),
-                    child: ListTile(
-                      onTap: null,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      /*leading: Container(
+            itemCount: widget.orders.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  elevation: 11.0,
+                  margin:
+                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(color: Colors.teal),
+                        child: ListTile(
+                          onTap: null,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          /*leading: Container(
                         padding: EdgeInsets.only(right: 12.0),
                         decoration: new BoxDecoration(
                             border: new Border(
@@ -213,34 +216,36 @@ class _OrderListState extends State<OrderList> {
                         child:
                         Icon(Icons.add_shopping_cart, color: Colors.white),
                       ),*/
-                      title: Row(
-                        children: <Widget>[
-                          new Expanded(
-                            child: new Column(
-                              children: <Widget>[
-
-                                buildText(AppTranslations.of(context).text(
-                                    "service_name"),
-                                    widget.orders[index].service_name),
-                                buildText(
-                                    AppTranslations.of(context).text("price"),
-                                    widget.orders[index].amount),
-                                buildText(AppTranslations.of(context).text(
-                                    "order_type"),
-                                    widget.orders[index].order_type),
-                                buildText(AppTranslations.of(context).text(
-                                    "order_status"),
-                                    widget.orders[index].status),
-                              ],
-                            ),
+                          title: Row(
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Column(
+                                  children: <Widget>[
+                                    buildText(
+                                        AppTranslations.of(context)
+                                            .text("service_name"),
+                                        widget.orders[index].service_name),
+                                    buildText(
+                                        AppTranslations.of(context)
+                                            .text("price"),
+                                        widget.orders[index].amount),
+                                    buildText(
+                                        AppTranslations.of(context)
+                                            .text("order_type"),
+                                        widget.orders[index].order_type),
+                                    buildText(
+                                        AppTranslations.of(context)
+                                            .text("order_status"),
+                                        widget.orders[index].status),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ));
-        });
+                    ],
+                  ));
+            });
   }
 }
-

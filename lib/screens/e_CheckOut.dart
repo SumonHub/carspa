@@ -26,13 +26,17 @@ Future<ConfirmAction> _asyncConfirmDialog(BuildContext context) async {
         // content: const Text('This will reset your device to its default factory settings.'),
         actions: <Widget>[
           FlatButton(
-            child: new Text(AppTranslations.of(context).text("cancel"),),
+            child: new Text(
+              AppTranslations.of(context).text("cancel"),
+            ),
             onPressed: () {
               Navigator.of(context).pop(ConfirmAction.CANCEL);
             },
           ),
           FlatButton(
-            child: new Text(AppTranslations.of(context).text("submit"),),
+            child: new Text(
+              AppTranslations.of(context).text("submit"),
+            ),
             onPressed: () {
               Navigator.of(context).pop(ConfirmAction.ACCEPT);
             },
@@ -42,7 +46,6 @@ Future<ConfirmAction> _asyncConfirmDialog(BuildContext context) async {
     },
   );
 }
-
 
 class CheckOut extends StatefulWidget {
   @override
@@ -93,7 +96,6 @@ class _CheckOutState extends State<CheckOut> {
   String addonsDuration;
   String addonsPrice;
 
-
   //Loading counter value on start
   Future _loadPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -119,7 +121,6 @@ class _CheckOutState extends State<CheckOut> {
       price = (prefs.getString('price') ?? 0);
       duration = (prefs.getString('duration') ?? 0);
 
-
       hasAddons = (prefs.getBool('hasAddons') ?? false);
       if (hasAddons) {
         addonsName = (prefs.getString('addons_name') ?? 0);
@@ -127,13 +128,12 @@ class _CheckOutState extends State<CheckOut> {
         addonsPrice = (prefs.getString('addons_price') ?? 0);
       }
 
-
       user_fstName = prefs.getString('user_fstName');
       user_lstName = prefs.getString('user_lstName');
-      if(_isGuestLogin){
+      if (_isGuestLogin) {
         user_id = ' ';
         user_email = ' ';
-      }else{
+      } else {
         user_id = prefs.getString('user_id');
         user_email = prefs.getString('user_email');
       }
@@ -164,22 +164,14 @@ class _CheckOutState extends State<CheckOut> {
           serialize_addons_id,
           price,
           duration);
-      _addressDetails =
-      new AddressDetails(
-          street,
-          area,
-          block,
-          building,
-          avenue,
-          apartment,
-          floor);
+      _addressDetails = new AddressDetails(
+          street, area, block, building, avenue, apartment, floor);
 
       print(_contactDetails.toString());
       print(_addressDetails.toString());
       print(_orderDatails.toString());
     });
   }
-
 
   @override
   void initState() {
@@ -217,7 +209,8 @@ class _CheckOutState extends State<CheckOut> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text('$key',
+                      new Text(
+                        '$key',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -230,17 +223,20 @@ class _CheckOutState extends State<CheckOut> {
                   child: Container(
                     width: 35,
                     child: new Icon(
-                      Icons.label, color: Colors.white, size: 20.0,),
+                      Icons.label,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
                   ),
                 ),
-
                 new Expanded(
                   flex: 2,
                   child: new Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text('''$value''',
+                      new Text(
+                        '''$value''',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -250,10 +246,8 @@ class _CheckOutState extends State<CheckOut> {
                 ),
               ],
             ),
-          )
-      );
+          ));
     }
-
 
     return Scaffold(
       backgroundColor: Colors.teal,
@@ -277,446 +271,10 @@ class _CheckOutState extends State<CheckOut> {
       ),
       bottomNavigationBar: _isLogin || _isGuestLogin
           ? new BottomAppBar(
-        child: FlatButton(
-          color: Colors.white,
-          child: new Text(
-            AppTranslations.of(context).text("check_out"),
-            style: const TextStyle(
-              color: Colors.black,
-              letterSpacing: 5.0,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: () async {
-            if (_addressDetails.street
-                .toString()
-                .trim()
-                .length == 0 ||
-                _addressDetails.block == null ||
-                _addressDetails.building == null) {
-              Fluttertoast.showToast(
-                  msg: AppTranslations.of(context)
-                      .text("pick_address_error_msg"),
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.white,
-                  textColor: Colors.red,
-                  fontSize: 16.0);
-            } else {
-              final ConfirmAction action = await _asyncConfirmDialog(context);
-              print("Confirm Action $action");
-
-              switch (action) {
-                case ConfirmAction.CANCEL:
-                // TODO: Handle this case.
-
-                  break;
-                case ConfirmAction.ACCEPT:
-                // TODO: Handle this case.
-                  _submitOrder().then((bool status) {
-                    if (status) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SuccessPage()),
-                          ModalRoute.withName('/'));
-                      // Navigator.of(context).pushNamedAndRemoveUntil('/screen4', (Route<dynamic> route) => false);
-                      // ModalRoute.withName('/screen1'));
-                    } else {
-                      Fluttertoast.showToast(
-                          msg:
-                          AppTranslations.of(context).text("error_msg"),
-                          //error_msg
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIos: 1,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.teal,
-                          fontSize: 16.0);
-                    }
-                  });
-                  break;
-              }
-            }
-          },
-        ),
-      )
-          : null,
-      body: _isLoading
-          ? new Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        ),
-      )
-          : _isLogin || _isGuestLogin
-          ? new ListView(
-        padding: EdgeInsets.all(17.0),
-        children: <Widget>[
-          _isGuestLogin
-              ? Center(
-            child: new Text(
-              AppTranslations.of(context)
-                  .text("guest_login_warning_msg"),
-              style: TextStyle(color: Colors.yellowAccent),
-            ),
-          )
-              : null,
-          new PPTextField(
-              Icon(
-                Icons.account_circle,
+              child: FlatButton(
                 color: Colors.white,
-              ),
-              '${_contactDetails.first_name + " " + _contactDetails.last_name}',
-              null),
-          _isGuestLogin
-              ? null
-              : new PPTextField(
-              Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              '$user_email',
-              null),
-          new PPTextField(
-              Icon(
-                Icons.phone_iphone,
-                color: Colors.white,
-              ),
-              '$user_phone ',
-              null),
-          new PPTextField(
-              Icon(
-                Icons.date_range,
-                color: Colors.white,
-              ),
-              dateTime,
-              null),
-          new Card(
-              color: Colors.teal,
-              elevation: 3.0,
-              // color: Colors.white,
-              child: new Container(
-                padding: EdgeInsets.only(bottom: 12.0),
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    ListTile(
-                      leading: Container(
-                        padding: EdgeInsets.only(right: 12.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                right: new BorderSide(
-                                    width: 1.0,
-                                    color: Colors.white24))),
-                        child:
-                        Icon(Icons.list, color: Colors.white),
-                        // Icon(Icons.directions_car, color: Colors.white),
-                      ),
-                      title: Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 0.0),
-                        padding: EdgeInsets.only(bottom: 8.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                bottom: new BorderSide(
-                                    width: 1.0,
-                                    color: Colors.white))),
-                        child: Text(
-                          AppTranslations.of(context)
-                              .text("services_details"),
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    // SizedBox(height: 15.0),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              buildText(
-                                  AppTranslations.of(context).text("car_name"),
-                                  '$car_name'),
-                              buildText(AppTranslations.of(context).text(
-                                  "service_nature"), '$service_nature'),
-                              buildText(AppTranslations.of(context).text(
-                                  "service_name"), '$service_name'),
-                              buildText(
-                                  AppTranslations.of(context).text("price"),
-                                  '$price'),
-                              buildText(
-                                  AppTranslations.of(context).text("duration"),
-                                  '$duration'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-          const SizedBox(height: 8.0),
-          new Card(
-            elevation: 3.0,
-            child: new Container(
-              child: ListTile(
-                  leading: Container(
-                    padding: EdgeInsets.only(right: 12.0),
-                    decoration: new BoxDecoration(
-                        border: new Border(
-                            right: new BorderSide(
-                                width: 1.0,
-                                color: Colors.white24))),
-                    child: Icon(Icons.monetization_on,
-                        color: Colors.white),
-                  ),
-                  title: Container(
-                    padding: EdgeInsets.only(
-                        top: 0.0,
-                        bottom: 0.0,
-                        left: 20.0,
-                        right: 12.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    child: DropdownButton(
-                      isExpanded: true,
-                      items: _allActivities
-                          .map<DropdownMenuItem<String>>(
-                              (String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                  '${AppTranslations.of(context).text(
-                                      "payment_by")} : $value'),
-                            );
-                          }).toList(),
-                      value: _payMethod,
-                      onChanged: (String newValue) {
-                        setState(() {
-                          _payMethod = newValue;
-                        });
-                      },
-                    ),
-                  )
-                // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
-                //  trailing: Icon(Icons.directions_car, color: Colors.white)
-              ),
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          new Card(
-              elevation: 3.0,
-              color: Colors.teal,
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: ListTile(
-                          leading: Container(
-                            padding: EdgeInsets.only(right: 12.0),
-                            decoration: new BoxDecoration(
-                                border: new Border(
-                                    right: new BorderSide(
-                                        width: 1.0,
-                                        color: Colors.white24))),
-                            child: Icon(Icons.directions,
-                                color: Colors.white),
-                            // Icon(Icons.directions_car, color: Colors.white),
-                          ),
-                          title: Text(
-                            AppTranslations.of(context)
-                                .text("pick_address"),
-                            style: TextStyle(
-                              //fontSize: 18.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: MaterialButton(
-                        textColor: Colors.white,
-                        child: Text(AppTranslations.of(context)
-                            .text("address_book")),
-                        // color: Colors.red,address_book
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(
-                            new MaterialPageRoute(
-                                builder: (_) =>
-                                new AddressBook()),
-                          )
-                              .then((value) =>
-                          value ? _loadPref() : null);
-
-                          /* Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AddressBook()));*/
-                        },
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                          decoration: new BoxDecoration(
-                              border: new Border(
-                                  left: new BorderSide(
-                                      width: 5.0,
-                                      color: Colors.white54))),
-                          child: MaterialButton(
-                            textColor: Colors.white,
-                            child: Text(AppTranslations.of(context)
-                                .text("map")),
-                            // color: Colors.yellow,
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PickMap()));
-                            },
-                          ),
-                        )),
-                  ])
-                ],
-              )),
-          new Card(
-              color: Colors.teal,
-              elevation: 3.0,
-              // color: Colors.white,
-              child: new Container(
-                padding: EdgeInsets.only(bottom: 12.0),
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    ListTile(
-                      leading: Container(
-                        padding: EdgeInsets.only(right: 12.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                right: new BorderSide(
-                                    width: 1.0,
-                                    color: Colors.white24))),
-                        child:
-                        Icon(Icons.list, color: Colors.white),
-                        // Icon(Icons.directions_car, color: Colors.white),
-                      ),
-                      title: Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 0.0),
-                        padding: EdgeInsets.only(bottom: 8.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                bottom: new BorderSide(
-                                    width: 1.0,
-                                    color: Colors.white))),
-                        child: Text(
-                          AppTranslations.of(context)
-                              .text("address_details"),
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    // SizedBox(height: 15.0),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              buildText(
-                                  AppTranslations.of(context).text("street"),
-                                  '${street == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : street}'),
-                              buildText(
-                                  AppTranslations.of(context).text("area_name"),
-                                  '${area == null
-                                      ? '${AppTranslations.of(
-                                      context).text(
-                                      "not_selected_error_msg")}'
-                                      : area}'),
-                              buildText(
-                                  AppTranslations.of(context).text("block"),
-                                  '${block == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : block}'),
-                              buildText(
-                                  AppTranslations.of(context).text("building"),
-                                  '${building == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : building}'),
-                              buildText(
-                                  AppTranslations.of(context).text("avenue"),
-                                  '${avenue == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : avenue}'),
-                              buildText(
-                                  AppTranslations.of(context).text("apartment"),
-                                  '${apartment == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : apartment}'),
-                              buildText(
-                                  AppTranslations.of(context).text("floor"),
-                                  '${floor == null
-                                      ? '${AppTranslations.of(context).text(
-                                      "not_selected_error_msg")}'
-                                      : floor}'),
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-        ].map<Widget>((Widget child) {
-          return Container(
-            //  padding: const EdgeInsets.symmetric(vertical: 5.0),
-            // height: 96.0,
-              child: child);
-        }).toList(),
-      )
-          : Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              MaterialButton(
-                color: Colors.white,
-                onPressed: () {
-                  _goToLoginTab(context, 0);
-                },
-                child: Text(
-                  AppTranslations.of(context).text("login_note"),
+                child: new Text(
+                  AppTranslations.of(context).text("check_out"),
                   style: const TextStyle(
                     color: Colors.black,
                     letterSpacing: 5.0,
@@ -724,24 +282,444 @@ class _CheckOutState extends State<CheckOut> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              FlatButton(
-                // color: Colors.blue,
-                textColor: Colors.white,
-                //  disabledColor: Colors.grey,
-                //  disabledTextColor: Colors.black,
-                //  padding: EdgeInsets.all(8.0),
-                //  splashColor: Colors.blueAccent,
-                onPressed: () {
-                  _goToLoginTab(context, 1);
+                onPressed: () async {
+                  if (_addressDetails.street.toString().trim().length == 0 ||
+                      _addressDetails.block == null ||
+                      _addressDetails.building == null) {
+                    Fluttertoast.showToast(
+                        msg: AppTranslations.of(context)
+                            .text("pick_address_error_msg"),
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.white,
+                        textColor: Colors.red,
+                        fontSize: 16.0);
+                  } else {
+                    final ConfirmAction action =
+                        await _asyncConfirmDialog(context);
+                    print("Confirm Action $action");
+
+                    switch (action) {
+                      case ConfirmAction.CANCEL:
+                        // TODO: Handle this case.
+
+                        break;
+                      case ConfirmAction.ACCEPT:
+                        // TODO: Handle this case.
+                        _submitOrder().then((bool status) {
+                          if (status) {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SuccessPage()),
+                                ModalRoute.withName('/'));
+                            // Navigator.of(context).pushNamedAndRemoveUntil('/screen4', (Route<dynamic> route) => false);
+                            // ModalRoute.withName('/screen1'));
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: AppTranslations.of(context)
+                                    .text("error_msg"),
+                                //error_msg
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.white,
+                                textColor: Colors.teal,
+                                fontSize: 16.0);
+                          }
+                        });
+                        break;
+                    }
+                  }
                 },
-                child: Text(
-                  "* ${AppTranslations.of(context).text("login_as_guest")}",
-                ),
-              )
-            ],
-          )
-      ),
+              ),
+            )
+          : null,
+      body: _isLoading
+          ? new Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : _isLogin || _isGuestLogin
+              ? new ListView(
+                  padding: EdgeInsets.all(17.0),
+                  children: <Widget>[
+                    _isGuestLogin
+                        ? Center(
+                            child: new Text(
+                              AppTranslations.of(context)
+                                  .text("guest_login_warning_msg"),
+                              style: TextStyle(color: Colors.yellowAccent),
+                            ),
+                          )
+                        : null,
+                    new PPTextField(
+                        Icon(
+                          Icons.account_circle,
+                          color: Colors.white,
+                        ),
+                        '${_contactDetails.first_name + " " + _contactDetails.last_name}',
+                        null),
+                    _isGuestLogin
+                        ? null
+                        : new PPTextField(
+                            Icon(
+                              Icons.email,
+                              color: Colors.white,
+                            ),
+                            '$user_email',
+                            null),
+                    new PPTextField(
+                        Icon(
+                          Icons.phone_iphone,
+                          color: Colors.white,
+                        ),
+                        '$user_phone ',
+                        null),
+                    new PPTextField(
+                        Icon(
+                          Icons.date_range,
+                          color: Colors.white,
+                        ),
+                        dateTime,
+                        null),
+                    new Card(
+                        color: Colors.teal,
+                        elevation: 3.0,
+                        // color: Colors.white,
+                        child: new Container(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Container(
+                                  padding: EdgeInsets.only(right: 12.0),
+                                  decoration: new BoxDecoration(
+                                      border: new Border(
+                                          right: new BorderSide(
+                                              width: 1.0,
+                                              color: Colors.white24))),
+                                  child: Icon(Icons.list, color: Colors.white),
+                                  // Icon(Icons.directions_car, color: Colors.white),
+                                ),
+                                title: Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 0.0),
+                                  padding: EdgeInsets.only(bottom: 8.0),
+                                  decoration: new BoxDecoration(
+                                      border: new Border(
+                                          bottom: new BorderSide(
+                                              width: 1.0,
+                                              color: Colors.white))),
+                                  child: Text(
+                                    AppTranslations.of(context)
+                                        .text("services_details"),
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                              // SizedBox(height: 15.0),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  new Expanded(
+                                    child: Column(
+                                      children: <Widget>[
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("car_name"),
+                                            '$car_name'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("service_nature"),
+                                            '$service_nature'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("service_name"),
+                                            '$service_name'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("price"),
+                                            '$price'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("duration"),
+                                            '$duration'),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+                    const SizedBox(height: 8.0),
+                    new Card(
+                      elevation: 3.0,
+                      child: new Container(
+                        child: ListTile(
+                            leading: Container(
+                              padding: EdgeInsets.only(right: 12.0),
+                              decoration: new BoxDecoration(
+                                  border: new Border(
+                                      right: new BorderSide(
+                                          width: 1.0, color: Colors.white24))),
+                              child: Icon(Icons.monetization_on,
+                                  color: Colors.white),
+                            ),
+                            title: Container(
+                              padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: 0.0,
+                                  left: 20.0,
+                                  right: 12.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                items: _allActivities
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                        '${AppTranslations.of(context).text("payment_by")} : $value'),
+                                  );
+                                }).toList(),
+                                value: _payMethod,
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    _payMethod = newValue;
+                                  });
+                                },
+                              ),
+                            )
+                            // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+                            //  trailing: Icon(Icons.directions_car, color: Colors.white)
+                            ),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    new Card(
+                        elevation: 3.0,
+                        color: Colors.teal,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: ListTile(
+                                    leading: Container(
+                                      padding: EdgeInsets.only(right: 12.0),
+                                      decoration: new BoxDecoration(
+                                          border: new Border(
+                                              right: new BorderSide(
+                                                  width: 1.0,
+                                                  color: Colors.white24))),
+                                      child: Icon(Icons.directions,
+                                          color: Colors.white),
+                                      // Icon(Icons.directions_car, color: Colors.white),
+                                    ),
+                                    title: Text(
+                                      AppTranslations.of(context)
+                                          .text("pick_address"),
+                                      style: TextStyle(
+                                          //fontSize: 18.0,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                            Row(children: <Widget>[
+                              Expanded(
+                                child: MaterialButton(
+                                  textColor: Colors.white,
+                                  child: Text(AppTranslations.of(context)
+                                      .text("address_book")),
+                                  // color: Colors.red,address_book
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(
+                                          new MaterialPageRoute(
+                                              builder: (_) =>
+                                                  new AddressBook()),
+                                        )
+                                        .then((value) =>
+                                            value ? _loadPref() : null);
+
+                                    /* Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddressBook()));*/
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                decoration: new BoxDecoration(
+                                    border: new Border(
+                                        left: new BorderSide(
+                                            width: 5.0,
+                                            color: Colors.white54))),
+                                child: MaterialButton(
+                                  textColor: Colors.white,
+                                  child: Text(
+                                      AppTranslations.of(context).text("map")),
+                                  // color: Colors.yellow,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PickMap()));
+                                  },
+                                ),
+                              )),
+                            ])
+                          ],
+                        )),
+                    new Card(
+                        color: Colors.teal,
+                        elevation: 3.0,
+                        // color: Colors.white,
+                        child: new Container(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Container(
+                                  padding: EdgeInsets.only(right: 12.0),
+                                  decoration: new BoxDecoration(
+                                      border: new Border(
+                                          right: new BorderSide(
+                                              width: 1.0,
+                                              color: Colors.white24))),
+                                  child: Icon(Icons.list, color: Colors.white),
+                                  // Icon(Icons.directions_car, color: Colors.white),
+                                ),
+                                title: Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 0.0),
+                                  padding: EdgeInsets.only(bottom: 8.0),
+                                  decoration: new BoxDecoration(
+                                      border: new Border(
+                                          bottom: new BorderSide(
+                                              width: 1.0,
+                                              color: Colors.white))),
+                                  child: Text(
+                                    AppTranslations.of(context)
+                                        .text("address_details"),
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                              // SizedBox(height: 15.0),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  new Expanded(
+                                    child: Column(
+                                      children: <Widget>[
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("street"),
+                                            '${street == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : street}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("area_name"),
+                                            '${area == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : area}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("block"),
+                                            '${block == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : block}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("building"),
+                                            '${building == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : building}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("avenue"),
+                                            '${avenue == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : avenue}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("apartment"),
+                                            '${apartment == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : apartment}'),
+                                        buildText(
+                                            AppTranslations.of(context)
+                                                .text("floor"),
+                                            '${floor == null ? '${AppTranslations.of(context).text("not_selected_error_msg")}' : floor}'),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+                  ].map<Widget>((Widget child) {
+                    return Container(
+                        //  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        // height: 96.0,
+                        child: child);
+                  }).toList(),
+                )
+              : Center(
+                  child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    MaterialButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        _goToLoginTab(context, 0);
+                      },
+                      child: Text(
+                        AppTranslations.of(context).text("login_note"),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 5.0,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    FlatButton(
+                      // color: Colors.blue,
+                      textColor: Colors.white,
+                      //  disabledColor: Colors.grey,
+                      //  disabledTextColor: Colors.black,
+                      //  padding: EdgeInsets.all(8.0),
+                      //  splashColor: Colors.blueAccent,
+                      onPressed: () {
+                        _goToLoginTab(context, 1);
+                      },
+                      child: Text(
+                        "* ${AppTranslations.of(context).text("login_as_guest")}",
+                      ),
+                    )
+                  ],
+                )),
     );
   }
 
@@ -783,7 +761,7 @@ class _CheckOutState extends State<CheckOut> {
     );
     var jsonResponse = json.decode(_shippingAddressResponse.body);
     var _shippingAddress = jsonResponse['data'];
-   // print('_shippingAddressResponse : $_shippingAddress');
+    // print('_shippingAddressResponse : $_shippingAddress');
 
     // Create a FormData
     var _orderBody = {
@@ -814,8 +792,10 @@ class _CheckOutState extends State<CheckOut> {
   void _goToLoginTab(BuildContext context, int tabPosition) async {
     Navigator.of(context)
         .push(
-      new MaterialPageRoute(
-          builder: (_) => new LoginTab(tabPosition: tabPosition,)),
+          new MaterialPageRoute(
+              builder: (_) => new LoginTab(
+                    tabPosition: tabPosition,
+                  )),
         )
         .then((val) => val ? _loadPref() : null);
   }
@@ -841,7 +821,7 @@ class _ShippingAddress {
       this.email,
       this.phone,
       this.street,
-        this.area,
+      this.area,
       this.block,
       this.building,
       this.avenue,

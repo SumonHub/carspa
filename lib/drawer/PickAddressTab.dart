@@ -22,8 +22,12 @@ class _PickAddressTabState extends State<PickAddressTab> {
             child: TabBar(
               indicatorColor: Colors.white,
               tabs: [
-                Tab(text: 'AddressBook',),
-                Tab(text: 'PickMap',),
+                Tab(
+                  text: 'AddressBook',
+                ),
+                Tab(
+                  text: 'PickMap',
+                ),
               ],
             ),
           ),
