@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:carspa/api/ApiConstant.dart';
 import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/components/loginInput.dart';
 import 'package:carspa/localization/AppTranslations.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPage extends StatefulWidget {
@@ -30,6 +31,7 @@ class _SignupPageState extends State<SignupPage> {
   String empty_msg;
   String sign_success_msg;
   String error_msg;
+  String error;
   String email_error_msg;
   String pass_error_msg;
 
@@ -51,6 +53,7 @@ class _SignupPageState extends State<SignupPage> {
     empty_msg = AppTranslations.of(context).text("empty_msg");
     sign_success_msg = AppTranslations.of(context).text("sign_success_msg");
     error_msg = AppTranslations.of(context).text("error_msg");
+    error = AppTranslations.of(context).text("error");
     email_error_msg = AppTranslations.of(context).text("email_error_msg");
     pass_error_msg = AppTranslations.of(context).text("pass_error_msg");
 
@@ -76,6 +79,8 @@ class _SignupPageState extends State<SignupPage> {
 
               if (_valid()) {
                 print('------------_valid()-------------');
+
+                setState(() {});
                 _userReg(
                         fstNameController.text,
                         lstNameController.text,
@@ -87,17 +92,23 @@ class _SignupPageState extends State<SignupPage> {
                         cnfPassController.text)
                     .then((bool success) {
                   if (success) {
-                    _showToast(' $sign_success_msg ');
                     Navigator.pop(context);
+                    new MyToast(
+                        context,
+                        'Conrgratulation!',
+                        '$sign_success_msg',
+                        Duration(seconds: 2),
+                        Color(0xff004d40),
+                        FlushbarPosition.TOP,
+                        true)
+                        .showToast();
+                    // _showToast(' $sign_success_msg ');
+                  } else {
+                    /* new MyToast(context, 'Error', '$error_msg', Duration(seconds: 2), Color(0xffdd2c00), FlushbarPosition.TOP,
+                        true).showToast();*/
                   }
-                  /*else {
-                    _showToast(' $error_msg ');
-                  }*/
                 });
               }
-
-              /* Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ChooseTime()));*/
             },
             elevation: 4.0,
             minWidth: double.infinity,
@@ -196,7 +207,15 @@ class _SignupPageState extends State<SignupPage> {
       return true;
     } else {
       print(responseBody['error']);
-      _showToast(responseBody['error'].toString());
+      new MyToast(
+          context,
+          '$error',
+          responseBody['error'].toString(),
+          Duration(seconds: 2),
+          Color(0xffdd2c00),
+          FlushbarPosition.TOP,
+          true)
+          .showToast();
 
       return false;
     }
@@ -237,16 +256,5 @@ class _SignupPageState extends State<SignupPage> {
       return false;
     }
     return true;
-  }
-
-  void _showToast(String msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }

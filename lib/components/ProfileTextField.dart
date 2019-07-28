@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class PPTextField extends StatelessWidget {
   PPTextField(this._leadingIcon, this._string, this.trailingIcon);
+
   final Icon _leadingIcon;
   final String _string;
 

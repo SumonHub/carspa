@@ -1,9 +1,10 @@
 import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/components/loginInput.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class GuestLogin extends StatefulWidget {
   @override
@@ -18,6 +19,9 @@ class _GuestLoginState extends State<GuestLogin> {
   String _fstNameErrorText = null;
   String _lstNameErrorText = null;
   String _phoneErrorText = null;
+
+  String loadingMsg;
+  String loadingExtMsg;
   String _emptyMsg;
   String guest_login_warning_msg;
   String error_msg;
@@ -30,6 +34,8 @@ class _GuestLoginState extends State<GuestLogin> {
     guest_login_warning_msg =
         AppTranslations.of(context).text("guest_login_warning_msg");
     error_msg = AppTranslations.of(context).text("error_msg");
+    loadingMsg = AppTranslations.of(context).text("loading");
+    loadingExtMsg = AppTranslations.of(context).text("loading_ext");
 
     return Scaffold(
       backgroundColor: Colors.teal,
@@ -70,30 +76,30 @@ class _GuestLoginState extends State<GuestLogin> {
                 ),
               ),
               onPressed: () async {
-                if (_fstNameController.text.isEmpty) {
-                  setState(() {
-                    _fstNameErrorText = _emptyMsg;
-                  });
-                }
-                if (_lstNameController.text.isEmpty) {
-                  setState(() {
-                    _lstNameErrorText = _emptyMsg;
-                  });
-                }
-                if (_phoneController.text.isEmpty) {
-                  setState(() {
-                    _phoneErrorText = _emptyMsg;
-                  });
-                }
-                if (_phoneController.text.isNotEmpty &&
-                    _lstNameController.text.isNotEmpty &&
-                    _phoneController.text.isNotEmpty) {
-                  _showToast(' Loading... ');
+                bool status = checkValidity();
+                if (status) {
+                  new MyToast(
+                      context,
+                      '$loadingMsg',
+                      '$loadingExtMsg',
+                      Duration(seconds: 2),
+                      Color(0xff004d40),
+                      FlushbarPosition.TOP,
+                      true)
+                      .showToast();
                   _login(_fstNameController.text, _lstNameController.text,
-                          _phoneController.text)
-                      .then((_) {
-                    _showToast(' $guest_login_warning_msg ');
+                      _phoneController.text);
+                  new Future.delayed(Duration(seconds: 2), () {
                     Navigator.pop(context, true);
+                    new MyToast(
+                        context,
+                        '',
+                        '$guest_login_warning_msg',
+                        Duration(seconds: 2),
+                        Color(0xff004d40),
+                        FlushbarPosition.TOP,
+                        false)
+                        .showToast();
                   });
                 }
               },
@@ -108,16 +114,7 @@ class _GuestLoginState extends State<GuestLogin> {
     );
   }
 
-  void _showToast(String msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+  void _showToast(String msg) {}
 
   _login(String fstName, String lstName, String phoneNo) async {
     UserStringPref.saveBoolPref('isLogin', false);
@@ -126,5 +123,28 @@ class _GuestLoginState extends State<GuestLogin> {
     UserStringPref.savePref('user_fstName', fstName);
     UserStringPref.savePref('user_lstName', lstName);
     UserStringPref.savePref('user_phone', phoneNo);
+  }
+
+  bool checkValidity() {
+    bool status = true;
+    if (_fstNameController.text.isEmpty) {
+      status = false;
+      setState(() {
+        _fstNameErrorText = _emptyMsg;
+      });
+    }
+    if (_lstNameController.text.isEmpty) {
+      status = false;
+      setState(() {
+        _lstNameErrorText = _emptyMsg;
+      });
+    }
+    if (_phoneController.text.isEmpty) {
+      status = false;
+      setState(() {
+        _phoneErrorText = _emptyMsg;
+      });
+    }
+    return status;
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:carspa/api/ApiConstant.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/components/ProfileTextField.dart';
 import 'package:carspa/drawer/AddressBook.dart';
 import 'package:carspa/drawer/LoginTab.dart';
@@ -9,8 +10,8 @@ import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/f_PickMap.dart';
 import 'package:carspa/screens/g_SuccessPage.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -286,15 +287,16 @@ class _CheckOutState extends State<CheckOut> {
                   if (_addressDetails.street.toString().trim().length == 0 ||
                       _addressDetails.block == null ||
                       _addressDetails.building == null) {
-                    Fluttertoast.showToast(
-                        msg: AppTranslations.of(context)
+                    new MyToast(
+                        context,
+                        '',
+                        AppTranslations.of(context)
                             .text("pick_address_error_msg"),
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIos: 1,
-                        backgroundColor: Colors.white,
-                        textColor: Colors.red,
-                        fontSize: 16.0);
+                        Duration(seconds: 2),
+                        Color(0xff004d40),
+                        FlushbarPosition.TOP,
+                        false)
+                        .showToast();
                   } else {
                     final ConfirmAction action =
                         await _asyncConfirmDialog(context);
@@ -317,16 +319,16 @@ class _CheckOutState extends State<CheckOut> {
                             // Navigator.of(context).pushNamedAndRemoveUntil('/screen4', (Route<dynamic> route) => false);
                             // ModalRoute.withName('/screen1'));
                           } else {
-                            Fluttertoast.showToast(
-                                msg: AppTranslations.of(context)
+                            new MyToast(
+                                context,
+                                '',
+                                AppTranslations.of(context)
                                     .text("error_msg"),
-                                //error_msg
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIos: 1,
-                                backgroundColor: Colors.white,
-                                textColor: Colors.teal,
-                                fontSize: 16.0);
+                                Duration(seconds: 2),
+                                Color(0xff004d40),
+                                FlushbarPosition.TOP,
+                                false)
+                                .showToast();
                           }
                         });
                         break;

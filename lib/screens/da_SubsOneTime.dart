@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:carspa/api/ApiConstant.dart';
 import 'package:carspa/api/ApiHelperClass.dart';
 import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/e_CheckOut.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -19,6 +20,9 @@ class SubsOneTime extends StatefulWidget {
 }
 
 class _SubsOneTimeState extends State<SubsOneTime> {
+  String loadingMsg;
+  String loadingExtMsg;
+
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
   List<Schedule> _scheduleList = new List();
@@ -101,6 +105,9 @@ class _SubsOneTimeState extends State<SubsOneTime> {
 
   @override
   Widget build(BuildContext context) {
+    loadingMsg = AppTranslations.of(context).text("loading");
+    loadingExtMsg = AppTranslations.of(context).text("loading_ext");
+
     return new Scaffold(
         backgroundColor: Colors.teal,
         appBar: AppBar(
@@ -127,17 +134,20 @@ class _SubsOneTimeState extends State<SubsOneTime> {
                 * service_dateTime: dateTime
                 * comment: _commentEditingController.text
                 * */
-              Fluttertoast.showToast(
-                  msg: " Loading.... ",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.black54,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
 
-              _saveData(_selectedDateList).then((_) {
-                Fluttertoast.cancel();
+              new MyToast(
+                  context,
+                  '$loadingMsg',
+                  '$loadingExtMsg',
+                  Duration(seconds: 2),
+                  Color(0xff004d40),
+                  FlushbarPosition.TOP,
+                  true)
+                  .showToast();
+
+              _saveData(_selectedDateList);
+
+              new Future.delayed(Duration(seconds: 2), () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CheckOut()));
               });
@@ -153,7 +163,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
                 Avatar("assets/photos/date.png"),
                 Container(
                   padding:
-                      EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
+                  EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8.0))),

@@ -213,7 +213,7 @@ class Address_Book {
     this.area_name,
   });
 
-  /* factory Address_Book.fromJson(Map<String,dynamic> json){
+/* factory Address_Book.fromJson(Map<String,dynamic> json){
     return Address_Book(
       id: json['id'],
       customer_id: json['customer_id'],

@@ -4,12 +4,13 @@ import 'dart:convert';
 import 'package:carspa/api/ApiConstant.dart';
 import 'package:carspa/api/ApiHelperClass.dart';
 import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/components/loginInput.dart';
 import 'package:carspa/drawer/SignupPage.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _loading = false;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -28,7 +31,10 @@ class _LoginPageState extends State<LoginPage> {
 
   String _emptyMsg;
   String login_success_msg;
+  String greeting_msg;
   String error_msg;
+  String loadingMsg;
+  String loadingExtMsg;
 
   @override
   void dispose() {
@@ -41,7 +47,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     _emptyMsg = AppTranslations.of(context).text("empty_msg");
     login_success_msg = AppTranslations.of(context).text("login_success_msg");
+    greeting_msg = AppTranslations.of(context).text("greeting_msg");
     error_msg = AppTranslations.of(context).text("error_msg");
+    loadingMsg = AppTranslations.of(context).text("loading");
+    loadingExtMsg = AppTranslations.of(context).text("loading_ext");
 
     return Scaffold(
         backgroundColor: Colors.teal,
@@ -77,29 +86,48 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 onPressed: () async {
-                  if (emailController.text.isEmpty) {
-                    setState(() {
-                      _emailErrorText = _emptyMsg;
-                    });
-                  }
-                  ;
-                  if (passwordController.text.isEmpty) {
-                    setState(() {
-                      _passwordErrorText = _emptyMsg;
-                    });
-                  }
-                  if (emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty) {
-                    _showToast(' Loading... ');
+                  setState(() {
+                    _loading = true;
+                  });
+
+                  bool status = checkValidity();
+
+                  if (status) {
+                    new MyToast(
+                        context,
+                        '$loadingMsg',
+                        '$loadingExtMsg',
+                        Duration(seconds: 2),
+                        Color(0xff004d40),
+                        FlushbarPosition.TOP,
+                        true)
+                        .showToast();
+
                     _login(emailController.text, passwordController.text)
                         .then((bool success) {
                       if (success) {
-                        _loadingUserInfo().then((_) {
-                          _showToast(' $login_success_msg ');
-                          Navigator.pop(context, true);
+                        _loadingUserInfo();
+                        new Future.delayed(new Duration(seconds: 2), () {
+                          Navigator.pop(context);
+                          new MyToast(
+                              context,
+                              '$login_success_msg',
+                              '$greeting_msg',
+                              Duration(seconds: 2),
+                              Color(0xff004d40),
+                              FlushbarPosition.TOP,
+                              false)
+                              .showToast();
                         });
                       } else {
-                        _showToast(' $error_msg ');
+                        _showToast(
+                            context,
+                            '$error_msg',
+                            '$error_msg',
+                            Duration(seconds: 2),
+                            Colors.teal,
+                            FlushbarPosition.TOP,
+                            true);
                       }
                     });
                   }
@@ -148,14 +176,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<bool> _login(String user_email, String user_password) async {
     var _loginUrl = ApiConstant.LOGIN_API;
-    var _bodyData = {
+    /*var _bodyData = {
       "email": "$user_email",
       'password': "$user_password",
-    };
-    /*var _bodyData = {
+    };*/
+    var _bodyData = {
       "email": "admin@123.com",
       'password': "123456",
-    };*/
+    };
     var response = await http.post(_loginUrl, body: _bodyData);
     var responseBody = jsonDecode(response.body);
 
@@ -175,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _showToast(String msg) {
+  /*void _showToast(String msg) {
     Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
@@ -184,6 +212,25 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.black54,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+*/
+  void _showToast(BuildContext context,
+      String msg1,
+      String msg2,
+      Duration duration,
+      MaterialColor color,
+      FlushbarPosition position,
+      bool loading) async {
+    Flushbar(
+      title: msg1,
+      message: msg2,
+      duration: duration,
+      flushbarPosition: FlushbarPosition.TOP,
+      backgroundColor: color,
+      showProgressIndicator: loading,
+      progressIndicatorBackgroundColor: Colors.white,
+    )
+      ..show(context);
   }
 
   Future _loadingUserInfo() async {
@@ -202,5 +249,22 @@ class _LoginPageState extends State<LoginPage> {
       UserStringPref.savePref('user_email', '${user.email}');
       UserStringPref.savePref('user_phone', '${user.phone.toString()}');
     }
+  }
+
+  bool checkValidity() {
+    bool status = true;
+    if (emailController.text.isEmpty) {
+      status = false;
+      setState(() {
+        _emailErrorText = _emptyMsg;
+      });
+    }
+    if (passwordController.text.isEmpty) {
+      status = false;
+      setState(() {
+        _passwordErrorText = _emptyMsg;
+      });
+    }
+    return status;
   }
 }

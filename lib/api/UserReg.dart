@@ -7,10 +7,12 @@ class UserReg {
   String address;
   String pass;
   String cnfPass;
+
 // String eToken;
 
   UserReg(this.fstName, this.lstName, this.email, this.cnfEmail, this.phone,
       this.address, this.pass, this.cnfPass);
+
 //first_name, last_name, email, confirm_email, phone, address, password, confirm_password
   UserReg.fromJson(Map<String, dynamic> json)
       : fstName = json['first_name'],
@@ -22,7 +24,7 @@ class UserReg {
         pass = json['password'],
         cnfPass = json['confirm_password'];
 
-  /* Map<String, dynamic> toJson() =>
+/* Map<String, dynamic> toJson() =>
       {
         'name': name,
         'email': email,

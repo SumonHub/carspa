@@ -11,7 +11,6 @@ class PickMap extends StatefulWidget {
   _PickMapState createState() => _PickMapState();
 }
 
-
 class _PickMapState extends State<PickMap> {
   var _search;
   TextEditingController _textEditingController;

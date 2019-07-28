@@ -3,16 +3,18 @@ import 'dart:convert';
 import 'package:carspa/api/ApiConstant.dart';
 import 'package:carspa/api/ApiHelperClass.dart';
 import 'package:carspa/components/Avatar.dart';
+import 'package:carspa/components/MyToast.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/e_CheckOut.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 //import 'package:flutter_calendar_carousel/classes/event.dart';
 //import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 //   show CalendarCarousel;
@@ -25,6 +27,9 @@ class SubsMonthly extends StatefulWidget {
 class _SubsMonthlyState extends State<SubsMonthly> {
   final GlobalKey<ScaffoldState> mScaffoldState =
       new GlobalKey<ScaffoldState>();
+
+  String loadingMsg;
+  String loadingExtMsg;
 
   DateTime _date = DateTime.now();
   TimeOfDay _time = TimeOfDay.now();
@@ -121,6 +126,8 @@ class _SubsMonthlyState extends State<SubsMonthly> {
 
   @override
   Widget build(BuildContext context) {
+    loadingMsg = AppTranslations.of(context).text("loading");
+    loadingExtMsg = AppTranslations.of(context).text("loading_ext");
     return new Scaffold(
         key: mScaffoldState,
         backgroundColor: Colors.teal,
@@ -167,17 +174,19 @@ class _SubsMonthlyState extends State<SubsMonthly> {
                 *
                 *
                 * */
-              Fluttertoast.showToast(
-                  msg: " Loading.... ",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.black54,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              new MyToast(
+                  context,
+                  '$loadingMsg',
+                  '$loadingExtMsg',
+                  Duration(seconds: 2),
+                  Color(0xff004d40),
+                  FlushbarPosition.TOP,
+                  true)
+                  .showToast();
 
-              _saveData(_selectedDateList).then((_) {
-                Fluttertoast.cancel();
+              _saveData(_selectedDateList);
+
+              new Future.delayed(Duration(seconds: 2), () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CheckOut()));
               });
@@ -193,7 +202,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
                 Avatar("assets/photos/date.png"),
                 Container(
                   padding:
-                      EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
+                  EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8.0))),

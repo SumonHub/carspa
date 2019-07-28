@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
   final String url;
+
   Avatar(this.url);
 
   @override
