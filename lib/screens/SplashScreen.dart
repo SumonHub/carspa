@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       shape: BoxShape.circle,
                       image: new DecorationImage(
                         fit: BoxFit.contain,
-                        image: new AssetImage('assets/photos/logo.png'),
+                        image: new AssetImage('assets/launcher/logo.png'),
                       ))),
               SpinKitWave(
                   color: Colors.white, size: 30.0, type: SpinKitWaveType.start),

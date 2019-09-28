@@ -29,7 +29,7 @@ dependencies:
   #geocoder: ^0.2.1
   shared_preferences: ^0.4.3
   cached_network_image: ^0.5.1
-  flutter_launcher_icons: ^0.6.1
+  flutter_launcher_icons: ^0.7.3
   numberpicker: ^1.0.0
   geolocator: ^3.0.1
   #fluttertoast: 3.0.0
@@ -37,9 +37,10 @@ dependencies:
   flutter_spinkit: ^3.1.0
 
 flutter_icons:
-  image_path: "assets/photos/base.png"
+  image_path: "assets/launcher/ic_launcher.png"
   android: true
   ios: true
+
 
 dev_dependencies:
   flutter_test:
@@ -63,11 +64,11 @@ flutter:
     - assets/photos/service.png
     - assets/photos/date.png
     - assets/photos/profile.png
-    - assets/photos/base.png
     - assets/photos/successful.png
     - assets/photos/done.png
     - assets/photos/price.png
-    - assets/photos/logo.png
+    - assets/launcher/logo.png
+    - assets/launcher/ic_launcher.png
     - assets/locale/localization_en.json
     - assets/locale/localization_ar.json
 

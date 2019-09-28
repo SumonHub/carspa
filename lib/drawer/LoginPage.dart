@@ -120,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                               .showToast();
                         });
                       } else {
+                        print("login fail");
                         _showToast(
                             context,
                             '$error_msg',
