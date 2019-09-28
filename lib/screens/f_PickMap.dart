@@ -2,7 +2,6 @@ import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/fa_AddressForm.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -19,20 +18,11 @@ class _PickMapState extends State<PickMap> {
 
   //var _initLocation = const LatLng(29.347126136377188, 47.67043210566044);
   var _initLocation = const LatLng(29.3759, 47.9774);
-  var _currLoc;
 
   @override
   void initState() {
     super.initState();
-    Geolocator()
-        .getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.best,
-    )
-        .then((currloc) {
-      setState(() {
-        _currLoc = LatLng(currloc.latitude, currloc.longitude);
-      });
-    });
+
   }
 
   @override
@@ -174,11 +164,24 @@ class _PickMapState extends State<PickMap> {
   }
 
   void _currLocation() {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(_currLoc.latitude, _currLoc.longitude),
-      zoom: 15.0,
-    )));
-    _getAddressFromLatlng(_currLoc);
+    var _currLoc;
+
+    Geolocator()
+        .getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    )
+        .then((currloc) {
+      setState(() {
+        _currLoc = LatLng(currloc.latitude, currloc.longitude);
+      });
+    }).then((_) {
+      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(_currLoc.latitude, _currLoc.longitude),
+        zoom: 15.0,
+      )));
+      _getAddressFromLatlng(_currLoc);
+    });
+
   }
 
   Future _getAddressFromLatlng(LatLng latlng) async {
@@ -222,7 +225,7 @@ class _PickMapState extends State<PickMap> {
   }
 
   _getLatlngFromAddress(String address) async {
-    final query = address;
+    /* final query = address;
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
     var first = addresses.first;
     print("${first.featureName} : ${first.coordinates}");
@@ -230,6 +233,19 @@ class _PickMapState extends State<PickMap> {
     setState(() {
       final _updatedLoc =
           LatLng(first.coordinates.latitude, first.coordinates.longitude);
+      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(_updatedLoc.latitude, _updatedLoc.longitude),
+        zoom: 17.0,
+      )));
+    });*/
+
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromAddress(address);
+    print("position : ${placemark[0].position}");
+
+    setState(() {
+      final _updatedLoc =
+      LatLng(placemark[0].position.latitude, placemark[0].position.longitude);
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         target: LatLng(_updatedLoc.latitude, _updatedLoc.longitude),
         zoom: 17.0,

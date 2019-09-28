@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (success) {
                         _loadingUserInfo();
                         new Future.delayed(new Duration(seconds: 2), () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                           new MyToast(
                               context,
                               '$login_success_msg',
