@@ -204,17 +204,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  /*void _showToast(String msg) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-*/
   void _showToast(BuildContext context,
       String msg1,
       String msg2,
