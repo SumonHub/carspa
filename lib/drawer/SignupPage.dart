@@ -58,13 +58,17 @@ class _SignupPageState extends State<SignupPage> {
     pass_error_msg = AppTranslations.of(context).text("pass_error_msg");
 
     return Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         appBar: new AppBar(
             title: new Text(AppTranslations.of(context).text("signup"))),
         bottomNavigationBar: new Padding(
           padding:
               EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0, top: 12.0),
           child: MaterialButton(
+            elevation: 4.0,
+            minWidth: double.infinity,
+            height: 48.0,
+            color: Color(0xffe0e0e0),
             child: new Text(
               AppTranslations.of(context).text("signup"),
               style: const TextStyle(
@@ -82,14 +86,14 @@ class _SignupPageState extends State<SignupPage> {
 
                 setState(() {});
                 _userReg(
-                        fstNameController.text,
-                        lstNameController.text,
-                        emailController.text,
-                        cnfEmailController.text,
-                        phoneController.text,
-                        addressController.text,
-                        passController.text,
-                        cnfPassController.text)
+                    fstNameController.text,
+                    lstNameController.text,
+                    emailController.text,
+                    cnfEmailController.text,
+                    phoneController.text,
+                    addressController.text,
+                    passController.text,
+                    cnfPassController.text)
                     .then((bool success) {
                   if (success) {
                     Navigator.pop(context);
@@ -110,10 +114,6 @@ class _SignupPageState extends State<SignupPage> {
                 });
               }
             },
-            elevation: 4.0,
-            minWidth: double.infinity,
-            height: 48.0,
-            color: Colors.white,
           ),
         ),
         body: new ListView(

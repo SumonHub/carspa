@@ -68,7 +68,8 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: application.supportedLocales(),
         title: "CARSPA",
         theme: ThemeData(
-          primarySwatch: Colors.teal,
+          // primarySwatch: Colors.teal,
+          primaryColor: Color(0xffe0e0e0),
         ),
         home: checkConnection
             ? SplashScreen()

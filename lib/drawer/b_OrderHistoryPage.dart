@@ -5,6 +5,7 @@ import 'package:carspa/api/ApiHelperClass.dart';
 import 'package:carspa/drawer/LoginTab.dart';
 import 'package:carspa/localization/AppTranslations.dart';
 import 'package:carspa/pref/UserPref.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,33 +20,31 @@ class _OrderHistoryState extends State<OrderHistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: new Text(AppTranslations.of(context).text("your_order")),
       ),
       body: _isLogin
-          ? Container(
-              padding: new EdgeInsets.all(12.0),
-              child: FutureBuilder(
-                  future: fetchOrders(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) print(snapshot.error);
-                    print(snapshot.data);
-                    return snapshot.hasData
-                        ? OrderList(
-                            orders: snapshot.data,
-                          )
-                        : Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          );
-                  }),
+          ? FutureBuilder(
+          future: fetchOrders(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            print(snapshot.data);
+            return snapshot.hasData
+                ? OrderList(
+              orders: snapshot.data,
             )
+                : Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                AlwaysStoppedAnimation<Color>(Colors.teal),
+              ),
+            );
+          })
           : Center(
               child: MaterialButton(
-                color: Colors.white,
+                height: 44.0,
+                color: Color(0xffe0e0e0),
                 onPressed: () {
                   Navigator.of(context)
                       .push(
@@ -129,9 +128,6 @@ class _OrderListState extends State<OrderList> {
         flex: 0,
         child: Container(
           padding: EdgeInsets.all(3.0),
-          /* decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.red),),
-        ),*/
           child: new Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -142,7 +138,7 @@ class _OrderListState extends State<OrderList> {
                     new Text(
                       '$key',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -154,7 +150,7 @@ class _OrderListState extends State<OrderList> {
                   width: 50,
                   child: new Icon(
                     Icons.label,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -166,7 +162,7 @@ class _OrderListState extends State<OrderList> {
                     new Text(
                       '''$value''',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -184,7 +180,7 @@ class _OrderListState extends State<OrderList> {
             child: Text(
               AppTranslations.of(context).text("empty_msg"),
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.grey,
                 letterSpacing: 5.0,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
@@ -195,27 +191,14 @@ class _OrderListState extends State<OrderList> {
             itemCount: widget.orders.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  elevation: 11.0,
-                  margin:
-                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
+                  elevation: 3.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        decoration: BoxDecoration(color: Colors.teal),
                         child: ListTile(
                           onTap: null,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          /*leading: Container(
-                        padding: EdgeInsets.only(right: 12.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                right: new BorderSide(
-                                    width: 1.0, color: Colors.white24))),
-                        child:
-                        Icon(Icons.add_shopping_cart, color: Colors.white),
-                      ),*/
                           title: Row(
                             children: <Widget>[
                               new Expanded(

@@ -13,13 +13,12 @@ class Avatar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         new Container(
-            margin: EdgeInsets.only(bottom: 12.0),
-            // padding: EdgeInsets.all(16.0),
+            margin: EdgeInsets.all(20.0),
             width: 160.0,
             height: 160.0,
             decoration: new BoxDecoration(
                 color: Colors.white54,
-                shape: BoxShape.circle,
+                //shape: BoxShape.circle,
                 image: new DecorationImage(
                   fit: BoxFit.scaleDown,
                   image: new AssetImage(url),

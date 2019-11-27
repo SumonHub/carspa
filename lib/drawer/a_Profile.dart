@@ -71,7 +71,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget._pageTitle),
       ),
@@ -93,7 +93,7 @@ class _ProfileState extends State<Profile> {
                 elevation: 4.0,
                 minWidth: double.infinity,
                 height: 48.0,
-                color: Colors.white,
+                color: Colors.grey,
               ),
             )
           : null,
@@ -114,9 +114,9 @@ class _ProfileState extends State<Profile> {
                           decoration: new BoxDecoration(
                               border: new Border(
                                   right: new BorderSide(
-                                      width: 1.0, color: Colors.white24))),
+                                      width: 1.0, color: Colors.grey))),
                           child:
-                              Icon(Icons.account_circle, color: Colors.white),
+                          Icon(Icons.account_circle, color: Colors.grey),
                           // Icon(Icons.directions_car, color: Colors.white),
                         ),
                         title: TextField(
@@ -126,21 +126,21 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          cursorColor: Colors.yellowAccent,
+                          cursorColor: Colors.redAccent,
                           enabled: activeName,
                           decoration: InputDecoration(
                             hintText: _name,
                             hintStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
                                 AppTranslations.of(context).text("name"),
                             helperStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             disabledBorder: UnderlineInputBorder(
@@ -148,13 +148,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                              color: Colors.white,
+                                  color: Colors.grey,
                               style: BorderStyle.solid,
                             )),
                           ),
                         ),
                         trailing: IconButton(
-                            icon: Icon(Icons.edit, color: Colors.white),
+                            icon: Icon(Icons.edit, color: Colors.grey),
                             onPressed: () {
                               setState(() {
                                 activeName == true
@@ -168,8 +168,8 @@ class _ProfileState extends State<Profile> {
                           decoration: new BoxDecoration(
                               border: new Border(
                                   right: new BorderSide(
-                                      width: 1.0, color: Colors.white24))),
-                          child: Icon(Icons.email, color: Colors.white),
+                                      width: 1.0, color: Colors.grey))),
+                          child: Icon(Icons.email, color: Colors.grey),
                           // Icon(Icons.directions_car, color: Colors.white),
                         ),
                         title: TextField(
@@ -179,21 +179,21 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          cursorColor: Colors.yellowAccent,
+                          cursorColor: Colors.redAccent,
                           enabled: activeEmail,
                           decoration: InputDecoration(
                             hintText: _email,
                             hintStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
                                 AppTranslations.of(context).text("email"),
                             helperStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             disabledBorder: UnderlineInputBorder(
@@ -201,13 +201,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                              color: Colors.white,
+                                  color: Colors.grey,
                               style: BorderStyle.solid,
                             )),
                           ),
                         ),
                         trailing: IconButton(
-                            icon: Icon(Icons.edit, color: Colors.white),
+                            icon: Icon(Icons.edit, color: Colors.grey),
                             onPressed: () {
                               setState(() {
                                 activeEmail == true
@@ -221,9 +221,9 @@ class _ProfileState extends State<Profile> {
                           decoration: new BoxDecoration(
                               border: new Border(
                                   right: new BorderSide(
-                                      width: 1.0, color: Colors.white24))),
-                          child: Icon(Icons.phone, color: Colors.white),
-                          // Icon(Icons.directions_car, color: Colors.white),
+                                      width: 1.0, color: Colors.grey))),
+                          child: Icon(Icons.phone, color: Colors.grey),
+                          // Icon(Icons.directions_car, color: Colors.grey),
                         ),
                         title: TextField(
                           onSubmitted: (value) {
@@ -232,21 +232,21 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          cursorColor: Colors.yellowAccent,
+                          cursorColor: Colors.redAccent,
                           enabled: activePhone,
                           decoration: InputDecoration(
                             hintText: _phone,
                             hintStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
                                 AppTranslations.of(context).text("phone"),
                             helperStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             disabledBorder: UnderlineInputBorder(
@@ -254,13 +254,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                              color: Colors.white,
+                                  color: Colors.grey,
                               style: BorderStyle.solid,
                             )),
                           ),
                         ),
                         trailing: IconButton(
-                            icon: Icon(Icons.edit, color: Colors.white),
+                            icon: Icon(Icons.edit, color: Colors.grey),
                             onPressed: () {
                               setState(() {
                                 activePhone == true
@@ -274,9 +274,9 @@ class _ProfileState extends State<Profile> {
                           decoration: new BoxDecoration(
                               border: new Border(
                                   right: new BorderSide(
-                                      width: 1.0, color: Colors.white24))),
-                          child: Icon(Icons.add_location, color: Colors.white),
-                          // Icon(Icons.directions_car, color: Colors.white),
+                                      width: 1.0, color: Colors.grey))),
+                          child: Icon(Icons.add_location, color: Colors.grey),
+                          // Icon(Icons.directions_car, color: Colors.grey),
                         ),
                         title: TextField(
                           onSubmitted: (value) {
@@ -285,21 +285,21 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          cursorColor: Colors.yellowAccent,
+                          cursorColor: Colors.redAccent,
                           enabled: activeAddress,
                           decoration: InputDecoration(
                             hintText: _address,
                             hintStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
                                 AppTranslations.of(context).text("address"),
                             helperStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             disabledBorder: UnderlineInputBorder(
@@ -307,13 +307,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                              color: Colors.white,
+                                  color: Colors.grey,
                               style: BorderStyle.solid,
                             )),
                           ),
                         ),
                         trailing: IconButton(
-                            icon: Icon(Icons.edit, color: Colors.white),
+                            icon: Icon(Icons.edit, color: Colors.grey),
                             onPressed: () {
                               setState(() {
                                 activeAddress == true
@@ -327,9 +327,8 @@ class _ProfileState extends State<Profile> {
                           decoration: new BoxDecoration(
                               border: new Border(
                                   right: new BorderSide(
-                                      width: 1.0, color: Colors.white24))),
-                          child: Icon(Icons.lock, color: Colors.white),
-                          // Icon(Icons.directions_car, color: Colors.white),
+                                      width: 1.0, color: Colors.grey))),
+                          child: Icon(Icons.lock, color: Colors.grey),
                         ),
                         title: TextField(
                           // autofocus: true,
@@ -339,21 +338,21 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
-                          cursorColor: Colors.yellowAccent,
+                          cursorColor: Colors.redAccent,
                           enabled: activePassword,
                           decoration: InputDecoration(
                             hintText: _password,
                             hintStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             helperText:
                                 AppTranslations.of(context).text("password"),
                             helperStyle: new TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                             disabledBorder: UnderlineInputBorder(
@@ -361,13 +360,13 @@ class _ProfileState extends State<Profile> {
                             ),
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                              color: Colors.white,
+                                  color: Colors.grey,
                               style: BorderStyle.solid,
                             )),
                           ),
                         ),
                         trailing: IconButton(
-                            icon: Icon(Icons.edit, color: Colors.white),
+                            icon: Icon(Icons.edit, color: Colors.grey),
                             onPressed: () {
                               setState(() {
                                 activePassword == true
@@ -383,7 +382,8 @@ class _ProfileState extends State<Profile> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     MaterialButton(
-                      color: Colors.white,
+                      height: 44.0,
+                      color: Color(0xffe0e0e0),
                       onPressed: () {
                         _goToLoginTab(context, 0);
                       },

@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     loadingExtMsg = AppTranslations.of(context).text("loading_ext");
 
     return Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         // appBar: new AppBar(title: new Text(AppTranslations.of(context).text("login"))),
         body: new ListView(
           padding: EdgeInsets.all(30.0),
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         '$loadingMsg',
                         '$loadingExtMsg',
                         Duration(seconds: 2),
-                        Color(0xff004d40),
+                        Colors.grey,
                         FlushbarPosition.TOP,
                         true)
                         .showToast();
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                               '$login_success_msg',
                               '$greeting_msg',
                               Duration(seconds: 2),
-                              Color(0xff004d40),
+                              Colors.grey,
                               FlushbarPosition.TOP,
                               false)
                               .showToast();
@@ -126,17 +126,17 @@ class _LoginPageState extends State<LoginPage> {
                             '$error_msg',
                             '$error_msg',
                             Duration(seconds: 2),
-                            Colors.teal,
+                            Colors.grey,
                             FlushbarPosition.TOP,
                             true);
                       }
                     });
                   }
                 },
-                elevation: 4.0,
+                //elevation: 4.0,
                 minWidth: double.infinity,
                 height: 48.0,
-                color: Colors.white,
+                color: Color(0xffe0e0e0),
               ),
             ),
             // new Text("forgot password"),
@@ -145,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                 "_____________OR_____________",
                 style: TextStyle(
                   fontSize: 15.0,
-                  color: Colors.white,
+                  color: Colors.black,
+
                 ),
               ),
             ),
@@ -165,10 +166,10 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SignupPage()));
                 },
-                elevation: 4.0,
+                // elevation: 4.0,
                 minWidth: double.infinity,
                 height: 48.0,
-                color: Colors.white,
+                color: Color(0xffe0e0e0),
               ),
             ),
           ],

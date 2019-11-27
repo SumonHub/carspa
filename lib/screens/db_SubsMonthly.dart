@@ -130,13 +130,14 @@ class _SubsMonthlyState extends State<SubsMonthly> {
     loadingExtMsg = AppTranslations.of(context).text("loading_ext");
     return new Scaffold(
         key: mScaffoldState,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: new Text(
             AppTranslations.of(context).text("monthly_wash"),
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.grey,
           onPressed: () {
             setState(() {
               if (_selectedDateList.length < 5) {
@@ -153,8 +154,10 @@ class _SubsMonthlyState extends State<SubsMonthly> {
           child: Icon(Icons.add),
         ),
         bottomNavigationBar: new BottomAppBar(
-          child: FlatButton(
-            color: Colors.white,
+          child: MaterialButton(
+            minWidth: double.infinity,
+            height: 48.0,
+            color: Color(0xffe0e0e0),
             child: new Text(
               AppTranslations.of(context).text("continue"),
               style: const TextStyle(
@@ -179,7 +182,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
                   '$loadingMsg',
                   '$loadingExtMsg',
                   Duration(seconds: 2),
-                  Color(0xff004d40),
+                  Colors.grey,
                   FlushbarPosition.TOP,
                   true)
                   .showToast();
@@ -199,7 +202,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
             padding: EdgeInsets.all(12.0),
             child: ListView(
               children: <Widget>[
-                Avatar("assets/photos/date.png"),
+                Avatar("assets/photos/calendar.png"),
                 Container(
                   padding:
                   EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),

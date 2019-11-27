@@ -111,14 +111,16 @@ class _AddressFormState extends State<AddressForm> {
     _floorText = AppTranslations.of(context).text("floor");
 
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(AppTranslations.of(context).text("confirm_address")),
       ),
       bottomNavigationBar: _isLogin
           ? new BottomAppBar(
-              child: FlatButton(
-                color: Colors.white,
+        child: MaterialButton(
+          minWidth: double.infinity,
+          height: 48.0,
+          color: Color(0xffe0e0e0),
                 child: new Text(
                   AppTranslations.of(context).text("confirm_address"),
                   style: const TextStyle(
@@ -189,27 +191,33 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
-                // Icon(Icons.directions_car, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
+                // Icon(Icons.directions_car, color: Colors.grey),
               ),
               title: Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(
+                    width: 2.5,
+                    color: Colors.grey,
+                  ),
                 ),
-                child: DropdownButton(
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      canvasColor: Color(0xffe0e0e0),
+                    ),
+                    child: DropdownButton(
                   elevation: 0,
                   isExpanded: true,
-                  /*style: TextStyle(
-                      color: Colors.white
-                    ),*/
+
                   hint: Text(
                     AppTranslations.of(context).text("choose_your_area"),
                     // 'Choose Your Area',
                     style: TextStyle(
-                      color: Colors.teal,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -227,7 +235,7 @@ class _AddressFormState extends State<AddressForm> {
                       value: location,
                     );
                   }).toList(),
-                ),
+                    ),)
               ),
               subtitle: Container(
                 padding: EdgeInsets.all(9.0),
@@ -237,7 +245,7 @@ class _AddressFormState extends State<AddressForm> {
                       : empty_msg,
                   style: TextStyle(
                     color:
-                        _areaValidStatus ? Colors.white : Colors.yellowAccent,
+                    _areaValidStatus ? Colors.grey : Colors.redAccent,
                     fontSize: 12.5,
                     fontWeight:
                         _areaValidStatus ? FontWeight.bold : FontWeight.normal,
@@ -254,42 +262,42 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
-                // Icon(Icons.directions_car, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
+                // Icon(Icons.directions_car, color: Colors.grey),
               ),
               title: TextField(
                 maxLines: 2,
                 controller: _streetController,
                 textInputAction: TextInputAction.done,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter $_streetText',
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("street"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.5)),
+                      borderSide: BorderSide(color: Colors.grey, width: 2.5)),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                   errorText: _streetValidStatus ? null : empty_msg,
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                    color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                   )),
                   errorStyle: TextStyle(
-                    color: Colors.yellowAccent,
+                    color: Colors.redAccent,
                   ),
                 ),
               ),
@@ -303,41 +311,41 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
               ),
               title: TextField(
                 controller: _blockController,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter $_blockText',
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("block"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.white, width: 2.5),
+                    const BorderSide(color: Colors.grey, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                   errorText: _blockValidStatus ? null : empty_msg,
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                    color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                   )),
                   errorStyle: TextStyle(
-                    color: Colors.yellowAccent,
+                    color: Colors.redAccent,
                   ),
                 ),
               ),
@@ -351,41 +359,41 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
               ),
               title: TextField(
                 controller: _buildingController,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter ' + _buildingText,
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("building"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.white, width: 2.5),
+                    const BorderSide(color: Colors.grey, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                   errorText: _buildingValidStatus ? null : '$empty_msg',
                   errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                    color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                   )),
                   errorStyle: TextStyle(
-                    color: Colors.yellowAccent,
+                    color: Colors.redAccent,
                   ),
                 ),
               ),
@@ -399,35 +407,35 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
-                // Icon(Icons.directions_car, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
+                // Icon(Icons.directions_car, color: Colors.grey),
               ),
               title: TextField(
                 controller: _avenueController,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter ' + _avenueText,
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("avenue"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.white, width: 2.5),
+                    const BorderSide(color: Colors.grey, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                 ),
               ),
             ),
@@ -440,34 +448,34 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
               ),
               title: TextField(
                 controller: _apartmentController,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter ' + _apartmentText,
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("apartment"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.white, width: 2.5),
+                    const BorderSide(color: Colors.grey, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                 ),
               ),
             ),
@@ -480,34 +488,34 @@ class _AddressFormState extends State<AddressForm> {
                 decoration: new BoxDecoration(
                     border: new Border(
                         right:
-                            new BorderSide(width: 1.0, color: Colors.white24))),
-                child: Icon(Icons.add_location, color: Colors.white),
+                        new BorderSide(width: 1.0, color: Colors.grey))),
+                child: Icon(Icons.add_location, color: Colors.grey),
               ),
               title: TextField(
                 controller: _floorController,
                 style: new TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
-                cursorColor: Colors.yellowAccent,
+                cursorColor: Colors.redAccent,
                 decoration: InputDecoration(
                   hintText: '$enter ' + _floorText,
                   hintStyle: new TextStyle(
-                    color: Colors.white54,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   helperText: AppTranslations.of(context).text("floor"),
                   helperStyle: new TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   enabledBorder: const OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.white, width: 2.5),
+                    const BorderSide(color: Colors.grey, width: 2.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.yellowAccent, width: 2.5)),
+                      BorderSide(color: Colors.redAccent, width: 2.5)),
                 ),
               ),
             ),

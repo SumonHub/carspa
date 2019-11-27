@@ -36,7 +36,7 @@ class _PickMapState extends State<PickMap> {
     _search = AppTranslations.of(context).text("search_your_place");
 
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           AppTranslations.of(context).text("map"),
@@ -109,7 +109,7 @@ class _PickMapState extends State<PickMap> {
               child: new Icon(
                 Icons.edit_location,
                 size: 80.0,
-                color: Colors.teal,
+                color: Colors.redAccent,
               ),
             ),
           ),
@@ -126,7 +126,7 @@ class _PickMapState extends State<PickMap> {
                 child: Icon(
                   Icons.location_on,
                   size: 70.0,
-                  color: Colors.teal,
+                  color: Colors.redAccent,
                 ),
               ),
             ),
@@ -153,7 +153,7 @@ class _PickMapState extends State<PickMap> {
                 child: Icon(
                   Icons.check_circle,
                   size: 70.0,
-                  color: Colors.teal,
+                  color: Colors.redAccent,
                 ),
               ),
             ),

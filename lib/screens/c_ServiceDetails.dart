@@ -8,6 +8,7 @@ import 'package:carspa/pref/UserPref.dart';
 import 'package:carspa/screens/d_ServiceNature.dart';
 import 'package:carspa/screens/da_SubsOneTime.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,18 +68,11 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         }
       }
     }
-    /*else {
-      addonsList.add(new Addons('1', '10.00', '20.00', 'test add1'));
-      addonsList.add(new Addons('2', '30.00', '40.00', 'test add2'));
-      addonsList.add(new Addons('3', '50.00', '60.00', 'test add3'));
-    }*/
-
     setState(() {
       print('---------> fetchData() <------------');
       _addonsList = addonsList;
     });
   }
-
   //Loading counter value on start
   _loadPref() async {
     print('---------> _loadPref() <------------');
@@ -95,6 +89,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     });
   }
 
+  //
   void _saveSelectedAddons(List selectedAddonsId) async {
     if (selectedAddonsId.isNotEmpty) {
       var body = jsonEncode(selectedAddonsId);
@@ -114,18 +109,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadPref();
-    fetchData();
-
-    const timeOut = const Duration(seconds: 1);
-    new Timer(timeOut, () {
-      setState(() => isLoading = false);
-    });
-  }
-
+  //
   void _onAddonsSelected(bool selected, addons_id, int index) {
     var initDuration = double.parse(_addonsList[index].duration).abs();
     var addonsDuration = double.parse(duration).abs();
@@ -157,17 +141,32 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     }
   }
 
+  //
+  @override
+  void initState() {
+    super.initState();
+    _loadPref();
+    fetchData();
+
+    const timeOut = const Duration(seconds: 1);
+    new Timer(timeOut, () {
+      setState(() => isLoading = false);
+    });
+  }
+
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
       appBar: AppBar(
         title: new Text(AppTranslations.of(context).text("services_details")),
       ),
       bottomNavigationBar: isLoading
           ? null
           : new BottomAppBar(
-              child: FlatButton(
+        child: MaterialButton(
+          minWidth: double.infinity,
+          height: 48.0,
                 color: Colors.white,
                 child: new Text(
                   AppTranslations.of(context).text("continue"),
@@ -207,171 +206,185 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 },
               ),
             ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ),
-            )
-          : new ListView(
-              children: <Widget>[
-                new Align(
-                  alignment: Alignment.topCenter,
-                  child: SizedBox.fromSize(
-                      size: Size.fromHeight(
-                          MediaQuery.of(context).size.height * 0.33),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: <Widget>[
-                          Container(
-                            // margin: EdgeInsets.only(top: 24.0),
-                            child: Material(
-                              // elevation: 10.0,
-                              borderRadius: BorderRadius.circular(6.0),
-                              /*  shadowColor: Colors.white,
-                        color: Colors.white,*/
-                              child: InkWell(
-                                // onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ItemReviewsPage())),
-                                //  child: Image.asset('assets/car.png'),
-                                child: Image.network(
-                                    ApiConstant.IMAGE_BASE_URL + service_image),
+        body:
+        isLoading ? Center(
+          child: SpinKitPouringHourglass(color: Colors.teal),
+        )
+            : new Container(
+          color: Colors.black12,
+          child: new ListView(
+            children: <Widget>[
+              // top panel
+              new Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox.fromSize(
+                    size: Size.fromHeight(
+                        MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.33),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Container(
+                          child: Material(
+                            child: InkWell(
+                              child: Image.network(
+                                ApiConstant.IMAGE_BASE_URL + service_image,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
+                        ),
 
-                          /// Item description inside a material
-                          Container(
-                            color: Colors.white24,
+                        /// Item description inside a material
+                        Container(
+                          color: Colors.white24,
+                          child: Material(
+                            // elevation: 10.0,
+                            // borderRadius: BorderRadius.circular(12.0),
+                            color: Colors.white54,
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
 
-                            // margin: EdgeInsets.only(top: 24.0),
-                            child: Material(
-                              // elevation: 10.0,
-                              borderRadius: BorderRadius.circular(12.0),
-                              color: Colors.white54,
-                              child: Container(
-                                padding: EdgeInsets.only(bottom: 20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    /// Title and rating
-                                    Container(
-                                      height: 30.0,
-                                      // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
-                                      child: ListTile(
-                                        leading: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 12.0),
-                                          decoration: new BoxDecoration(
-                                              border: new Border(
-                                                  right: new BorderSide(
-                                                      width: 1.0,
-                                                      color: Colors.black54))),
-                                          child: Icon(Icons.title,
-                                              color: Colors.black),
-                                        ),
-                                        title: Text(
-                                          '$service_name',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                                  /// Title and rating
+                                  Container(
+                                    height: 30.0,
+                                    // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
+                                    child: ListTile(
+                                      leading: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 12.0),
+                                        decoration: new BoxDecoration(
+                                            border: new Border(
+                                                right: new BorderSide(
+                                                    width: 1.0,
+                                                    color: Colors.black54))),
+                                        child: Icon(Icons.title,
+                                            color: Colors.black),
                                       ),
-                                    ),
-
-                                    Container(
-                                      height: 30.0,
-                                      // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
-                                      child: ListTile(
-                                        leading: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 12.0),
-                                          decoration: new BoxDecoration(
-                                              border: new Border(
-                                                  right: new BorderSide(
-                                                      width: 1.0,
-                                                      color: Colors.black54))),
-                                          child: Icon(Icons.timer,
-                                              color: Colors.black),
-                                        ),
-                                        title: Text(
-                                          '${AppTranslations.of(context).text("duration")}: $duration',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                                      title: Text(
+                                        '$service_name',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
                                       ),
+                                      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
                                     ),
-                                    Container(
-                                      height: 30.0,
-                                      // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
-                                      child: ListTile(
-                                        leading: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 12.0),
-                                          decoration: new BoxDecoration(
-                                              border: new Border(
-                                                  right: new BorderSide(
-                                                      width: 1.0,
-                                                      color: Colors.black54))),
-                                          child: Image.asset(
-                                            'assets/photos/price.png',
-                                            width: 24.0,
-                                            height: 24.0,
-                                          ),
-                                        ),
-                                        title: Text(
-                                          //'$price',
-                                          '${'${AppTranslations.of(context).text("price")}: $price'} ${subscription_price != '' ? '|| ${AppTranslations.of(context).text("subscription_price")}: $subscription_price' : ''}',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                                  ),
+                                  Container(
+                                    height: 30.0,
+                                    // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
+                                    child: ListTile(
+                                      leading: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 12.0),
+                                        decoration: new BoxDecoration(
+                                            border: new Border(
+                                                right: new BorderSide(
+                                                    width: 1.0,
+                                                    color: Colors.black54))),
+                                        child: Icon(Icons.timer,
+                                            color: Colors.black),
                                       ),
+                                      title: Text(
+                                        '${AppTranslations.of(context).text(
+                                            "duration")}: $duration',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Container(
+                                    height: 30.0,
+                                    // padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0.0),
+                                    child: ListTile(
+                                      leading: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 12.0),
+                                        decoration: new BoxDecoration(
+                                            border: new Border(
+                                                right: new BorderSide(
+                                                    width: 1.0,
+                                                    color: Colors.black54))),
+                                        child: Image.asset(
+                                          'assets/photos/tag.png',
+                                          width: 24.0,
+                                          height: 24.0,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        //'$price',
+                                        '${'${AppTranslations.of(context).text(
+                                            "price")}: $price'} ${subscription_price !=
+                                            ''
+                                            ? '|| ${AppTranslations.of(context)
+                                            .text(
+                                            "subscription_price")}: $subscription_price'
+                                            : ''}',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          )
-                        ],
-                      )),
-                ),
-                // ------->description<----------------//
-                new Container(
-                    padding: EdgeInsets.only(
-                      top: 12.0,
-                    ),
-                    child: ListTile(
-                      leading: Container(
-                        padding: EdgeInsets.all(12.0),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                right: new BorderSide(
-                                    width: 1.0, color: Colors.white24))),
-                        child: Icon(Icons.format_align_justify,
-                            color: Colors.white),
-                      ),
-                      title: Text(
-                        '$description',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                          ),
+                        )
+                      ],
                     )),
-                // ------->addons<----------------//
-                new ListView.builder(
-                    padding: EdgeInsets.only(bottom: 12.0),
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _addonsList.length,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return new Container(
-                        // color: Colors.white,
-                        margin: EdgeInsets.only(left: 12.0),
+              ),
+
+              // ------->description<----------------//
+              new Container(
+                // color: Colors.black12,
+                  padding: EdgeInsets.only(
+                    top: 12.0,
+                  ),
+                  child: ListTile(
+                    leading: Container(
+                      padding: EdgeInsets.all(12.0),
+                      decoration: new BoxDecoration(
+                          border: new Border(
+                              right: new BorderSide(
+                                  width: 1.0, color: Colors.white24))),
+                      child: Icon(Icons.format_align_justify,
+                          color: Colors.teal),
+                    ),
+                    title: Text(
+                      '$description'.replaceAll("\n", ""),
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                  )),
+              // ------->addons<----------------//
+              new ListView.builder(
+                  padding: EdgeInsets.only(bottom: 12.0),
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: _addonsList.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return new Theme(
+                      data: Theme.of(context).copyWith(
+                        unselectedWidgetColor: Colors.teal,
+                      ),
+                      child: new Container(
+                        //  color: Colors.black12,
+                        margin: EdgeInsets.only(left: 10.0),
                         height: 60.0,
                         child: CheckboxListTile(
                           value: _selectedAddonsId
@@ -389,9 +402,12 @@ class _ServiceDetailsState extends State<ServiceDetails> {
 
                             print(
                                 '\n${a.toString()} + ${aa.toString()} = ${aaa.toString()}\n'
-                                '${a.toString()} - ${aa.toString()} = ${aaaa.toString()}\n'
-                                ' ${b.toString()} + ${bb.toString()} = ${bbb.toString()}\n'
-                                '${b.toString()} - ${bb.toString()} = ${bbbb.toString()}\n');
+                                    '${a.toString()} - ${aa.toString()} = ${aaaa
+                                    .toString()}\n'
+                                    ' ${b.toString()} + ${bb.toString()} = ${bbb
+                                    .toString()}\n'
+                                    '${b.toString()} - ${bb.toString()} = ${bbbb
+                                    .toString()}\n');
 
                             _onAddonsSelected(
                                 selected, _addonsList[index].addons_id, index);
@@ -399,22 +415,24 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                           title: new Text(
                             _addonsList[index].addons_name,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black54,
                                 fontWeight: FontWeight.bold),
                           ),
                           controlAffinity: ListTileControlAffinity.leading,
                           subtitle: new Text(
                             '${AppTranslations.of(context).text("price")}: ${_addonsList[index].price} | ${AppTranslations.of(context).text("duration")}: ${_addonsList[index].duration}',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black54,
                                 fontWeight: FontWeight.bold),
                           ),
-                          activeColor: Colors.white,
+                          activeColor: Colors.teal,
+
                         ),
-                      );
-                    })
-              ],
-            ),
+                      ),);
+                  })
+            ],
+          ),
+        )
     );
   }
 }

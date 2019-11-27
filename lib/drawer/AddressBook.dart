@@ -21,11 +21,12 @@ class _AddressBookState extends State<AddressBook> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: new Text(AppTranslations.of(context).text('address_book')),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () {
           Navigator.push(
               context,
@@ -46,8 +47,8 @@ class _AddressBookState extends State<AddressBook> {
                     print(snapshot.data);
                     return snapshot.hasData
                         ? AddressList(
-                            addressBooks: snapshot.data,
-                          )
+                      addressBooks: snapshot.data,
+                    )
                         : Center(
                             child: CircularProgressIndicator(
                               valueColor:
@@ -58,7 +59,8 @@ class _AddressBookState extends State<AddressBook> {
             )
           : Center(
               child: MaterialButton(
-                color: Colors.white,
+                height: 44.0,
+                color: Color(0xffe0e0e0),
                 onPressed: () {
                   Navigator.of(context)
                       .push(
@@ -157,15 +159,11 @@ class AddressList extends StatefulWidget {
 }
 
 class _AddressListState extends State<AddressList> {
+
   Widget buildText(String key, String value) {
     return new Expanded(
         flex: 0,
         child: Container(
-          // margin: EdgeInsets.only(left: 60.0, right: 12.0),
-          padding: EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-              //  border: Border(bottom: BorderSide(color: Colors.red),),
-              ),
           child: new Row(
             children: <Widget>[
               new Expanded(
@@ -176,19 +174,19 @@ class _AddressListState extends State<AddressList> {
                     new Text(
                       '$key',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                       ),
                     ),
                   ],
                 ),
               ),
-              Expanded(
+              new Expanded(
                 flex: 0,
                 child: Container(
                   width: 50,
                   child: new Icon(
                     Icons.label,
-                    color: Colors.white,
+                    color: Colors.black54,
                   ),
                 ),
               ),
@@ -201,7 +199,7 @@ class _AddressListState extends State<AddressList> {
                     new Text(
                       '''$value''',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                       ),
                     ),
                   ],
@@ -231,22 +229,19 @@ class _AddressListState extends State<AddressList> {
             itemCount: widget.addressBooks.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  elevation: 11.0,
-                  margin:
-                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  elevation: 3.0,
+
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        decoration: BoxDecoration(color: Colors.teal),
+                        // decoration: BoxDecoration(color: Colors.black12),
                         child: ListTile(
                           onTap: () {
                             _addAddressLocally(index);
                             Navigator.pop(context, true);
                           },
-                          onLongPress: null,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
+
                           title: new Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

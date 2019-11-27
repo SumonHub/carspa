@@ -9,6 +9,8 @@ class LoginInput extends StatelessWidget {
    LoginInput(this.hintText, this.myController);*/
 
   final TextEditingController myController;
+  final String prefixText;
+  final int maxLength;
   final String hintText;
   final String labelText;
   final String errorText;
@@ -16,6 +18,8 @@ class LoginInput extends StatelessWidget {
 
   const LoginInput(
       {Key key,
+        this.prefixText,
+        this.maxLength,
       this.hintText,
       this.labelText,
       this.myController,
@@ -27,24 +31,34 @@ class LoginInput extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.all(10.0),
+
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       // color: Colors.white,
       child: new TextField(
+        maxLength: maxLength,
         obscureText: obscureText,
         controller: myController,
         decoration: new InputDecoration(
+          prefixText: prefixText,
           hintText: hintText,
           labelText: labelText,
-          fillColor: Colors.white,
+          fillColor: Colors.grey,
           border: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(10.0),
             borderSide: new BorderSide(),
           ),
           errorText: errorText,
+          hintStyle: new TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+          ),
+          labelStyle: new TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: Colors.grey, width: 2.5)),
         ),
         // keyboardType: TextInputType.emailAddress,
         style: new TextStyle(
@@ -55,19 +69,3 @@ class LoginInput extends StatelessWidget {
     );
   }
 }
-
-/*
- * new TextFormField(
-       autovalidate: true,
-       decoration: InputDecoration(
-         //  border: const UnderlineInputBorder(),
-         filled: true,
-         hintText: "$hintText",
-         labelText: "Username",
-         //  helperText: "",
-         fillColor: Colors.white,
-       ),
-     );
-
-
-     */

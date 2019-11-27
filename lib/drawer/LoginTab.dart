@@ -26,9 +26,10 @@ class _LoginTabState extends State<LoginTab> {
           preferredSize: Size.fromHeight(70.0),
           child: Container(
             padding: EdgeInsets.only(top: 30.0),
-            color: Colors.teal,
+            color: Color(0xffe0e0e0),
             child: TabBar(
-              indicatorColor: Colors.white,
+              indicatorColor: Colors.grey,
+              indicatorWeight: 5.0,
               tabs: [
                 Tab(
                   text: AppTranslations.of(context).text("login"),

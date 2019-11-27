@@ -78,7 +78,7 @@ class _CarsState extends State<Cars> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: new Text(
             AppTranslations.of(context).text("select_cars"),
@@ -91,7 +91,7 @@ class _CarsState extends State<Cars> {
                       child: Text(
                     'En/Ar',
                     style: TextStyle(
-                      color: Colors.yellow,
+                      color: Colors.redAccent,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -119,7 +119,7 @@ class _CarsState extends State<Cars> {
                   ? CarTypeList(
                       carList: snapshot.data,
                     )
-                  : SpinKitPouringHourglass(color: Colors.white);
+                  : Center(child: SpinKitPouringHourglass(color: Colors.teal),);
             }));
   }
 }
@@ -133,8 +133,6 @@ class CarTypeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: new ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
         itemCount: carList.length,
         itemBuilder: (BuildContext context, int index) {
           return new Stack(
@@ -182,7 +180,8 @@ class CarItem extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 16.0, top: 16.0),
       child: Stack(
         children: <Widget>[
-          /// Item card
+
+          /// Item photo
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox.fromSize(
@@ -194,13 +193,14 @@ class CarItem extends StatelessWidget {
                     Container(
                       // margin: EdgeInsets.only(top: 24.0),
                       child: Material(
-                        elevation: 14.0,
+                        // elevation: 14.0,
                         borderRadius: BorderRadius.circular(12.0),
                         shadowColor: Color(0x802196F3),
                         color: Colors.white70,
                         child: InkWell(
                           child: Image.network(
-                              ApiConstant.IMAGE_BASE_URL + _carImage),
+                            ApiConstant.IMAGE_BASE_URL + _carImage,
+                            fit: BoxFit.cover,),
                         ),
                       ),
                     ),
@@ -208,43 +208,51 @@ class CarItem extends StatelessWidget {
                 )),
           ),
 
-          /// Review
+          /// item
           Padding(
-            padding: EdgeInsets.only(top: 160.0, left: 32.0),
+            padding: EdgeInsets.only(top: 170.0, left: 32.0),
             child: Material(
-              elevation: 12.0,
-              color: Colors.teal,
+              // elevation: 12.0,
+              color: Colors.black12,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                bottomLeft: Radius.circular(20.0),
-                bottomRight: Radius.circular(20.0),
+                topLeft: Radius.circular(40.0),
+                bottomLeft: Radius.circular(40.0),
+                bottomRight: Radius.circular(40.0),
               ),
-              child: Container(
-                child: Container(
-                  child: ListTile(
-                    leading: Container(
-                      padding: EdgeInsets.only(right: 12.0),
-                      decoration: new BoxDecoration(
-                          border: new Border(
-                              right: new BorderSide(
-                                  width: 1.0, color: Colors.white24))),
-                      child: Icon(Icons.directions_car, color: Colors.white),
-                    ),
-                    title: Text(
-                      _carName,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+              child: ListTile(
+                leading: Container(
+                  padding: EdgeInsets.only(right: 12.0),
+                  decoration: new BoxDecoration(
+                      border: new Border(
+                          right: new BorderSide(
+                              width: 1.0, color: Colors.black))),
+                  child: Icon(
+                    Icons.directions_car,
+                    color: Colors.teal,
+                    size: 48.0,
 
-                    subtitle: Row(
-                      children: <Widget>[
-                        Icon(Icons.linear_scale, color: Colors.yellowAccent),
-                        Text(AppTranslations.of(context).text("car_type"),
-                            style: TextStyle(color: Colors.white))
-                      ],
-                    ),
                   ),
+                ),
+                title: Text(
+                  _carName,
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 22.0
+
+                  ),
+                ),
+                // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+                subtitle: Row(
+                  children: <Widget>[
+                    // Icon(Icons.linear_scale, color: Colors.yellowAccent),
+                    Text(AppTranslations.of(context).text("car_type"),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18.0
+                        ))
+                  ],
                 ),
               ),
             ),
@@ -290,20 +298,20 @@ class _AppDrawerState extends State<AppDrawer> {
             /*  accountName: new Text('ggg'),
             accountEmail: new Text('gggg'),*/
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Colors.white,
               // backgroundBlendMode: BlendMode.colorBurn,
               image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/photos/logo.png')),
+                  image: AssetImage('assets/launcher/logo.png')),
             ),
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.teal))),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: ListTile(
               leading: Icon(
                 Icons.home,
-                color: Colors.teal,
+                color: Colors.grey,
               ),
               title: Text(AppTranslations.of(context).text("home")),
               onTap: () {
@@ -318,11 +326,11 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.teal))),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: ListTile(
               leading: Icon(
                 Icons.shopping_cart,
-                color: Colors.teal,
+                color: Colors.grey,
               ),
               title: Text(AppTranslations.of(context).text("your_order")),
               onTap: () {
@@ -339,11 +347,11 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.teal))),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: ListTile(
               leading: Icon(
                 Icons.account_circle,
-                color: Colors.teal,
+                color: Colors.grey,
               ),
               title: Text(AppTranslations.of(context).text("profile")),
               onTap: () {
@@ -360,11 +368,11 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.teal))),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: ListTile(
               leading: Icon(
                 Icons.directions,
-                color: Colors.teal,
+                color: Colors.grey,
               ),
               title: Text(AppTranslations.of(context).text("address_book")),
               onTap: () {
@@ -378,11 +386,11 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.teal))),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: ListTile(
               leading: Icon(
                 Icons.vpn_key,
-                color: Colors.red,
+                color: Colors.grey,
               ),
               title: Text(AppTranslations.of(context)
                   .text(_isLogin ? "logout" : "login")),

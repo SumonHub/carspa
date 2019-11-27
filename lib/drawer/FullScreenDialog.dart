@@ -47,6 +47,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
   var _avenueText = 'Enter Avenue No';
   var _apartmentText = 'Enter Apartment No';
   var _floorText = 'Enter Floor No';
+  var _phoneText = 'Enter Phone No';
 
   var _isLogin = true;
   List<SuggestedArea> _areaList = new List();
@@ -147,15 +148,16 @@ class FullScreenDialogState extends State<FullScreenDialog> {
     _apartmentText =
         enter + ' ' + AppTranslations.of(context).text("apartment");
     _floorText = enter + ' ' + AppTranslations.of(context).text("floor");
+    _phoneText = enter + ' ' + AppTranslations.of(context).text("phone");
 
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       appBar: AppBar(
           title: Text(AppTranslations.of(context).text("add_new_address")),
           actions: <Widget>[
             FlatButton(
                 child: Text(AppTranslations.of(context).text("save"),
-                    style: theme.textTheme.body1.copyWith(color: Colors.white)),
+                    style: theme.textTheme.body1.copyWith(color: Colors.black)),
                 onPressed: () {
                   if (_addressNameController.text.isEmpty ||
                       _selectedLocation == null ||
@@ -185,45 +187,45 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
-                    // Icon(Icons.directions_car, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
+                    // Icon(Icons.directions_car, color: Colors.black54),
                   ),
                   title: TextField(
                     maxLines: 1,
                     controller: _addressNameController,
                     textInputAction: TextInputAction.done,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
                       hintText: '$_addressNameText',
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("address"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.white, width: 2.5)),
+                          BorderSide(color: Colors.black54, width: 2.5)),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : empty_error_msg,
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                     ),
                   ),
@@ -234,27 +236,36 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
-                    // Icon(Icons.directions_car, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
+                    // Icon(Icons.directions_car, color: Colors.black54),
                   ),
                   title: Container(
                     padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      border: new Border.all(
+                        width: 2.5,
+                        color: Colors.black54,
+
+                      ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: DropdownButton(
-                      elevation: 0,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          backgroundColor: Colors.teal,
+                          canvasColor: Color(0xffe0e0e0),
+                        ),
+                        child: DropdownButton(
+                          elevation: 3,
                       isExpanded: true,
                       /*style: TextStyle(
-                      color: Colors.white
+                      color: Colors.black54
                     ),*/
                       hint: Text(
                         AppTranslations.of(context).text("choose_your_area"),
                         // 'Choose Your Area',
                         style: TextStyle(
-                          color: Colors.teal,
+                          color: Colors.black54,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -272,7 +283,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                           value: location,
                         );
                       }).toList(),
-                    ),
+                        ),)
                   ),
                   subtitle: Container(
                     padding: EdgeInsets.all(9.0),
@@ -282,7 +293,7 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                           : empty_error_msg,
                       style: TextStyle(
                         color:
-                            _validStatus ? Colors.white : Colors.yellowAccent,
+                        _validStatus ? Colors.black54 : Colors.redAccent,
                         fontSize: 12.5,
                         fontWeight:
                             _validStatus ? FontWeight.bold : FontWeight.normal,
@@ -296,43 +307,43 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
-                    // Icon(Icons.directions_car, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
+                    // Icon(Icons.directions_car, color: Colors.black54),
                   ),
                   title: TextField(
                     maxLines: 1,
                     controller: _streetController,
                     textInputAction: TextInputAction.done,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: '$_streetText',
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("street"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.white, width: 2.5)),
+                          BorderSide(color: Colors.black54, width: 2.5)),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : empty_error_msg,
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -345,41 +356,41 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _blockController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: _blockText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("block"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : empty_error_msg,
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -392,41 +403,41 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _buildingController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: _buildingText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("building"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : '$empty_error_msg',
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -439,42 +450,42 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
-                    // Icon(Icons.directions_car, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
+                    // Icon(Icons.directions_car, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _avenueController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: _avenueText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("avenue"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : '$empty_error_msg',
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -487,41 +498,41 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _apartmentController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: _apartmentText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("apartment"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : '$empty_error_msg',
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -534,41 +545,41 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _floorController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
                       hintText: _floorText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("floor"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : '$empty_error_msg',
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),
@@ -581,41 +592,41 @@ class FullScreenDialogState extends State<FullScreenDialog> {
                     decoration: new BoxDecoration(
                         border: new Border(
                             right: new BorderSide(
-                                width: 1.0, color: Colors.white24))),
-                    child: Icon(Icons.add_location, color: Colors.white),
+                                width: 1.0, color: Colors.black54))),
+                    child: Icon(Icons.add_location, color: Colors.black54),
                   ),
                   title: TextField(
                     controller: _phoneController,
                     style: new TextStyle(
-                      color: Colors.white,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                     ),
-                    cursorColor: Colors.yellowAccent,
+                    cursorColor: Colors.redAccent,
                     decoration: InputDecoration(
-                      hintText: _floorText,
+                      hintText: _phoneText,
                       hintStyle: new TextStyle(
-                        color: Colors.white54,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       helperText: AppTranslations.of(context).text("phone"),
                       helperStyle: new TextStyle(
-                        color: Colors.white,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: Colors.white, width: 2.5),
+                        const BorderSide(color: Colors.black54, width: 2.5),
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.yellowAccent, width: 2.5)),
+                              color: Colors.redAccent, width: 2.5)),
                       errorText: _validStatus ? null : '$empty_error_msg',
                       errorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                        color: Colors.yellowAccent,
+                            color: Colors.redAccent,
                       )),
                       errorStyle: TextStyle(
-                        color: Colors.yellowAccent,
+                        color: Colors.redAccent,
                       ),
                       focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(style: BorderStyle.none)),

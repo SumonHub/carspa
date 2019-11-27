@@ -38,7 +38,7 @@ class _GuestLoginState extends State<GuestLogin> {
     loadingExtMsg = AppTranslations.of(context).text("loading_ext");
 
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Colors.white,
       body: ListView(
         padding: EdgeInsets.all(30.0),
         children: <Widget>[
@@ -57,8 +57,10 @@ class _GuestLoginState extends State<GuestLogin> {
             obscureText: false,
           ),
           new LoginInput(
+            prefixText: '+965',
+            maxLength: 8,
             labelText: AppTranslations.of(context).text("phone"),
-            hintText: AppTranslations.of(context).text("enter_phone"),
+            // hintText: AppTranslations.of(context).text("enter_phone"),
             myController: _phoneController,
             errorText: _phoneErrorText,
             obscureText: false,
@@ -83,7 +85,7 @@ class _GuestLoginState extends State<GuestLogin> {
                       '$loadingMsg',
                       '$loadingExtMsg',
                       Duration(seconds: 2),
-                      Color(0xff004d40),
+                      Colors.grey,
                       FlushbarPosition.TOP,
                       true)
                       .showToast();
@@ -96,17 +98,17 @@ class _GuestLoginState extends State<GuestLogin> {
                         '',
                         '$guest_login_warning_msg',
                         Duration(seconds: 2),
-                        Color(0xff004d40),
+                        Colors.grey,
                         FlushbarPosition.TOP,
                         false)
                         .showToast();
                   });
                 }
               },
-              elevation: 4.0,
+              // elevation: 4.0,
               minWidth: double.infinity,
               height: 48.0,
-              color: Colors.white,
+              color: Color(0xffe0e0e0),
             ),
           ),
         ],
@@ -114,7 +116,6 @@ class _GuestLoginState extends State<GuestLogin> {
     );
   }
 
-  void _showToast(String msg) {}
 
   _login(String fstName, String lstName, String phoneNo) async {
     UserStringPref.saveBoolPref('isLogin', false);
@@ -122,7 +123,7 @@ class _GuestLoginState extends State<GuestLogin> {
     UserStringPref.savePref('token', null);
     UserStringPref.savePref('user_fstName', fstName);
     UserStringPref.savePref('user_lstName', lstName);
-    UserStringPref.savePref('user_phone', phoneNo);
+    UserStringPref.savePref('user_phone', '+965' + phoneNo);
   }
 
   bool checkValidity() {

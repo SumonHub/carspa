@@ -109,15 +109,17 @@ class _SubsOneTimeState extends State<SubsOneTime> {
     loadingExtMsg = AppTranslations.of(context).text("loading_ext");
 
     return new Scaffold(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: new Text(
             AppTranslations.of(context).text("one_time_wash"),
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child: FlatButton(
-            color: Colors.white,
+          child: MaterialButton(
+            minWidth: double.infinity,
+            height: 48.0,
+            color: Color(0xffe0e0e0),
             child: new Text(
               AppTranslations.of(context).text("continue"),
               style: const TextStyle(
@@ -140,7 +142,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
                   '$loadingMsg',
                   '$loadingExtMsg',
                   Duration(seconds: 2),
-                  Color(0xff004d40),
+                  Colors.grey,
                   FlushbarPosition.TOP,
                   true)
                   .showToast();
@@ -160,7 +162,7 @@ class _SubsOneTimeState extends State<SubsOneTime> {
             padding: EdgeInsets.all(12.0),
             child: ListView(
               children: <Widget>[
-                Avatar("assets/photos/date.png"),
+                Avatar("assets/photos/calendar.png"),
                 Container(
                   padding:
                   EdgeInsets.only(left: 12.0, bottom: 12.0, right: 12.0),
