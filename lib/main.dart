@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               )
 
-        //LoginPage()
+      // LoginPage()
         // MapsDemo()
         // OrderCompletaion()
         // PickMap()
@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         // SuccessPage()
         // LoginTab()
         // SubsOneTime()
-        //  AddressBook()
+      // AddressBook()
         // ServiceNature()
 
         );
