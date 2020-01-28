@@ -17,7 +17,8 @@ class _PickMapState extends State<PickMap> {
   GoogleMapController mapController;
 
   //var _initLocation = const LatLng(29.347126136377188, 47.67043210566044);
-  var _initLocation = const LatLng(29.3759, 47.9774);
+  static const _initLocation = const LatLng(29.3759, 47.9774);
+  LatLng _updatedLoc = _initLocation;
 
   @override
   void initState() {
@@ -46,22 +47,17 @@ class _PickMapState extends State<PickMap> {
         children: <Widget>[
           GoogleMap(
             onMapCreated: (GoogleMapController controller) {
-              controller
-                  .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                target: _initLocation,
-                zoom: 15.0,
-              )));
-              setState(() {
-                mapController = controller;
-              });
+              mapController = controller;
             },
-            options: GoogleMapOptions(
-              trackCameraPosition: true,
-              /*cameraPosition: CameraPosition(
-                target: _initLocation,
-                zoom: 15.0,
-              ),*/
+            initialCameraPosition: new CameraPosition(
+              target: _initLocation,
+              zoom: 15.0,
             ),
+            onCameraMove: (CameraPosition position) {
+              _updatedLoc = position.target;
+              debugPrint(_updatedLoc.toString());
+            },
+
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -133,18 +129,12 @@ class _PickMapState extends State<PickMap> {
           ),
           GestureDetector(
             onTap: () {
-              setState(() {
-                var _updatedLoc = LatLng(
-                    mapController.cameraPosition.target.latitude,
-                    mapController.cameraPosition.target.longitude);
-                debugPrint(_updatedLoc.toString());
                 _getAddressFromLatlng(_updatedLoc).then((_) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => AddressForm()),
                   );
                 });
-              });
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

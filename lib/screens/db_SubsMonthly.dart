@@ -15,9 +15,6 @@ import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//import 'package:flutter_calendar_carousel/classes/event.dart';
-//import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-//   show CalendarCarousel;
 
 class SubsMonthly extends StatefulWidget {
   @override
@@ -72,7 +69,7 @@ class _SubsMonthlyState extends State<SubsMonthly> {
     var _offDayIdList = new List();
     var _fullWeekDayList = [
       'monday',
-      ' tuesday ',
+      'tuesday ',
       'wednesday',
       'thursday',
       'friday',
